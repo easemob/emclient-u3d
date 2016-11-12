@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using EaseMob;
  
 public class Login : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class Login : MonoBehaviour {
 	public InputField password;
 	public Button regBtn;
 	public Button loginBtn;
+	public Button logoutBtn;
 	public Text logText;
 
 	void Awake ()
@@ -21,26 +23,21 @@ public class Login : MonoBehaviour {
 		username.text = "user1";
 		password.text = "123";
 
-
 		EMConnListenerCallback connCb = new EMConnListenerCallback ();
 		connCb.onConnectionCallback = () => {
 			logText.text = "Connected!";
-
 		};
 		connCb.onDisconnectedCallback = (code) => {
-			logText.color = new Color (255, 0, 0);
 			logText.text = "Disconnected! code=" + code;
 		};
 		EMClient.Instance.connListenerCallback = connCb;
 
-	
 		regBtn.onClick.AddListener (delegate() {
 			string nametext = username.text;
 			string pwdtext = password.text;
 			int ret = EMClient.Instance.CreateAccount(nametext,pwdtext);
 			if(ret == 0){
-				logText.text = "reg ok";
-//				Application.LoadLevel("MainScene");
+				logText.text = "reg success";
 			}else{
 				logText.text = "reg error,code="+ret;
 			}
@@ -55,13 +52,26 @@ public class Login : MonoBehaviour {
 				Application.LoadLevel("MainScene");
 			};
 			cb.onProgressCallback = (p,s) => {
-				logText.text = ("p="+p+",s="+s);
+				logText.text = ("prograss="+p+",status="+s);
 			};
 			cb.onErrorCallback = (c,m) => {
-				logText.text = ("c="+c+",m="+m);
+				logText.text = ("Err code="+c+",msg="+m);
 			};
-			Debug.LogError("login username="+nametext);
 			EMClient.Instance.Login(nametext,pwdtext,cb);
+		});
+
+		logoutBtn.onClick.AddListener (delegate() {
+			EMBaseCallback cb = new EMBaseCallback();
+			cb.onSuccessCallback = () => {
+				logText.text = "logout success";
+			};
+			cb.onProgressCallback = (p,s) => {
+				logText.text = ("prograss="+p+",status="+s);
+			};
+			cb.onErrorCallback = (c,m) => {
+				logText.text = ("Err code="+c+",msg="+m);
+			};
+			EMClient.Instance.Logout(true,cb);
 		});
 	}
 	

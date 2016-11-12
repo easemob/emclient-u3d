@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.IO;
 using LitJson;
+using EaseMob;
 
 public class MainScene : MonoBehaviour {
 
@@ -32,67 +33,9 @@ public class MainScene : MonoBehaviour {
 		
 		rawImage.gameObject.SetActive(false);
 
-//		string testjson = "[{\"mStatus\":0,\"mIsListened\":false,\"mIsUnread\":true,\"mTo\":\"user1\",\"mFrom\":\"user4\",\"mMsgId\":\"262951845230544912\",\"mType\":0,\"mServerTime\":1478788047384,\"mLocalTime\":1478788047323,\"mChatType\":0,\"mTxt\":\"呃呃\",\"mDirection\":1,\"mIsAcked\":false,\"mIsDelivered\":false},{\"mStatus\":0,\"mIsListened\":false,\"mIsUnread\":true,\"mTo\":\"user1\",\"mFrom\":\"user4\",\"mMsgId\":\"262951845230544912\",\"mType\":0,\"mServerTime\":1478788047384,\"mLocalTime\":1478788047323,\"mChatType\":0,\"mTxt\":\"呃呃\",\"mDirection\":1,\"mIsAcked\":false,\"mIsDelivered\":false}]";
-//		List<EMMessage> list = json2messagelist (testjson);
-//		foreach(EMMessage msg in list){
-//			logText.text += msg.mMsgId;
-//		}
-//		rawImage.GetComponent<ShowPicture>().loadPic("https://a1.easemob.com/1116161102115561/u3d/chatfiles/0082d470-a75d-11e6-978c-c580a716cc1d");
+		setConnectionListener ();
 
-		EMMessageCallback receiveMessageCallback = new EMMessageCallback();
-		receiveMessageCallback.onMessageReceivedCallback = (msgs) =>
-		{
-			logText.text = "from ";
-			foreach(EMMessage msg in msgs){
-				logText.text += msg.mFrom;
-				if(msg.mType == 0){
-					logText.text += ",content="+msg.mTxt;
-				}
-
-				if(msg.mType == 1)
-				{
-					rawImage.gameObject.SetActive(true);
-					rawImage.GetComponent<ShowPicture>().loadPic(msg.mRemotePath);
-				}else{
-					rawImage.gameObject.SetActive(false);
-				}
-
-				if(msg.mType == 4)
-				{
-					voicePath.text = msg.mLocalPath;
-				}
-			}
-		};
-
-		EMConnListenerCallback connCb = new EMConnListenerCallback ();
-		connCb.onConnectionCallback = () => {
-		
-		};
-		connCb.onDisconnectedCallback = (code) => {
-			logText.color = new Color (255, 0, 0);
-			logText.text = "Disconnected! code=" + code;
-		};
-		EMClient.Instance.connListenerCallback = connCb;
-
-
-		receiveMessageCallback.onMessageReadAckReceivedCallback = (msgs) => 
-		{
-			
-		};
-		receiveMessageCallback.onMessageDeliveryAckReceivedCallback = (msgs) => 
-		{
-			
-		};
-		receiveMessageCallback.onMessageChangedCallback = (msgs) => 
-		{
-			
-		};
-		receiveMessageCallback.onCmdMessageReceivedCallback = (msgs) => 
-		{
-			
-		};
-	
-		EMClient.Instance.receiveMessageCallback = receiveMessageCallback;
+		setMessageRecvListener ();
 
 
 		friendListBtn.onClick.AddListener (delegate {
@@ -130,7 +73,7 @@ public class MainScene : MonoBehaviour {
 			cb.onErrorCallback = (c,m) => {
 				
 			};
-			EMClient.Instance.SendTextMessage(txtContent.text, dod.text, 0, cb);
+			EMClient.Instance.SendTextMessage(txtContent.text, dod.text, ChatType.Chat, cb);
 		});
 
 		screenShot.onClick.AddListener (delegate() {
@@ -150,7 +93,7 @@ public class MainScene : MonoBehaviour {
 				cb.onErrorCallback = (c,m) => {
 
 				};
-				EMClient.Instance.SendPictureMessage(picFilePath, picComprass.value==1 ? true : false, dod.text, 0, cb);
+				EMClient.Instance.SendPictureMessage(picFilePath, picComprass.value==1 ? true : false, dod.text, ChatType.Chat, cb);
 			}
 		});
 
@@ -168,7 +111,7 @@ public class MainScene : MonoBehaviour {
 				cb.onErrorCallback = (c,m) => {
 
 				};
-				EMClient.Instance.SendVoiceMessage(voicePath.text,10,dod.text,0,cb);
+				EMClient.Instance.SendVoiceMessage(voicePath.text,10,dod.text,ChatType.Chat,cb);
 			}
 		});
 		/*
@@ -247,4 +190,61 @@ public class MainScene : MonoBehaviour {
 		picFilePath = filePath;
 	}
 
+	private void setConnectionListener()
+	{
+		EMConnListenerCallback connCb = new EMConnListenerCallback ();
+		connCb.onConnectionCallback = () => {
+
+		};
+		connCb.onDisconnectedCallback = (code) => {
+			logText.color = new Color (255, 0, 0);
+			logText.text = "Disconnected! code=" + code;
+		};
+		EMClient.Instance.connListenerCallback = connCb;
+	}
+
+	private void setMessageRecvListener()
+	{
+		EMMessageCallback receiveMessageCallback = new EMMessageCallback();
+		receiveMessageCallback.onMessageReceivedCallback = (msgs) =>
+		{
+			logText.text = "from ";
+			foreach(EMMessage msg in msgs){
+				logText.text += msg.mFrom;
+				if(msg.mType == MessageType.TXT){
+					logText.text += ",content="+msg.mTxt;
+				}
+
+				if(msg.mType == MessageType.IMAGE)
+				{
+					rawImage.gameObject.SetActive(true);
+					rawImage.GetComponent<ShowPicture>().loadPic(msg.mRemotePath);
+				}else{
+					rawImage.gameObject.SetActive(false);
+				}
+
+				if(msg.mType == MessageType.VOICE)
+				{
+					voicePath.text = msg.mLocalPath;
+				}
+			}
+		};
+		receiveMessageCallback.onMessageReadAckReceivedCallback = (msgs) => 
+		{
+
+		};
+		receiveMessageCallback.onMessageDeliveryAckReceivedCallback = (msgs) => 
+		{
+
+		};
+		receiveMessageCallback.onMessageChangedCallback = (msgs) => 
+		{
+
+		};
+		receiveMessageCallback.onCmdMessageReceivedCallback = (msgs) => 
+		{
+
+		};
+		EMClient.Instance.receiveMessageCallback = receiveMessageCallback;
+	}
 }

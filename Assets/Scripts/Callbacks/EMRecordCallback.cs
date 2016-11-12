@@ -1,7 +1,11 @@
-﻿public class EMRecordCallback  {
+﻿namespace EaseMob{
 
-	public delegate void StopRecordCallback(string path,int length);
+	public class EMRecordCallback  {
 
-	public StopRecordCallback onStopRecordCallback;
+		public delegate void StopRecordCallback(string path,int length);
+
+		public StopRecordCallback onStopRecordCallback;
+
+	}
 
 }

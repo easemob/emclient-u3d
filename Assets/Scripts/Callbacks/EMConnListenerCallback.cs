@@ -1,8 +1,11 @@
-﻿public class EMConnListenerCallback {
+﻿namespace EaseMob{
 
-	public delegate void ConnectionCallback();
-	public delegate void DisconnectedCallback(string code);
+	public class EMConnListenerCallback {
 
-	public ConnectionCallback onConnectionCallback;
-	public DisconnectedCallback onDisconnectedCallback;
+		public delegate void ConnectionCallback();
+		public delegate void DisconnectedCallback(string code);
+
+		public ConnectionCallback onConnectionCallback;
+		public DisconnectedCallback onDisconnectedCallback;
+	}
 }
