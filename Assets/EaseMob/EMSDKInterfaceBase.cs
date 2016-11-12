@@ -47,23 +47,23 @@
 		public abstract void removeMessage (string username, string msgId);
 		public abstract void importMessages (string json);
 		//group
-		public abstract void createGroup (string groupName, string desc, string strMembers, string reason, int maxUsers, int style);
-		public abstract void addUsersToGroup (string groupId, string strMembers);
-		public abstract void inviteUser (string groupId, string beInvitedUsernames, string reason);
-		public abstract void removeUserFromGroup (string groupId, string username);
-		public abstract void joinGroup (string groupId);
-		public abstract void applyJoinToGroup (string groupId, string reason);
-		public abstract void leaveGroup (string groupId);
-		public abstract void destroyGroup (string groupId);
-		public abstract void getJoinedGroupsFromServer ();
+		public abstract void createGroup (int callbackId,string groupName, string desc, string strMembers, string reason, int maxUsers, int style);
+		public abstract void addUsersToGroup (int callbackId,string groupId, string strMembers);
+		public abstract void inviteUser (int callbackId,string groupId, string beInvitedUsernames, string reason);
+		public abstract void removeUserFromGroup (int callbackId,string groupId, string username);
+		public abstract void joinGroup (int callbackId,string groupId);
+		public abstract void applyJoinToGroup (int callbackId,string groupId, string reason);
+		public abstract void leaveGroup (int callbackId,string groupId);
+		public abstract void destroyGroup (int callbackId,string groupId);
+		public abstract void getJoinedGroupsFromServer (int callbackId);
 		public abstract string getAllGroups ();
-		public abstract void changeGroupName (string groupId,string groupName);
+		public abstract void changeGroupName (int callbackId,string groupId,string groupName);
 		public abstract string getGroup (string groupId);
-		public abstract void blockGroupMessage (string groupId);
-		public abstract void unblockGroupMessage (string groupId);
-		public abstract void blockUser (string groupId, string username);
-		public abstract void unblockUser(string groupId,string username);
-		public abstract void getBlockedUsers(string groupId);
+		public abstract void blockGroupMessage (int callbackId,string groupId);
+		public abstract void unblockGroupMessage (int callbackId,string groupId);
+		public abstract void blockUser (int callbackId,string groupId, string username);
+		public abstract void unblockUser(int callbackId,string groupId,string username);
+		public abstract void getBlockedUsers(int callbackId,string groupId);
 
 	}
 

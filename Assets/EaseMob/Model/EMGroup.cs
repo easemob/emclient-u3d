@@ -1,15 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿namespace EaseMob{
+	
+	public class EMGroup {
 
-public class EMGroup : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+		public string mGroupId{ set; get; }
+		public string mGroupName{ set; get; }
+		public bool mIsPublic{ set; get; }
+		public bool mIsAllowInvites{ set; get; }
+		public bool mIsMsgBlocked{ set; get; }
+		public string mOwner{ set; get; }
+		public string mMembers{ set; get; }
+		public string mDescription{ set; get; }
 	}
 }

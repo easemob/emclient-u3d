@@ -325,8 +325,8 @@ RectTransform:
   - {fileID: 236684948}
   - {fileID: 703517417}
   - {fileID: 1852011588}
-  - {fileID: 882943531}
   - {fileID: 1481886026}
+  - {fileID: 882943531}
   m_Father: {fileID: 1265777280}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
@@ -382,6 +382,7 @@ MonoBehaviour:
   password: {fileID: 236684949}
   regBtn: {fileID: 703517418}
   loginBtn: {fileID: 1852011589}
+  logoutBtn: {fileID: 1481886027}
   logText: {fileID: 882943532}
 --- !u!1 &523259327
 GameObject:
@@ -715,7 +716,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 517403732}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 8, y: -220}
@@ -1027,7 +1028,7 @@ RectTransform:
   m_Children:
   - {fileID: 1417453843}
   m_Father: {fileID: 517403732}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 110, y: -315}

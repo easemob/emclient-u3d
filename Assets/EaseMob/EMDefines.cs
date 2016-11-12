@@ -18,4 +18,13 @@
 		ChatRoom
 	}
 
+	public enum ConversationType
+	{
+		Chat,
+		GroupChat,
+		ChatRoom,
+		DiscussionGroup,
+		HelpDesk
+	}
+
 }

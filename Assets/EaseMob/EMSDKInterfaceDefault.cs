@@ -107,46 +107,46 @@ namespace EaseMob{
 
 		}
 
-		public override void createGroup (string groupName, string desc, string strMembers, string reason, int maxUsers, int style)
+		public override void createGroup (int callbackId,string groupName, string desc, string strMembers, string reason, int maxUsers, int style)
 		{
 			
 		}
-		public override void addUsersToGroup (string groupId, string strMembers)
+		public override void addUsersToGroup (int callbackId,string groupId, string strMembers)
 		{
 			
 		}
-		public override void inviteUser (string groupId, string beInvitedUsernames, string reason)
+		public override void inviteUser (int callbackId,string groupId, string beInvitedUsernames, string reason)
 		{
 			
 		}
-		public override void removeUserFromGroup (string groupId, string username)
+		public override void removeUserFromGroup (int callbackId,string groupId, string username)
 		{
 			
 		}
-		public override void joinGroup (string groupId)
+		public override void joinGroup (int callbackId,string groupId)
 		{
 			
 		}
-		public override void applyJoinToGroup (string groupId, string reason)
+		public override void applyJoinToGroup (int callbackId,string groupId, string reason)
 		{
 			
 		}
-		public override void leaveGroup (string groupId)
+		public override void leaveGroup (int callbackId,string groupId)
 		{
 			
 		}
-		public override void destroyGroup (string groupId)
+		public override void destroyGroup (int callbackId,string groupId)
 		{
 			
 		}
-		public override void getJoinedGroupsFromServer ()
+		public override void getJoinedGroupsFromServer (int callbackId)
 		{
 			
 		}
 		public override string getAllGroups (){
 			return "";
 		}
-		public override void changeGroupName (string groupId,string groupName)
+		public override void changeGroupName (int callbackId,string groupId,string groupName)
 		{
 			
 		}
@@ -154,23 +154,23 @@ namespace EaseMob{
 		{
 			return "";
 		}
-		public override void blockGroupMessage (string groupId)
+		public override void blockGroupMessage (int callbackId,string groupId)
 		{
 			
 		}
-		public override void unblockGroupMessage (string groupId)
+		public override void unblockGroupMessage (int callbackId,string groupId)
 		{
 			
 		}
-		public override void blockUser (string groupId, string username)
+		public override void blockUser (int callbackId,string groupId, string username)
 		{
 			
 		}
-		public override void unblockUser(string groupId,string username)
+		public override void unblockUser(int callbackId,string groupId,string username)
 		{
 			
 		}
-		public override void getBlockedUsers(string groupId)
+		public override void getBlockedUsers(int callbackId,string groupId)
 		{
 			
 		}

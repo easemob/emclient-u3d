@@ -137,72 +137,72 @@ namespace EaseMob{
 		{
 			SDKCall ("importMessages", json);
 		}
-		public override void createGroup (string groupName, string desc, string strMembers, string reason, int maxUsers, int style)
+		public override void createGroup (int callbackId,string groupName, string desc, string strMembers, string reason, int maxUsers, int style)
 		{
-			SDKCall ("createGroup", groupName, desc, strMembers, reason, maxUsers, style);
+			SDKCall ("createGroup",callbackId, groupName, desc, strMembers, reason, maxUsers, style);
 		}
-		public override void addUsersToGroup (string groupId, string strMembers)
+		public override void addUsersToGroup (int callbackId, string groupId, string strMembers)
 		{
-			SDKCall ("addUsersToGroup", groupId, strMembers);
+			SDKCall ("addUsersToGroup",callbackId, groupId, strMembers);
 		}
-		public override void inviteUser (string groupId, string beInvitedUsernames, string reason)
+		public override void inviteUser (int callbackId, string groupId, string beInvitedUsernames, string reason)
 		{
-			SDKCall ("inviteUser", groupId, beInvitedUsernames, reason);
+			SDKCall ("inviteUser",callbackId, groupId, beInvitedUsernames, reason);
 		}
-		public override void removeUserFromGroup (string groupId, string username)
+		public override void removeUserFromGroup (int callbackId,string groupId, string username)
 		{
-			SDKCall ("removeUserFromGroup", groupId, username);
+			SDKCall ("removeUserFromGroup",callbackId, groupId, username);
 		}
-		public override void joinGroup (string groupId)
+		public override void joinGroup (int callbackId,string groupId)
 		{
-			SDKCall ("joinGroup", groupId);
+			SDKCall ("joinGroup",callbackId, groupId);
 		}
-		public override void applyJoinToGroup (string groupId, string reason)
+		public override void applyJoinToGroup (int callbackId,string groupId, string reason)
 		{
-			SDKCall ("applyJoinToGroup", groupId, reason);
+			SDKCall ("applyJoinToGroup",callbackId, groupId, reason);
 		}
-		public override void leaveGroup (string groupId)
+		public override void leaveGroup (int callbackId,string groupId)
 		{
-			SDKCall ("leaveGroup", groupId);
+			SDKCall ("leaveGroup",callbackId, groupId);
 		}
-		public override void destroyGroup (string groupId)
+		public override void destroyGroup (int callbackId,string groupId)
 		{
-			SDKCall ("destroyGroup", groupId);
+			SDKCall ("destroyGroup",callbackId, groupId);
 		}
-		public override void getJoinedGroupsFromServer ()
+		public override void getJoinedGroupsFromServer (int callbackId)
 		{
-			SDKCall ("getJoinedGroupsFromServer");
+			SDKCall ("getJoinedGroupsFromServer",callbackId);
 		}
 		public override string getAllGroups (){
 			return SDKCall<string> ("getAllGroups");
 		}
-		public override void changeGroupName (string groupId,string groupName)
+		public override void changeGroupName (int callbackId,string groupId,string groupName)
 		{
-			SDKCall ("changeGroupName", groupId, groupName);
+			SDKCall ("changeGroupName",callbackId, groupId, groupName);
 		}
 		public override string getGroup (string groupId)
 		{
 			return SDKCall<string> ("getGroup", groupId);
 		}
-		public override void blockGroupMessage (string groupId)
+		public override void blockGroupMessage (int callbackId,string groupId)
 		{
-			SDKCall ("blockGroupMessage", groupId);
+			SDKCall ("blockGroupMessage",callbackId, groupId);
 		}
-		public override void unblockGroupMessage (string groupId)
+		public override void unblockGroupMessage (int callbackId,string groupId)
 		{
-			SDKCall ("unblockGroupMessage", groupId);
+			SDKCall ("unblockGroupMessage",callbackId, groupId);
 		}
-		public override void blockUser (string groupId, string username)
+		public override void blockUser (int callbackId, string groupId, string username)
 		{
-			SDKCall ("blockUser", groupId, username);
+			SDKCall ("blockUser",callbackId, groupId, username);
 		}
-		public override void unblockUser(string groupId,string username)
+		public override void unblockUser(int callbackId, string groupId,string username)
 		{
-			SDKCall ("unblockUser", groupId, username);
+			SDKCall ("unblockUser",callbackId, groupId, username);
 		}
-		public override void getBlockedUsers(string groupId)
+		public override void getBlockedUsers(int callbackId,string groupId)
 		{
-			SDKCall ("getBlockedUsers", groupId);
+			SDKCall ("getBlockedUsers",callbackId, groupId);
 		}
 	}
 

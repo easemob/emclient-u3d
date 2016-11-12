@@ -24,6 +24,8 @@ public class MainScene : MonoBehaviour {
 	public Button getMessageBtn;
 	public Button logoutBtn;
 	public RawImage rawImage;
+	public InputField filePath;
+	public Button sendFileMessageBtn;
 
 	private string picFilePath = "";
 	private List<Dropdown.OptionData> friendList = new List<Dropdown.OptionData>();
@@ -36,6 +38,8 @@ public class MainScene : MonoBehaviour {
 		setConnectionListener ();
 
 		setMessageRecvListener ();
+
+		setGroupListener ();
 
 
 		friendListBtn.onClick.AddListener (delegate {
@@ -85,7 +89,7 @@ public class MainScene : MonoBehaviour {
 				Dropdown.OptionData dod = friendList[friendListDd.value];
 				EMBaseCallback cb = new EMBaseCallback();
 				cb.onSuccessCallback = () => {
-					logText.text = "send message success";
+					logText.text = "send Picture success";
 				};
 				cb.onProgressCallback = (p,s) => {
 
@@ -103,7 +107,7 @@ public class MainScene : MonoBehaviour {
 				Dropdown.OptionData dod = friendList[friendListDd.value];
 				EMBaseCallback cb = new EMBaseCallback();
 				cb.onSuccessCallback = () => {
-					logText.text = "send message success";
+					logText.text = "send Voice success";
 				};
 				cb.onProgressCallback = (p,s) => {
 
@@ -113,6 +117,24 @@ public class MainScene : MonoBehaviour {
 				};
 				EMClient.Instance.SendVoiceMessage(voicePath.text,10,dod.text,ChatType.Chat,cb);
 			}
+		});
+
+		sendFileMessageBtn.onClick.AddListener (delegate() {
+			if(filePath.text.Length > 0){
+				Dropdown.OptionData dod = friendList[friendListDd.value];
+				EMBaseCallback cb = new EMBaseCallback();
+				cb.onSuccessCallback = () => {
+					logText.text = "send file success";
+				};
+				cb.onProgressCallback = (p,s) => {
+
+				};
+				cb.onErrorCallback = (c,m) => {
+
+				};
+				EMClient.Instance.SendFileMessage(filePath.text,dod.text,ChatType.Chat,cb);
+			}
+
 		});
 		/*
 		startRecord.onClick.AddListener (delegate() {
@@ -184,10 +206,11 @@ public class MainScene : MonoBehaviour {
 			imagePath = imagePath.Replace ("/Assets", null);  
 		}
 
-		string filePath = imagePath + "/" + "screencapture.png";
-		File.WriteAllBytes(filePath,imagebytes);//存储png图
-		logText.text = picFilePath;
-		picFilePath = filePath;
+		string path = imagePath + "/" + "screencapture.png";
+		File.WriteAllBytes(path,imagebytes);//存储png图
+		logText.text = path;
+		picFilePath = path;
+		filePath.text = path;
 	}
 
 	private void setConnectionListener()
@@ -223,7 +246,7 @@ public class MainScene : MonoBehaviour {
 					rawImage.gameObject.SetActive(false);
 				}
 
-				if(msg.mType == MessageType.VOICE)
+				if(msg.mType == MessageType.VOICE || msg.mType == MessageType.FILE)
 				{
 					voicePath.text = msg.mLocalPath;
 				}
@@ -246,5 +269,40 @@ public class MainScene : MonoBehaviour {
 
 		};
 		EMClient.Instance.receiveMessageCallback = receiveMessageCallback;
+	}
+
+	private void setGroupListener()
+	{
+		
+		EMGroupListenerCallback groupListenerCallback = new EMGroupListenerCallback ();
+		groupListenerCallback.onUserRemovedCallback = (groupId,groupName) => {
+
+		};
+		groupListenerCallback.onInvitationAccepted = (groupId, inviter, reason) => {
+
+		};
+		groupListenerCallback.onInvitationDeclined = (groupId, invitee, reason) => {
+		
+		};
+		groupListenerCallback.onInvitationAccepted = (groupId, inviter, reason) => {
+
+		};
+		groupListenerCallback.onGroupDestroyed = (groupId, groupName) => {
+
+		};
+		groupListenerCallback.onAutoAcceptInvitationFromGroup = (groupId, inviter, inviteMessage) => {
+
+		};
+		groupListenerCallback.onApplicationReceived = (groupId, groupName, applicant, reason) => {
+
+		};
+		groupListenerCallback.onApplicationDeclined = (groupId, groupName, decliner, reason) => {
+
+		};
+		groupListenerCallback.onApplicationAccept = (groupId, groupName, accepter) => {
+
+		};
+		EMClient.Instance.groupListenerCallback = groupListenerCallback;
+
 	}
 }

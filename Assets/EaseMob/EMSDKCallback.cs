@@ -94,6 +94,7 @@ namespace EaseMob{
 				string on = (string)jsonData ["on"];
 				if (on.Equals ("success")) {
 					cb.onSuccessCallback ();
+//					EMClient.Instance.RemoveCallbackById (callbackId);
 				} else if (on.Equals ("progress")) {
 					cb.onProgressCallback ((int)jsonData ["progress"], (string)jsonData ["status"]);
 				} else if (on.Equals ("error")) {
@@ -163,5 +164,190 @@ namespace EaseMob{
 				EMClient.Instance.connListenerCallback.onDisconnectedCallback (code);
 		}
 
+		//group listener callback
+		public void UserRemovedCallback(string jsonParam)
+		{
+			if (EMClient.Instance.groupListenerCallback == null) {
+				throw new System.Exception ("NOT set group callback");
+			}
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			string groupId = (string)jsonData ["groupId"];
+			string groupName = (string)jsonData ["groupName"];
+			EMClient.Instance.groupListenerCallback.onUserRemovedCallback (groupId, groupName);
+		}
+
+		public void InvitationReceivedCallback(string jsonParam)
+		{
+			if (EMClient.Instance.groupListenerCallback == null) {
+				throw new System.Exception ("NOT set group callback");
+			}
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			string groupId = (string)jsonData ["groupId"];
+			string groupName = (string)jsonData ["groupName"];
+			string inviter = (string)jsonData ["inviter"];
+			string reason = (string)jsonData ["reason"];
+			EMClient.Instance.groupListenerCallback.onInvitationReceived (groupId, groupName, inviter, reason);
+		}
+
+		public void InvitationDeclinedCallback(string jsonParam)
+		{
+			if (EMClient.Instance.groupListenerCallback == null) {
+				throw new System.Exception ("NOT set group callback");
+			}
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			string groupId = (string)jsonData ["groupId"];
+			string invitee = (string)jsonData ["invitee"];
+			string reason = (string)jsonData ["reason"];
+			EMClient.Instance.groupListenerCallback.onInvitationDeclined (groupId, invitee, reason);
+		}
+
+		public void InvitationAcceptedCallback(string jsonParam)
+		{
+			if (EMClient.Instance.groupListenerCallback == null) {
+				throw new System.Exception ("NOT set group callback");
+			}
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			string groupId = (string)jsonData ["groupId"];
+			string inviter = (string)jsonData ["inviter"];
+			string reason = (string)jsonData ["reason"];
+			EMClient.Instance.groupListenerCallback.onInvitationAccepted (groupId, inviter, reason);
+		}
+
+		public void GroupDestroyedCallback(string jsonParam)
+		{
+			if (EMClient.Instance.groupListenerCallback == null) {
+				throw new System.Exception ("NOT set group callback");
+			}
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			string groupId = (string)jsonData ["groupId"];
+			string groupName = (string)jsonData ["groupName"];
+			EMClient.Instance.groupListenerCallback.onGroupDestroyed (groupId, groupName);
+		}
+
+		public void AutoAcceptInvitationFromGroupCallback(string jsonParam)
+		{
+			if (EMClient.Instance.groupListenerCallback == null) {
+				throw new System.Exception ("NOT set group callback");
+			}
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			string groupId = (string)jsonData ["groupId"];
+			string inviter = (string)jsonData ["inviter"];
+			string inviteMessage = (string)jsonData ["inviteMessage"];
+			EMClient.Instance.groupListenerCallback.onAutoAcceptInvitationFromGroup (groupId, inviter, inviteMessage);
+		}
+
+		public void ApplicationReceivedCallback(string jsonParam)
+		{
+			if (EMClient.Instance.groupListenerCallback == null) {
+				throw new System.Exception ("NOT set group callback");
+			}
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			string groupId = (string)jsonData ["groupId"];
+			string groupName = (string)jsonData ["groupName"];
+			string applicant = (string)jsonData ["applicant"];
+			string reason = (string)jsonData ["reason"];
+			EMClient.Instance.groupListenerCallback.onApplicationReceived (groupId, groupName, applicant, reason);
+		}
+
+		public void ApplicationDeclinedCallback(string jsonParam)
+		{
+			if (EMClient.Instance.groupListenerCallback == null) {
+				throw new System.Exception ("NOT set group callback");
+			}
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			string groupId = (string)jsonData ["groupId"];
+			string groupName = (string)jsonData ["groupName"];
+			string decliner = (string)jsonData ["decliner"];
+			string reason = (string)jsonData ["reason"];
+			EMClient.Instance.groupListenerCallback.onApplicationDeclined (groupId, groupName, decliner, reason);
+		}
+
+		public void ApplicationAcceptCallback(string jsonParam)
+		{
+			if (EMClient.Instance.groupListenerCallback == null) {
+				throw new System.Exception ("NOT set group callback");
+			}
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			string groupId = (string)jsonData ["groupId"];
+			string groupName = (string)jsonData ["groupName"];
+			string accepter = (string)jsonData ["accepter"];
+			EMClient.Instance.groupListenerCallback.onApplicationAccept (groupId, groupName, accepter);
+		}
+
+		//
+		public void CreateGroupCallback(string jsonParam)
+		{
+
+		}
+
+		public void AddUsersToGroupCallback(string jsonParam)
+		{
+
+		}
+
+		public void InviteUserCallback(string jsonParam)
+		{
+
+		}
+
+		public void RemoveUserFromGroupCallback(string jsonParam)
+		{
+
+		}
+
+		public void JoinGroupCallback(string jsonParam)
+		{
+
+		}
+
+		public void ApplyJoinToGroupCallback(string jsonParam)
+		{
+
+		}
+
+		public void LeaveGroupCallback(string jsonParam)
+		{
+
+		}
+
+		public void DestroyGroupCallback(string jsonParam)
+		{
+
+		}
+
+		public void GetJoinedGroupsFromServerCallback(string jsonParam)
+		{
+
+		}
+
+		public void ChangeGroupNameCallback(string jsonParam)
+		{
+
+		}
+
+		public void BlockGroupMessageCallback(string jsonParam)
+		{
+
+		}
+
+		public void UnblockGroupMessageCallback(string jsonParam)
+		{
+
+		}
+
+		public void BlockUserCallback(string jsonParam)
+		{
+
+		}
+
+		public void UnblockUserCallback(string jsonParam)
+		{
+
+		}
+
+		public void GetBlockedUsersCallback(string jsonParam)
+		{
+
+		}
 	}
 }
