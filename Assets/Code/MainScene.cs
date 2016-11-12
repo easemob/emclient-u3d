@@ -71,10 +71,10 @@ public class MainScene : MonoBehaviour {
 			cb.onSuccessCallback = () => {
 				logText.text = "send message success";
 			};
-			cb.onProgressCallback = (p,s) => {
+			cb.onProgressCallback = (progress,status) => {
 				
 			};
-			cb.onErrorCallback = (c,m) => {
+			cb.onErrorCallback = (code,message) => {
 				
 			};
 			EMClient.Instance.SendTextMessage(txtContent.text, dod.text, ChatType.Chat, cb);
@@ -91,10 +91,10 @@ public class MainScene : MonoBehaviour {
 				cb.onSuccessCallback = () => {
 					logText.text = "send Picture success";
 				};
-				cb.onProgressCallback = (p,s) => {
+				cb.onProgressCallback = (progress,status) => {
 
 				};
-				cb.onErrorCallback = (c,m) => {
+				cb.onErrorCallback = (code,message) => {
 
 				};
 				EMClient.Instance.SendPictureMessage(picFilePath, picComprass.value==1 ? true : false, dod.text, ChatType.Chat, cb);
@@ -109,10 +109,10 @@ public class MainScene : MonoBehaviour {
 				cb.onSuccessCallback = () => {
 					logText.text = "send Voice success";
 				};
-				cb.onProgressCallback = (p,s) => {
+				cb.onProgressCallback = (progress,status) => {
 
 				};
-				cb.onErrorCallback = (c,m) => {
+				cb.onErrorCallback = (code,message) => {
 
 				};
 				EMClient.Instance.SendVoiceMessage(voicePath.text,10,dod.text,ChatType.Chat,cb);
@@ -126,10 +126,10 @@ public class MainScene : MonoBehaviour {
 				cb.onSuccessCallback = () => {
 					logText.text = "send file success";
 				};
-				cb.onProgressCallback = (p,s) => {
+				cb.onProgressCallback = (progress,status) => {
 
 				};
-				cb.onErrorCallback = (c,m) => {
+				cb.onErrorCallback = (code,msg) => {
 
 				};
 				EMClient.Instance.SendFileMessage(filePath.text,dod.text,ChatType.Chat,cb);
@@ -176,11 +176,11 @@ public class MainScene : MonoBehaviour {
 			cb.onSuccessCallback = () => {
 				Application.LoadLevel("LoginScene");
 			};
-			cb.onProgressCallback = (p,s) => {
-				logText.text = ("p="+p+",s="+s);
+			cb.onProgressCallback = (progress,status) => {
+				
 			};
-			cb.onErrorCallback = (c,m) => {
-				logText.text = ("c="+c+",m="+m);
+			cb.onErrorCallback = (code,message) => {
+				
 			};
 			EMClient.Instance.Logout(true,cb);
 		});
