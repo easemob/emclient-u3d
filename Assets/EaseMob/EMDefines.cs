@@ -2,7 +2,7 @@
 	
 	public enum MessageType
 	{
-		TXT,
+		TXT = 0,
 		IMAGE,
 		VIDEO,
 		LOCATION,

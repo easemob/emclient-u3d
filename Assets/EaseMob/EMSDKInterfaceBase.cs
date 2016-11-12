@@ -46,6 +46,25 @@
 		public abstract bool deleteConversation (string username, bool isDeleteHistory);
 		public abstract void removeMessage (string username, string msgId);
 		public abstract void importMessages (string json);
+		//group
+		public abstract void createGroup (string groupName, string desc, string strMembers, string reason, int maxUsers, int style);
+		public abstract void addUsersToGroup (string groupId, string strMembers);
+		public abstract void inviteUser (string groupId, string beInvitedUsernames, string reason);
+		public abstract void removeUserFromGroup (string groupId, string username);
+		public abstract void joinGroup (string groupId);
+		public abstract void applyJoinToGroup (string groupId, string reason);
+		public abstract void leaveGroup (string groupId);
+		public abstract void destroyGroup (string groupId);
+		public abstract void getJoinedGroupsFromServer ();
+		public abstract string getAllGroups ();
+		public abstract void changeGroupName (string groupId,string groupName);
+		public abstract string getGroup (string groupId);
+		public abstract void blockGroupMessage (string groupId);
+		public abstract void unblockGroupMessage (string groupId);
+		public abstract void blockUser (string groupId, string username);
+		public abstract void unblockUser(string groupId,string username);
+		public abstract void getBlockedUsers(string groupId);
+
 	}
 
 }

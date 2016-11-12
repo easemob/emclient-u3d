@@ -118,35 +118,35 @@ namespace EaseMob{
 		public void MessageReceivedCallback(string jsonParam)
 		{
 			if (EMClient.Instance.receiveMessageCallback != null) {
-				EMClient.Instance.receiveMessageCallback.onMessageReceivedCallback(json2messagelist(jsonParam));
+				EMClient.Instance.receiveMessageCallback.onMessageReceivedCallback(EMTools.json2messagelist(jsonParam));
 			}
 		}
 
 		public void MessageReadAckReceivedCallback(string jsonParam)
 		{
 			if (EMClient.Instance.receiveMessageCallback != null) {
-				EMClient.Instance.receiveMessageCallback.onMessageReadAckReceivedCallback (json2messagelist(jsonParam));
+				EMClient.Instance.receiveMessageCallback.onMessageReadAckReceivedCallback (EMTools.json2messagelist(jsonParam));
 			}
 		}
 
 		public void MessageDeliveryAckReceivedCallback(string jsonParam)
 		{
 			if (EMClient.Instance.receiveMessageCallback != null) {
-				EMClient.Instance.receiveMessageCallback.onMessageDeliveryAckReceivedCallback (json2messagelist(jsonParam));
+				EMClient.Instance.receiveMessageCallback.onMessageDeliveryAckReceivedCallback (EMTools.json2messagelist(jsonParam));
 			}
 		}
 
 		public void MessageChangedCallback(string jsonParam)
 		{
 			if (EMClient.Instance.receiveMessageCallback != null) {
-				EMClient.Instance.receiveMessageCallback.onMessageChangedCallback (json2messagelist(jsonParam));
+				EMClient.Instance.receiveMessageCallback.onMessageChangedCallback (EMTools.json2messagelist(jsonParam));
 			}
 		}
 
 		public void CmdMessageReceivedCallback(string jsonParam)
 		{
 			if (EMClient.Instance.receiveMessageCallback != null) {
-				EMClient.Instance.receiveMessageCallback.onCmdMessageReceivedCallback (json2messagelist(jsonParam));
+				EMClient.Instance.receiveMessageCallback.onCmdMessageReceivedCallback (EMTools.json2messagelist(jsonParam));
 			}
 				
 		}
@@ -161,49 +161,6 @@ namespace EaseMob{
 		{
 			if (EMClient.Instance.connListenerCallback != null)
 				EMClient.Instance.connListenerCallback.onDisconnectedCallback (code);
-		}
-
-		private List<EMMessage> json2messagelist(string jsonParam)
-		{
-			Debug.LogError ("receive List:" + jsonParam);
-			List<EMMessage> list = new List<EMMessage>();
-			JsonData jd = JsonMapper.ToObject (jsonParam);
-			for (int i = 0; i < jd.Count; i++) {
-				EMMessage message = new EMMessage ();
-				message.mMsgId = (string)jd [i] ["mMsgId"];
-				message.mFrom = (string)jd [i] ["mFrom"];
-				message.mTo = (string)jd [i] ["mTo"];
-				message.mIsUnread = (bool)jd [i] ["mIsUnread"];
-				message.mIsListened = (bool)jd [i] ["mIsListened"];
-				message.mIsAcked = (bool)jd [i] ["mIsAcked"];
-				message.mIsDelivered = (bool)jd [i] ["mIsDelivered"];
-				message.mLocalTime = (long)jd [i] ["mLocalTime"];
-				message.mServerTime = (long)jd [i] ["mServerTime"];
-				message.mDirection = (int)jd [i] ["mDirection"];
-				message.mStatus = (int)jd [i] ["mStatus"];
-				message.mChatType = (int)jd [i] ["mChatType"];
-				int  mType = (int) jd[i] ["mType"];
-				MessageType type = (MessageType)mType;
-				if (type == MessageType.VIDEO || type == MessageType.FILE || type == MessageType.IMAGE || type == MessageType.VOICE) {
-					message.mDisplayName = (string)jd [i] ["mDisplayName"];
-					message.mSecretKey = (string)jd [i] ["mSecretKey"];
-					message.mLocalPath = (string)jd [i] ["mLocalPath"];
-					message.mRemotePath = (string)jd [i] ["mRemotePath"];
-				} 
-				if (type == MessageType.TXT) { 
-					message.mTxt = (string)jd [i] ["mTxt"];
-				} else if (type == MessageType.IMAGE) {
-					message.mThumbnailLocalPath = (string)jd [i] ["mThumbnailLocalPath"];
-					message.mThumbnailRemotePath = (string)jd [i] ["mThumbnailRemotePath"];
-					message.mThumbnailSecretKey = (string)jd [i] ["mThumbnailSecretKey"];
-					message.mWidth = (int)jd [i] ["mWidth"];
-					message.mHeight = (int)jd [i] ["mHeight"];
-				} else if (type == MessageType.VOICE) {
-					message.mDuration = (int)jd [i] ["mDuration"];
-				}				
-				list.Add (message);
-			}
-			return list;
 		}
 
 	}

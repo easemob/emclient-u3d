@@ -2,7 +2,7 @@
 
 namespace EaseMob{
 
-	public class EMMessageCallback {
+	public class EMMessageListenerCallback {
 
 		public delegate void MessageReceivedCallback(List<EMMessage> msgs);
 		public delegate void CmdMessageReceivedCallback(List<EMMessage> msgs);

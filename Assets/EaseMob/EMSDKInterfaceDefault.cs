@@ -107,6 +107,74 @@ namespace EaseMob{
 
 		}
 
+		public override void createGroup (string groupName, string desc, string strMembers, string reason, int maxUsers, int style)
+		{
+			
+		}
+		public override void addUsersToGroup (string groupId, string strMembers)
+		{
+			
+		}
+		public override void inviteUser (string groupId, string beInvitedUsernames, string reason)
+		{
+			
+		}
+		public override void removeUserFromGroup (string groupId, string username)
+		{
+			
+		}
+		public override void joinGroup (string groupId)
+		{
+			
+		}
+		public override void applyJoinToGroup (string groupId, string reason)
+		{
+			
+		}
+		public override void leaveGroup (string groupId)
+		{
+			
+		}
+		public override void destroyGroup (string groupId)
+		{
+			
+		}
+		public override void getJoinedGroupsFromServer ()
+		{
+			
+		}
+		public override string getAllGroups (){
+			return "";
+		}
+		public override void changeGroupName (string groupId,string groupName)
+		{
+			
+		}
+		public override string getGroup (string groupId)
+		{
+			return "";
+		}
+		public override void blockGroupMessage (string groupId)
+		{
+			
+		}
+		public override void unblockGroupMessage (string groupId)
+		{
+			
+		}
+		public override void blockUser (string groupId, string username)
+		{
+			
+		}
+		public override void unblockUser(string groupId,string username)
+		{
+			
+		}
+		public override void getBlockedUsers(string groupId)
+		{
+			
+		}
+
 	}
 
 }

@@ -9,8 +9,11 @@ namespace EaseMob{
 
 		public EMSDKInterfaceAndroid(){
 
-			using (AndroidJavaClass aj = new AndroidJavaClass ("com.unity3d.player.UnityPlayer")) {
-				jo = aj.GetStatic<AndroidJavaObject> ("currentActivity");
+//			using (AndroidJavaClass aj = new AndroidJavaClass ("com.unity3d.player.UnityPlayer")) {
+//				jo = aj.GetStatic<AndroidJavaObject> ("currentActivity");
+//			}
+			using (AndroidJavaClass aj = new AndroidJavaClass ("com.easemob.sdk.EMSdkLib")) {
+				jo = aj.GetStatic<AndroidJavaObject> ("instance");
 			}
 		}
 
@@ -133,6 +136,73 @@ namespace EaseMob{
 		public override void importMessages (string json)
 		{
 			SDKCall ("importMessages", json);
+		}
+		public override void createGroup (string groupName, string desc, string strMembers, string reason, int maxUsers, int style)
+		{
+			SDKCall ("createGroup", groupName, desc, strMembers, reason, maxUsers, style);
+		}
+		public override void addUsersToGroup (string groupId, string strMembers)
+		{
+			SDKCall ("addUsersToGroup", groupId, strMembers);
+		}
+		public override void inviteUser (string groupId, string beInvitedUsernames, string reason)
+		{
+			SDKCall ("inviteUser", groupId, beInvitedUsernames, reason);
+		}
+		public override void removeUserFromGroup (string groupId, string username)
+		{
+			SDKCall ("removeUserFromGroup", groupId, username);
+		}
+		public override void joinGroup (string groupId)
+		{
+			SDKCall ("joinGroup", groupId);
+		}
+		public override void applyJoinToGroup (string groupId, string reason)
+		{
+			SDKCall ("applyJoinToGroup", groupId, reason);
+		}
+		public override void leaveGroup (string groupId)
+		{
+			SDKCall ("leaveGroup", groupId);
+		}
+		public override void destroyGroup (string groupId)
+		{
+			SDKCall ("destroyGroup", groupId);
+		}
+		public override void getJoinedGroupsFromServer ()
+		{
+			SDKCall ("getJoinedGroupsFromServer");
+		}
+		public override string getAllGroups (){
+			return SDKCall<string> ("getAllGroups");
+		}
+		public override void changeGroupName (string groupId,string groupName)
+		{
+			SDKCall ("changeGroupName", groupId, groupName);
+		}
+		public override string getGroup (string groupId)
+		{
+			return SDKCall<string> ("getGroup", groupId);
+		}
+		public override void blockGroupMessage (string groupId)
+		{
+			SDKCall ("blockGroupMessage", groupId);
+		}
+		public override void unblockGroupMessage (string groupId)
+		{
+			SDKCall ("unblockGroupMessage", groupId);
+		}
+		public override void blockUser (string groupId, string username)
+		{
+			SDKCall ("blockUser", groupId, username);
+		}
+		public override void unblockUser(string groupId,string username)
+		{
+			SDKCall ("unblockUser", groupId, username);
+		}
+		public override void getBlockedUsers(string groupId)
+		{
+			SDKCall ("getBlockedUsers", groupId);
 		}
 	}
 

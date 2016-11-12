@@ -205,7 +205,7 @@ public class MainScene : MonoBehaviour {
 
 	private void setMessageRecvListener()
 	{
-		EMMessageCallback receiveMessageCallback = new EMMessageCallback();
+		EMMessageListenerCallback receiveMessageCallback = new EMMessageListenerCallback();
 		receiveMessageCallback.onMessageReceivedCallback = (msgs) =>
 		{
 			logText.text = "from ";

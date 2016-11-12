@@ -16,7 +16,7 @@ namespace EaseMob{
 		public EMBaseCallback regCallback{ set; get; }
 		public EMBaseCallback logoutCallback{ set; get; }
 		public EMRecordCallback recordCallback{ set; get; }
-		public EMMessageCallback receiveMessageCallback{ set; get; }
+		public EMMessageListenerCallback receiveMessageCallback{ set; get; }
 		public EMConnListenerCallback connListenerCallback{ set; get; }
 
 		public static EMClient Instance{
@@ -141,7 +141,77 @@ namespace EaseMob{
 		{
 			sdk.importMessages (json);
 		}
-
+		public void createGroup (string groupName, string desc, string[] members, string reason, int maxUsers, int style)
+		{
+			sdk.createGroup (groupName, desc, string.Join (",", members), reason, maxUsers, style);
+		}
+		public void addUsersToGroup (string groupId, string[] strMembers)
+		{
+			sdk.addUsersToGroup (groupId, string.Join(",",strMembers));
+		}
+		public void inviteUser (string groupId, string[] beInvitedUsernames, string reason)
+		{
+			sdk.inviteUser (groupId, string.Join (",", beInvitedUsernames), reason);
+		}
+		public void removeUserFromGroup (string groupId, string username)
+		{
+			sdk.removeUserFromGroup (groupId, username);
+		}
+		public void joinGroup (string groupId)
+		{
+			sdk.joinGroup (groupId);
+		}
+		public void applyJoinToGroup (string groupId, string reason)
+		{
+			sdk.applyJoinToGroup (groupId, reason);
+		}
+		public void leaveGroup (string groupId)
+		{
+			sdk.leaveGroup (groupId);
+		}
+		public void destroyGroup (string groupId)
+		{
+			sdk.destroyGroup (groupId);
+		}
+		public void getJoinedGroupsFromServer ()
+		{
+			sdk.getJoinedGroupsFromServer ();
+		}
+		public List<EMGroup> getAllGroups (){
+			List<EMGroup> list = new List<EMGroup>();
+			string jsondata = sdk.getAllGroups ();
+			return EMTools.json2grouplist(jsondata);
+		}
+		public void changeGroupName (string groupId,string groupName)
+		{
+			sdk.changeGroupName (groupId, groupName);
+		}
+		public EMGroup getGroup (string groupId)
+		{
+			string jsondata = sdk.getGroup (groupId);
+			return EMTools.json2group(jsondata);
+		}
+		public void blockGroupMessage (string groupId)
+		{
+			sdk.blockGroupMessage (groupId);
+		}
+		public void unblockGroupMessage (string groupId)
+		{
+			sdk.unblockGroupMessage (groupId);
+		}
+		public void blockUser (string groupId, string username)
+		{
+			sdk.blockUser (groupId, username);
+		}
+		public void unblockUser(string groupId,string username)
+		{
+			sdk.unblockUser (groupId, username);
+		}
+		public void getBlockedUsers(string groupId)
+		{
+			sdk.getBlockedUsers (groupId);
+		}
+			
 		public EMBaseCallback GetCallbackById(int callbackId)
 		{
 			if (requestedCallbackList.ContainsKey (callbackId)) 
@@ -172,6 +242,8 @@ namespace EaseMob{
 				return callback.CallbackId;
 			}
 		}
+
+
 	}
 
 }
