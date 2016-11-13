@@ -27,4 +27,12 @@
 		HelpDesk
 	}
 
+	public enum GroupStyle
+	{
+		GroupStylePrivateOnlyOwnerInvite,
+		GroupStylePrivateMemberCanInvite,
+		GroupStylePublicJoinNeedApproval,
+		GroupStylePublicOpenJoin
+	}
+
 }

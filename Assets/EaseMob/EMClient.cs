@@ -151,10 +151,10 @@ namespace EaseMob{
 		}
 
 		#region
-		public void createGroup (string groupName, string desc, string[] members, string reason, int maxUsers, int style,EMGroupCallback cb)
+		public void createGroup (string groupName, string desc, string[] members, string reason, int maxUsers, GroupStyle style,EMGroupCallback cb)
 		{
 			AddCallbackToList (cb);
-			sdk.createGroup (cb.CallbackId, groupName, desc, string.Join (",", members), reason, maxUsers, style);
+			sdk.createGroup (cb.CallbackId, groupName, desc, string.Join (",", members), reason, maxUsers, (int)style);
 		}
 		public void addUsersToGroup (string groupId, string[] strMembers,EMBaseCallback cb)
 		{

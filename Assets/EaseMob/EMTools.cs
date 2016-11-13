@@ -112,5 +112,17 @@ namespace EaseMob{
 			}
 			return conversation;
 		}
+
+		public static List<string> string2list(string str)
+		{
+			List<string> list = new List<string> ();
+			if (str != null && str.Length > 0) {
+				string[] array = str.Split (',');
+				foreach (string val in array) {
+					list.Add (val);
+				}
+			}
+			return list;
+		}
 	}
 }

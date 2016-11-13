@@ -277,77 +277,126 @@ namespace EaseMob{
 		//
 		public void CreateGroupCallback(string jsonParam)
 		{
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			int callbackId = (int)jsonData ["callbackid"];
+			string on = (string)jsonData ["on"];
+			EMGroupCallback cb = (EMGroupCallback)EMClient.Instance.GetCallbackById (callbackId);
 
+			if (on.Equals ("success")) {
+				EMGroup group = EMTools.json2group ((string)jsonData ["data"]);
+				cb.onSuccessCreateGroupCallback (group);
+			} else if (on.Equals ("error")) {
+				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+			}
 		}
 
 		public void AddUsersToGroupCallback(string jsonParam)
 		{
-
+			doBaseCallback (jsonParam);
 		}
 
 		public void InviteUserCallback(string jsonParam)
 		{
-
+			doBaseCallback (jsonParam);
 		}
 
 		public void RemoveUserFromGroupCallback(string jsonParam)
 		{
-
+			doBaseCallback (jsonParam);
 		}
 
 		public void JoinGroupCallback(string jsonParam)
 		{
-
+			doBaseCallback (jsonParam);
 		}
 
 		public void ApplyJoinToGroupCallback(string jsonParam)
 		{
-
+			doBaseCallback (jsonParam);
 		}
 
 		public void LeaveGroupCallback(string jsonParam)
 		{
-
+			doBaseCallback (jsonParam);
 		}
 
 		public void DestroyGroupCallback(string jsonParam)
 		{
-
+			doBaseCallback (jsonParam);
 		}
 
 		public void GetJoinedGroupsFromServerCallback(string jsonParam)
 		{
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			int callbackId = (int)jsonData ["callbackid"];
+			string on = (string)jsonData ["on"];
+			EMGroupCallback cb = (EMGroupCallback)EMClient.Instance.GetCallbackById (callbackId);
 
+			if (on.Equals ("success")) {
+				List<EMGroup> groups = EMTools.json2grouplist ((string)jsonData ["data"]);
+				cb.onSuccessGetGroupListCallback (groups);
+			} else if (on.Equals ("error")) {
+				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+			}
 		}
 
 		public void ChangeGroupNameCallback(string jsonParam)
 		{
-
+			doBaseCallback (jsonParam);
 		}
 
 		public void BlockGroupMessageCallback(string jsonParam)
 		{
-
+			doBaseCallback (jsonParam);
 		}
 
 		public void UnblockGroupMessageCallback(string jsonParam)
 		{
-
+			doBaseCallback (jsonParam);
 		}
 
 		public void BlockUserCallback(string jsonParam)
 		{
-
+			doBaseCallback (jsonParam);
 		}
 
 		public void UnblockUserCallback(string jsonParam)
 		{
-
+			doBaseCallback (jsonParam);
 		}
 
 		public void GetBlockedUsersCallback(string jsonParam)
 		{
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			int callbackId = (int)jsonData ["callbackid"];
+			string on = (string)jsonData ["on"];
+			EMGroupCallback cb = (EMGroupCallback)EMClient.Instance.GetCallbackById (callbackId);
 
+			if (on.Equals ("success")) {
+				string strUsers = (string)jsonData ["data"];
+				cb.onSuccessGetBlockedUsers(EMTools.string2list(strUsers));
+			} else if (on.Equals ("error")) {
+				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+			}
 		}
+			
+		private void doBaseCallback(string jsonParam)
+		{
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			int callbackId = (int)jsonData ["callbackid"];
+			string on = (string)jsonData ["on"];
+			EMBaseCallback cb = EMClient.Instance.GetCallbackById (callbackId);
+			if (on.Equals ("success")) {
+				cb.onSuccessCallback ();
+			} else if (on.Equals ("progress")) {
+				cb.onProgressCallback ((int)jsonData ["progress"], (string)jsonData ["status"]);
+			} else if (on.Equals ("error")) {
+				EMClient.Instance.loginCallback.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+			} else {
+				EMClient.Instance.loginCallback.onErrorCallback (-999999, "unknown error");
+			}
+		}
+			
+
 	}
 }
