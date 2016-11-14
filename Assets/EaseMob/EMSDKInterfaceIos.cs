@@ -1,15 +1,23 @@
-﻿namespace EaseMob{
+﻿using System.Runtime.InteropServices;
+
+namespace EaseMob{
 
 	public class EMSDKInterfaceIos : EMSDKInterfaceBase {
 
+		[DllImport ("__Internal")]
+		private static extern int _createAccount(string username, string password);
+
+		[DllImport ("__Internal")]
+		private static extern void _login(string username, string password);
+
 		public override int createAccount (string username, string password)
 		{
-			return 0;
+			return _createAccount(username,password);
 		}
 
 		public override void login (string username, string password)
 		{
-
+			_login (username, password);
 		}
 
 		public override void logout (bool flag)
