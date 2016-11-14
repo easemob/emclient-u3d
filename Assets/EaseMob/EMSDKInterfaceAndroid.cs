@@ -5,15 +5,23 @@ namespace EaseMob{
 
 	public class EMSDKInterfaceAndroid : EMSDKInterfaceBase {
 
+		private AndroidJavaObject activity;
+		private AndroidJavaObject application;
+
+
 		private AndroidJavaObject jo;
 
 		public EMSDKInterfaceAndroid(){
 
-//			using (AndroidJavaClass aj = new AndroidJavaClass ("com.unity3d.player.UnityPlayer")) {
-//				jo = aj.GetStatic<AndroidJavaObject> ("currentActivity");
-//			}
+			using (AndroidJavaClass ajc = new AndroidJavaClass ("com.unity3d.player.UnityPlayer")) {
+				activity = ajc.GetStatic<AndroidJavaObject> ("currentActivity");
+				application = activity.Call<AndroidJavaObject>("getApplicationContext");
+			}
+
 			using (AndroidJavaClass aj = new AndroidJavaClass ("com.easemob.sdk.EMSdkLib")) {
+				aj.CallStatic<AndroidJavaObject> ("getInstance");
 				jo = aj.GetStatic<AndroidJavaObject> ("instance");
+				jo.Call ("onApplicationCreate", application);
 			}
 		}
 
