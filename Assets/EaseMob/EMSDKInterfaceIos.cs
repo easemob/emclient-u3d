@@ -10,6 +10,16 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern void _login(string username, string password);
 
+		[DllImport ("__Internal")]
+		private static extern void _logout(bool flag);
+
+		[DllImport ("__Internal")]
+		private static extern void _sendTextMessage(string content, string to, int callbackId,int chattype);
+
+		[DllImport ("__Internal")]
+		private static extern void _sendFileMessage(string path, string to, int callbackId,int chattype);
+
+
 		public override int createAccount (string username, string password)
 		{
 			return _createAccount(username,password);
@@ -17,17 +27,17 @@ namespace EaseMob{
 
 		public override void login (string username, string password)
 		{
-			_login (username, password);
+			_login(username, password);
 		}
 
 		public override void logout (bool flag)
 		{
-
+			_logout(flag);
 		}
 
 		public override void sendTextMessage (string content, string to, int callbackId,int chattype)
 		{
-
+			_sendTextMessage(content, to, callbackId, chattype);
 		}
 		public override void sendVoiceMessage (string path, int length, string to, int callbackId,int chattype)
 		{
@@ -47,7 +57,7 @@ namespace EaseMob{
 		}
 		public override void sendFileMessage (string path, string to, int callbackId,int chattype)
 		{
-
+			_sendFileMessage (path, to, callbackId, chattype);
 		}
 		public override string getAllContactsFromServer()
 		{
