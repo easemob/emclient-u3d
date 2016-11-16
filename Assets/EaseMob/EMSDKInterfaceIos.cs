@@ -1,25 +1,46 @@
-﻿namespace EaseMob{
+﻿using System.Runtime.InteropServices;
+
+namespace EaseMob{
 
 	public class EMSDKInterfaceIos : EMSDKInterfaceBase {
 
+		[DllImport ("__Internal")]
+		private static extern int _createAccount(string username, string password);
+
+		[DllImport ("__Internal")]
+		private static extern void _login(string username, string password);
+
+		[DllImport ("__Internal")]
+		private static extern void _logout(bool flag);
+
+		[DllImport ("__Internal")]
+		private static extern void _sendTextMessage(string content, string to, int callbackId,int chattype);
+
+		[DllImport ("__Internal")]
+		private static extern void _sendFileMessage(string path, string to, int callbackId,int chattype);
+
+		[DllImport ("__Internal")]
+		private static extern string _getAllContactsFromServer ();
+
+
 		public override int createAccount (string username, string password)
 		{
-			return 0;
+			return _createAccount(username,password);
 		}
 
 		public override void login (string username, string password)
 		{
-
+			_login(username, password);
 		}
 
 		public override void logout (bool flag)
 		{
-
+			_logout(flag);
 		}
 
 		public override void sendTextMessage (string content, string to, int callbackId,int chattype)
 		{
-
+			_sendTextMessage(content, to, callbackId, chattype);
 		}
 		public override void sendVoiceMessage (string path, int length, string to, int callbackId,int chattype)
 		{
@@ -39,11 +60,11 @@
 		}
 		public override void sendFileMessage (string path, string to, int callbackId,int chattype)
 		{
-
+			_sendFileMessage (path, to, callbackId, chattype);
 		}
 		public override string getAllContactsFromServer()
 		{
-			return "";
+			return _getAllContactsFromServer();
 		}
 		public override void startRecord(){}
 		public override void stopRecord(){}
