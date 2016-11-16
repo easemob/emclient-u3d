@@ -17,10 +17,10 @@ namespace EaseMob{
 					message.mMsgId = (string)jd [i] ["mMsgId"];
 					message.mFrom = (string)jd [i] ["mFrom"];
 					message.mTo = (string)jd [i] ["mTo"];
-					message.mIsUnread = (bool)jd [i] ["mIsUnread"];
-					message.mIsListened = (bool)jd [i] ["mIsListened"];
-					message.mIsAcked = (bool)jd [i] ["mIsAcked"];
-					message.mIsDelivered = (bool)jd [i] ["mIsDelivered"];
+					message.mIsUnread = ((string)jd [i] ["mIsUnread"]).Equals("true");
+					message.mIsListened = ((string)jd [i] ["mIsListened"]).Equals("true");
+					message.mIsAcked = ((string)jd [i] ["mIsAcked"]).Equals ("true");
+					message.mIsDelivered = ((string)jd [i] ["mIsDelivered"]).Equals("true");
 					message.mLocalTime = (long)jd [i] ["mLocalTime"];
 					message.mServerTime = (long)jd [i] ["mServerTime"];
 					message.mDirection = (int)jd [i] ["mDirection"];
@@ -76,9 +76,9 @@ namespace EaseMob{
 			EMGroup group = new EMGroup ();
 			group.mGroupId = (string)jd ["mGroupId"];
 			group.mGroupName = (string)jd ["mGroupName"];
-			group.mIsPublic = (bool)jd ["mIsPublic"];
-			group.mIsAllowInvites = (bool)jd ["mIsAllowInvites"];
-			group.mIsMsgBlocked = (bool)jd ["mIsMsgBlocked"];
+			group.mIsPublic = ((string)jd ["mIsPublic"]).Equals("true");
+			group.mIsAllowInvites = ((string)jd ["mIsAllowInvites"]).Equals("true");
+			group.mIsMsgBlocked = ((string)jd ["mIsMsgBlocked"]).Equals("true");
 			group.mOwner = (string)jd ["mOwner"];
 			group.mMembers = (string)jd ["mMembers"];
 			group.mDescription = (string)jd ["mDescription"];
@@ -106,7 +106,7 @@ namespace EaseMob{
 			ConversationType ctype = (ConversationType)type;
 			conversation.mConversationType = ctype;
 			conversation.mUsername = (string)jd ["mUsername"];
-			conversation.mIsGroup = (bool)jd ["mIsGroup"];
+			conversation.mIsGroup = ((string)jd ["mIsGroup"]).Equals("true");
 			if (jd ["key"] != null) {
 				conversation.mKey = (string)jd ["key"];
 			}

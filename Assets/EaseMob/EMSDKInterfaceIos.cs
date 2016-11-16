@@ -19,6 +19,9 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern void _sendFileMessage(string path, string to, int callbackId,int chattype);
 
+		[DllImport ("__Internal")]
+		private static extern string _getAllContactsFromServer ();
+
 
 		public override int createAccount (string username, string password)
 		{
@@ -61,7 +64,7 @@ namespace EaseMob{
 		}
 		public override string getAllContactsFromServer()
 		{
-			return "";
+			return _getAllContactsFromServer();
 		}
 		public override void startRecord(){}
 		public override void stopRecord(){}
