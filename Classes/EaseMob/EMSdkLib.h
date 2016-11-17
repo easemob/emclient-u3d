@@ -29,6 +29,12 @@
 - (void) updateGroupSubject:(NSString *) aSubject forGroup:(NSString *)aGroupId callbackId:(int)cbId;
 - (void) updateGroupDescription:(NSString *) aDescription forGroup:(NSString *)aGroupId callbackId:(int)cbId;
 
+- (NSString *)getJoinedGroups;
+- (NSString *)getGroupsWithoutPushNotification:(int)cbId;
+- (void)getJoinedGroupsFromServer:(int)cbId;
+- (void)getGroupSpecificationFromServerById:(NSString *)aGroupId includeMembersList:(BOOL)aIncludeMemberList callbackId:(int)cbId;
+- (void)getGroupBlacklistFromServerById:(NSString *)aGroupId callbackId:(int)cbId;
+
 - (void) addMembers:(NSString *)ms toGroup: (NSString *) aGroupId withMessage:(NSString *)message callbackId:(int) cbId;
 - (void) removeMembers:(NSString *)ms fromGroup: (NSString *) aGroupId callbackId:(int) cbId;
 - (void) blockMembers:(NSString *)ms fromGroup: (NSString *) aGroupId callbackId:(int) cbId;
