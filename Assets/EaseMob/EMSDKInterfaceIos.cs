@@ -22,6 +22,8 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern string _getAllContactsFromServer ();
 
+		[DllImport ("__Internal")]
+		private static extern string _createGroup (int callbackId, string groupName, string desc, string strMembers, string reason, int maxUsers, int style);
 
 		public override int createAccount (string username, string password)
 		{
@@ -121,7 +123,7 @@ namespace EaseMob{
 		}
 		public override void createGroup (int callbackId,string groupName, string desc, string strMembers, string reason, int maxUsers, int style)
 		{
-
+			_createGroup (callbackId, groupName, desc, strMembers, reason, maxUsers, style);
 		}
 		public override void addUsersToGroup (int callbackId,string groupId, string strMembers)
 		{
