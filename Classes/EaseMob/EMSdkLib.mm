@@ -117,6 +117,8 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     return @"user8";
 }
 
+//group API
+
 - (void) createGroup:(NSString *)groupName desc:(NSString *)desc members:(NSString *)ms reason:(NSString *)reason maxUsers:(int)count type:(int)type callbackId:(int)cbId
 {
     EMError *error = nil;
@@ -137,6 +139,171 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     }
 }
 
+- (void) destroyGroup: (NSString *) groupId callbackId:(int) cbId
+{
+    EMError *error = nil;
+    NSString *cbName = @"DestroyGroupCallback";
+
+    [[EMClient sharedClient].groupManager destroyGroup: groupId error:&error];
+    if (!error) {
+        [self sendSuccessCallback:cbName CallbackId: cbId];
+    } else {
+        [self sendErrorCallback:cbName withError:error];
+    }
+}
+
+- (void) updateGroupSubject:(NSString *) aSubject forGroup:(NSString *)aGroupId callbackId:(int)cbId
+{
+    NSString *cbName = @"UpdateGroupSubjectCallback";
+    [[EMClient sharedClient].groupManager updateGroupSubject:aSubject forGroup:aGroupId completion:^(EMGroup *aGroup, EMError *aError) {
+        if (!aError) {
+            [self sendSuccessCallback:cbName CallbackId: cbId];
+        }
+        else if (aError){
+            [self sendErrorCallback:cbName withError:aError];
+        }
+    }];
+
+}
+- (void) updateGroupDescription:(NSString *) aDescription forGroup:(NSString *)aGroupId callbackId:(int)cbId
+{
+    NSString *cbName = @"UpdateGroupDescriptionCallback";
+    [[EMClient sharedClient].groupManager updateDescription:aDescription forGroup:aGroupId completion:^(EMGroup *aGroup, EMError *aError) {
+        if (!aError) {
+            [self sendSuccessCallback:cbName CallbackId: cbId];
+        }
+        else if (aError){
+            [self sendErrorCallback:cbName withError:aError];
+        }
+    }];
+}
+
+- (void) addMembers:(NSString *)ms toGroup: (NSString *) aGroupId withMessage:(NSString *)message callbackId:(int) cbId
+{
+    NSString *cbName = @"AddMembersCallback";
+    NSArray *members = [ms componentsSeparatedByString:@","];
+    [[EMClient sharedClient].groupManager addMembers:members toGroup:aGroupId message:message completion:^(EMGroup *aGroup, EMError *aError) {
+        if (!aError) {
+            [self sendSuccessCallback:cbName CallbackId: cbId];
+        }
+        else if (aError){
+            [self sendErrorCallback:cbName withError:aError];
+        }
+    }];
+}
+- (void) removeMembers:(NSString *)ms fromGroup: (NSString *) aGroupId callbackId:(int) cbId
+{
+    NSString *cbName = @"RemoveMembersCallback";
+    NSArray *members = [ms componentsSeparatedByString:@","];
+    [[EMClient sharedClient].groupManager removeMembers:members fromGroup:aGroupId completion:^(EMGroup *aGroup, EMError *aError) {
+        if (!aError) {
+            [self sendSuccessCallback:cbName CallbackId: cbId];
+        }
+        else if (aError){
+            [self sendErrorCallback:cbName withError:aError];
+        }
+    }];
+}
+- (void) blockMembers:(NSString *)ms fromGroup: (NSString *) aGroupId callbackId:(int) cbId
+{
+    NSString *cbName = @"BlockMembersCallback";
+    NSArray *members = [ms componentsSeparatedByString:@","];
+    [[EMClient sharedClient].groupManager blockMembers:members fromGroup:aGroupId completion:^(EMGroup *aGroup, EMError *aError) {
+        if (!aError) {
+            [self sendSuccessCallback:cbName CallbackId: cbId];
+        }
+        else if (aError){
+            [self sendErrorCallback:cbName withError:aError];
+        }
+    }];
+}
+- (void) unblockMembers:(NSString *)ms fromGroup: (NSString *) aGroupId callbackId:(int) cbId
+{
+    NSString *cbName = @"UnblockMembersCallback";
+    NSArray *members = [ms componentsSeparatedByString:@","];
+    [[EMClient sharedClient].groupManager unblockMembers:members fromGroup:aGroupId completion:^(EMGroup *aGroup, EMError *aError) {
+        if (!aError) {
+            [self sendSuccessCallback:cbName CallbackId: cbId];
+        }
+        else if (aError){
+            [self sendErrorCallback:cbName withError:aError];
+        }
+    }];
+}
+
+- (void) requestToJoinGroup:(NSString *)aGroupId withMessage:(NSString *)message callbackId:(int) cbId
+{
+    NSString *cbName = @"RequestToJoinGroupCallback";
+    [[EMClient sharedClient].groupManager requestToJoinPublicGroup:aGroupId message:message completion:^(EMGroup *aGroup, EMError *aError) {
+        if (!aError) {
+            [self sendSuccessCallback:cbName CallbackId: cbId];
+        }
+        else if (aError){
+            [self sendErrorCallback:cbName withError:aError];
+        }
+    }];
+}
+- (void) leaveGroup:(NSString *)aGroupId callbackId:(int) cbId
+{
+    NSString *cbName = @"LeaveGroupCallback";
+    [[EMClient sharedClient].groupManager leaveGroup:aGroupId completion:^(EMGroup *aGroup, EMError *aError) {
+        if (!aError) {
+            [self sendSuccessCallback:cbName CallbackId: cbId];
+        }
+        else if (aError){
+            [self sendErrorCallback:cbName withError:aError];
+        }
+    }];
+}
+
+- (void) approveJoinGroupRequest:(NSString *)aGroupId sender:(NSString *) aUsername callbackId:(int) cbId
+{
+    NSString *cbName = @"ApproveJoinGroupRequestCallback";
+    [[EMClient sharedClient].groupManager approveJoinGroupRequest:aGroupId sender:aUsername completion:^(EMGroup *aGroup, EMError *aError) {
+        if (!aError) {
+            [self sendSuccessCallback:cbName CallbackId: cbId];
+        }
+        else if (aError){
+            [self sendErrorCallback:cbName withError:aError];
+        }
+    }];
+}
+- (void) declineJoinGroupRequest:(NSString *)aGroupId sender:(NSString *) aUsername reason:(NSString *)aReason callbackId:(int) cbId
+{
+    NSString *cbName = @"DeclineJoinGroupRequestCallback";
+    [[EMClient sharedClient].groupManager declineJoinGroupRequest:aGroupId sender:aUsername reason:aReason completion:^(EMGroup *aGroup, EMError *aError) {
+        if (!aError) {
+            [self sendSuccessCallback:cbName CallbackId: cbId];
+        }
+        else if (aError){
+            [self sendErrorCallback:cbName withError:aError];
+        }
+    }];
+}
+- (void) acceptInvitationFromGroup:(NSString *)aGroupId inviter:(NSString *) aUsername callbackId:(int) cbId
+{
+    NSString *cbName = @"AcceptInvitationFromGroupCallback";
+    [[EMClient sharedClient].groupManager acceptInvitationFromGroup:aGroupId inviter:aUsername completion:^(EMGroup *aGroup, EMError *aError) {
+        if (!aError) {
+            [self sendSuccessCallback:cbName CallbackId: cbId];
+        }
+        else if (aError){
+            [self sendErrorCallback:cbName withError:aError];
+        }
+    }];
+}
+- (void) declineInvitationFromGroup:(NSString *)aGroupId inviter:(NSString *) aUsername reason:(NSString *)aReason callbackId:(int) cbId
+{
+    NSString *cbName = @"DeclineInvitationFromGroupCallback";
+    [[EMClient sharedClient].groupManager declineGroupInvitation:aGroupId inviter:aUsername reason:aReason completion:^(EMError *aError) {
+        if (!aError) {
+            [self sendSuccessCallback:cbName CallbackId: cbId];
+        }
+        else if (aError){
+            [self sendErrorCallback:cbName withError:aError];
+        }
+    }];
+}
 
 //message delegates
 - (void)messagesDidReceive:(NSArray *)aMessages;
