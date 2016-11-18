@@ -89,12 +89,13 @@ public class EMTools {
 		try {
 			json.put("mGroupId", group.getGroupId());
 			json.put("mGroupName", group.getGroupName());
+			json.put("mDescription", group.getDescription());
+			json.put("mOwner", group.getOwner());
+			json.put("mMemCount", group.getMemberCount());
+			json.put("mMembers", listString2String(group.getMembers()));
 			json.put("mIsPublic", group.isPublic()?"true":"false");
 			json.put("mIsAllowInvites", group.isAllowInvites()?"true":"false");
 			json.put("mIsMsgBlocked", group.isMsgBlocked()?"true":"false");
-			json.put("mOwner", group.getOwner());
-			json.put("mMembers", listString2String(group.getMembers()));
-			json.put("mDescription", group.getDescription());
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -109,8 +110,9 @@ public class EMTools {
 		try {
 			json.put("mConversationId", conversation.conversationId());
 			json.put("mConversationType", conversation.getType().ordinal());
-			json.put("mUsername", conversation.getUserName());
-			json.put("mIsGroup", conversation.isGroup()?"true":"false");
+			json.put("mUnreadMsgCount", conversation.getUnreadMsgCount());
+			json.put("mExt", conversation.getExtField());
+			json.put("mLatesMsg", message2json(conversation.getLastMessage()).toString());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

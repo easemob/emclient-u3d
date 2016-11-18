@@ -230,7 +230,7 @@ namespace EaseMob{
 			AddCallbackToList (cb);
 			sdk.unblockUser (cb.CallbackId, groupId, username);
 		}
-		public void getBlockedUsers(string groupId,EMBaseCallback cb)
+		public void getBlockedUsers(string groupId,EMGroupCallback cb)
 		{
 			AddCallbackToList (cb);
 			sdk.getBlockedUsers (cb.CallbackId, groupId);
