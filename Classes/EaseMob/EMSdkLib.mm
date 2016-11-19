@@ -195,7 +195,7 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     NSMutableArray *retArray = [NSMutableArray array];
     if ([groupArray count] > 0) {
         for (EMGroup *group in groupArray) {
-            [retArray addObject:[self toJson:[self group2dic:group]]];
+            [retArray addObject:[self group2dic:group]];
         }
         return [self toJson:retArray];
     } else {
@@ -652,7 +652,7 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     else
         [dic setObject:@"" forKey:@"mMembers"];
     [dic setObject:group.isPublic?@"true":@"false" forKey:@"mIsPublic"];
-    [dic setObject:@"true" forKey:@"mIsAllowInvites"];//TODO
+//    [dic setObject:@"true" forKey:@"mIsAllowInvites"];//TODO
     [dic setObject:group.isBlocked?@"true":@"false" forKey:@"mIsMsgBlocked"];
     return [NSDictionary dictionaryWithDictionary:dic];
 }
@@ -744,10 +744,10 @@ extern "C" {
         [[EMSdkLib sharedSdkLib] createGroup:CreateNSString(groupName) desc:CreateNSString(desc) members:CreateNSString(strMembers) reason:CreateNSString(reason) maxUsers:maxUsers type:style callbackId:callbackId];
     }
     
-    //done
+    //todo
     void _applyJoinToGroup (int callbackId,const char* groupId, const char* reason)
     {
-        [[EMSdkLib sharedSdkLib] requestToJoinGroup:CreateNSString(groupId) withMessage:CreateNSString(reason) callbackId:callbackId];
+        
     }
 
     //done

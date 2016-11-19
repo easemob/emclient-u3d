@@ -22,8 +22,8 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern string _getAllContactsFromServer ();
 
-//		[DllImport ("__Internal")]
-//		private static extern string _getAllConversations ();
+		[DllImport ("__Internal")]
+		private static extern string _getAllConversations ();
 
 		[DllImport ("__Internal")]
 		private static extern string _createGroup (int callbackId, string groupName, string desc, string strMembers, string reason, int maxUsers, int style);
@@ -159,7 +159,7 @@ namespace EaseMob{
 
 		public override string getAllConversations ()
 		{
-			return "";
+			return _getAllConversations();
 		}
 		public override bool deleteConversation (string username, bool isDeleteHistory)
 		{
