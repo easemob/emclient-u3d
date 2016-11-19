@@ -26,7 +26,7 @@ namespace EaseMob{
 		private static extern string _getAllConversations ();
 
 		[DllImport ("__Internal")]
-		private static extern string _createGroup (int callbackId, string groupName, string desc, string strMembers, string reason, int maxUsers, int style);
+		private static extern void _createGroup (int callbackId, string groupName, string desc, string strMembers, string reason, int maxUsers, int style);
 
 		[DllImport ("__Internal")]
 		private static extern void _destroyGroup (int callbackId,string groupId);

@@ -132,22 +132,20 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
 //group API
 - (void) createGroup:(NSString *)groupName desc:(NSString *)desc members:(NSString *)ms reason:(NSString *)reason maxUsers:(int)count type:(int)type callbackId:(int)cbId
 {
-    EMError *error = nil;
     NSString *cbName = @"CreateGroupCallback";
     EMGroupOptions *setting = [[EMGroupOptions alloc] init];
     setting.maxUsersCount = count;
     setting.style = (EMGroupStyle)type;
     NSArray *arr = [ms componentsSeparatedByString:@","];
-    EMGroup *group = [[EMClient sharedClient].groupManager createGroupWithSubject:groupName description:desc invitees:arr message:reason setting:setting error:&error];
-    if(!error)
-    {
-        NSString *json = [self toJson:[self group2dic:group]];
-        if(json != nil)
+    [[EMClient sharedClient].groupManager createGroupWithSubject:groupName description:desc invitees:arr message:reason setting:setting completion:^(EMGroup *group, EMError *error){
+        if(group && !error){
+            NSString *json = [self toJson:[self group2dic:group]];
             [self sendSuccessCallback:cbName CallbackId:cbId data:json];
-    }else
-    {
-        [self sendErrorCallback:cbName withError:error];
-    }
+        }else{
+            [self sendErrorCallback:cbName withError:error];
+        }
+        
+    }];
 }
 
 - (void) destroyGroup: (NSString *) groupId callbackId:(int) cbId
