@@ -41,10 +41,15 @@
 - (void) blockMembers:(NSString *)ms fromGroup: (NSString *) aGroupId callbackId:(int) cbId;
 - (void) unblockMembers:(NSString *)ms fromGroup: (NSString *) aGroupId callbackId:(int) cbId;
 
+- (NSString*) loadMessagesStartFromId:(NSString *)msgId fromUser:(NSString *)username pageSize:(int)size;
 - (void) blockGroupMessage:(NSString *)aGroupId callbackId:(int) cbId;
 - (void) unblockGroupMessage:(NSString *)aGroupId callbackId:(int) cbId;
+- (int) getUnreadMsgCount:(NSString *)fromUser;
+- (void) markAllMessagesAsRead:(NSString *)fromUser;
+- (bool) deleteConversation:(NSString *)fromUser delHistory:(bool)flag;
+- (void) removeMessage:(NSString *)fromUser messageId:(NSString *)msgId;
 
-- (void) requestToJoinGroup:(NSString *)aGroupId withMessage:(NSString *)message callbackId:(int) cbId;
+- (void) joinGroup:(NSString *)aGroupId callbackId:(int) cbId;
 - (void) leaveGroup:(NSString *)aGroupId callbackId:(int) cbId;
 
 - (void) approveJoinGroupRequest:(NSString *)aGroupId sender:(NSString *) aUsername callbackId:(int) cbId;

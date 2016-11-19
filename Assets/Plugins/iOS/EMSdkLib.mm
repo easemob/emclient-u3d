@@ -195,7 +195,7 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     NSMutableArray *retArray = [NSMutableArray array];
     if ([groupArray count] > 0) {
         for (EMGroup *group in groupArray) {
-            [retArray addObject:[self toJson:[self group2dic:group]]];
+            [retArray addObject:[self group2dic:group]];
         }
         return [self toJson:retArray];
     } else {
@@ -328,6 +328,19 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     }];
 }
 
+- (NSString *) loadMessagesStartFromId:(NSString *)msgId fromUser:(NSString *)username pageSize:(int)size
+{
+    EMConversation *conversation =  [[EMClient sharedClient].chatManager getConversation:@"" type:EMConversationTypeChat createIfNotExist:YES];
+    NSArray *messages = [conversation loadMoreMessagesFromId:msgId limit:size direction:EMMessageSearchDirectionDown];
+    NSMutableArray *retArray = [NSMutableArray array];
+    if([messages count] > 0){
+        for (EMMessage *msg in messages){
+            [retArray addObject:[self message2dic:msg]];
+        }
+    }
+    return [self toJson:retArray];
+}
+
 - (void) blockGroupMessage:(NSString *)aGroupId callbackId:(int)cbId
 {
     NSString *cbName = @"BlockGroupMessageCallback";
@@ -351,18 +364,41 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     
 }
 
-- (void) requestToJoinGroup:(NSString *)aGroupId withMessage:(NSString *)message callbackId:(int) cbId
+- (int) getUnreadMsgCount:(NSString *)fromUser
 {
-    NSString *cbName = @"ApplyJoinToGroupCallback";
-    [[EMClient sharedClient].groupManager requestToJoinPublicGroup:aGroupId message:message completion:^(EMGroup *aGroup, EMError *aError) {
-        if (!aError) {
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:fromUser type:EMConversationTypeChat createIfNotExist:YES];
+    return conversation.unreadMessagesCount;
+}
+
+- (void) markAllMessagesAsRead:(NSString *)fromUser
+{
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:fromUser type:EMConversationTypeChat createIfNotExist:YES];
+    [conversation markAllMessagesAsRead:nil];
+}
+
+- (bool) deleteConversation:(NSString *)fromUser delHistory:(bool)flag
+{
+    [[EMClient sharedClient].chatManager deleteConversation:fromUser isDeleteMessages:flag completion:nil];
+    return YES;
+}
+
+- (void) removeMessage:(NSString *)fromUser messageId:(NSString *)msgId
+{
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:fromUser type:EMConversationTypeChat createIfNotExist:YES];
+    [conversation deleteMessageWithId:msgId error:nil];
+}
+
+- (void) joinGroup:(NSString *)aGroupId callbackId:(int) cbId
+{
+    NSString *cbName = @"JoinGroupCallback";
+    [[EMClient sharedClient].groupManager joinPublicGroup:aGroupId completion:^(EMGroup *group, EMError *error){
+        if(!error)
             [self sendSuccessCallback:cbName CallbackId: cbId];
-        }
-        else if (aError){
-            [self sendErrorCallback:cbName withError:aError];
-        }
+        else
+            [self sendErrorCallback:cbName withError:error];
     }];
 }
+
 - (void) leaveGroup:(NSString *)aGroupId callbackId:(int) cbId
 {
     NSString *cbName = @"LeaveGroupCallback";
@@ -652,7 +688,7 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     else
         [dic setObject:@"" forKey:@"mMembers"];
     [dic setObject:group.isPublic?@"true":@"false" forKey:@"mIsPublic"];
-    [dic setObject:@"true" forKey:@"mIsAllowInvites"];//TODO
+//    [dic setObject:@"true" forKey:@"mIsAllowInvites"];//TODO
     [dic setObject:group.isBlocked?@"true":@"false" forKey:@"mIsMsgBlocked"];
     return [NSDictionary dictionaryWithDictionary:dic];
 }
@@ -739,15 +775,42 @@ extern "C" {
     }
     
     //done
+    const char* _getConversationMessage(const char* username, const char* startMsgId, int pageSize)
+    {
+        return MakeStringCopy([[[EMSdkLib sharedSdkLib] loadMessagesStartFromId:CreateNSString(startMsgId) fromUser:CreateNSString(username) pageSize:pageSize] UTF8String]) ;
+    }
+    
+    //done
+    int _getUnreadMsgCount(const char* username)
+    {
+        return [[EMSdkLib sharedSdkLib] getUnreadMsgCount:CreateNSString(username)];
+    }
+    
+    void _markAllMessagesAsRead(const char* username)
+    {
+        [[EMSdkLib sharedSdkLib] markAllMessagesAsRead:CreateNSString(username)];
+    }
+    
+    bool _deleteConversation (const char* username, bool isDeleteHistory)
+    {
+        return [[EMSdkLib sharedSdkLib] deleteConversation:CreateNSString(username) delHistory:isDeleteHistory];
+    }
+    
+    void _removeMessage (const char* username, const char* msgId)
+    {
+        return [[EMSdkLib sharedSdkLib] removeMessage:CreateNSString(username) messageId:CreateNSString(msgId)];
+    }
+    
+    //done
     void _createGroup (int callbackId, const char* groupName, const char* desc, const char* strMembers, const char* reason, int maxUsers, int style)
     {
         [[EMSdkLib sharedSdkLib] createGroup:CreateNSString(groupName) desc:CreateNSString(desc) members:CreateNSString(strMembers) reason:CreateNSString(reason) maxUsers:maxUsers type:style callbackId:callbackId];
     }
     
-    //done
+    //todo
     void _applyJoinToGroup (int callbackId,const char* groupId, const char* reason)
     {
-        [[EMSdkLib sharedSdkLib] requestToJoinGroup:CreateNSString(groupId) withMessage:CreateNSString(reason) callbackId:callbackId];
+        
     }
 
     //done
@@ -797,10 +860,10 @@ extern "C" {
         [[EMSdkLib sharedSdkLib] getGroupBlacklistFromServerById:CreateNSString(groupId) callbackId:callbackId];
     }
     
-    //todo 群主加人调用此方法
+    //done 群主加人调用此方法
     void _addUsersToGroup(int callbackId, const char* toGroup, const char* members)
     {
-        
+        [[EMSdkLib sharedSdkLib] addMembers:CreateNSString(members) toGroup:CreateNSString(toGroup) withMessage:@"Hi" callbackId:callbackId];
     }
     
     //todo 私有群里，如果开放了群成员邀请，群成员邀请调用下面方法
@@ -809,10 +872,10 @@ extern "C" {
         
     }
     
-    //todo 如果群开群是自由加入的，即group.isMembersOnly()为false，直接join
+    //done 如果群开群是自由加入的，即group.isMembersOnly()为false，直接join
     void _joinGroup (int callbackId,const char* groupId)
     {
-        
+        [[EMSdkLib sharedSdkLib] joinGroup:CreateNSString(groupId) callbackId:callbackId];
     }
     
     //done
@@ -843,11 +906,6 @@ extern "C" {
     void _unblockGroupMessage (int callbackId,const char* groupId)
     {
         [[EMSdkLib sharedSdkLib] unblockGroupMessage:CreateNSString(groupId) callbackId:callbackId];
-    }
-    
-    void _requestToJoinGroup(int callbackId, const char* groupId, const char* message)
-    {
-        [[EMSdkLib sharedSdkLib] requestToJoinGroup:CreateNSString(groupId) withMessage:CreateNSString(message) callbackId:callbackId];
     }
     
     

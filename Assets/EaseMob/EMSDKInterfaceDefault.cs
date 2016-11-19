@@ -110,6 +110,7 @@ namespace EaseMob{
 		public override void createGroup (int callbackId,string groupName, string desc, string strMembers, string reason, int maxUsers, int style)
 		{
 			string json = "{\"on\":\"success\",\"callbackid\":1,\"data\":\"{\\\"mGroupId\\\":\\\"1479014387570\\\",\\\"mGroupName\\\":\\\"eee\\\",\\\"mIsPublic\\\":true,\\\"mIsAllowInvites\\\":false,\\\"mIsMsgBlocked\\\":false,\\\"mOwner\\\":\\\"user1\\\",\\\"mMembers\\\":\\\"[user1, ]\\\",\\\"mDescription \\\":\\\"desc:eee\\\"}\"}";
+			json = "{\"callbackid\":1,\"data\":\"{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"21\\\",\\\"mMemCount\\\":1,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:21\\\",\\\"mGroupId\\\":\\\"1479557332062\\\"}\",\"on\":\"success\"}";
 			EMSDKCallback.Instance.CreateGroupCallback (json);
 		}
 		public override void addUsersToGroup (int callbackId,string groupId, string strMembers)
