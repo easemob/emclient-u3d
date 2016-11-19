@@ -53,11 +53,17 @@
 		public abstract void removeUserFromGroup (int callbackId,string groupId, string username);
 		public abstract void joinGroup (int callbackId,string groupId);
 		public abstract void applyJoinToGroup (int callbackId,string groupId, string reason);
+		//主动退群
 		public abstract void leaveGroup (int callbackId,string groupId);
+		//群主解散群
 		public abstract void destroyGroup (int callbackId,string groupId);
+		//从服务器获取自己加入的和创建的群组列表，此api获取的群组sdk会自动保存到内存和db
 		public abstract void getJoinedGroupsFromServer (int callbackId);
+		//从本地加载群组列表
 		public abstract string getAllGroups ();
+		//修改群名称（只有群主有权限）
 		public abstract void changeGroupName (int callbackId,string groupId,string groupName);
+		//获取群详情
 		public abstract string getGroup (string groupId);
 		public abstract void blockGroupMessage (int callbackId,string groupId);
 		public abstract void unblockGroupMessage (int callbackId,string groupId);

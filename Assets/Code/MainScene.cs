@@ -27,8 +27,14 @@ public class MainScene : MonoBehaviour {
 	public InputField filePath;
 	public Button sendFileMessageBtn;
 	public InputField groupName;
+	public InputField groupUser;
 	public Button createGroupBtn;
+	public Button leaveGroupBtn;
 	public Button getGroupsBtn;
+	public Button addToGroupBtn;
+	public Button inviteToGroupBtn;
+	public Button RmUserFromGroupBtn;
+	public Button destroyGroupBtn;
 
 	private string picFilePath = "";
 	private List<Dropdown.OptionData> friendList = new List<Dropdown.OptionData>();
@@ -154,13 +160,30 @@ public class MainScene : MonoBehaviour {
 			}
 		});
 
+		leaveGroupBtn.onClick.AddListener (delegate () {
+			EMBaseCallback cb = new EMBaseCallback();
+			cb.onSuccessCallback = () => {
+				logText.text = "leave group success";
+			};
+			cb.onProgressCallback = (progress,status) => {
+
+			};
+			cb.onErrorCallback = (code,msg) => {
+
+			};
+			if(groupName.text.Length > 0)
+				EMClient.Instance.leaveGroup(groupName.text,cb);
+			else
+				logText.text = "input group id first";
+		});
+
 		getGroupsBtn.onClick.AddListener (delegate() {
 			logText.text = "";
 			groupList.Clear();
 			EMGroupCallback cb = new EMGroupCallback();
 			cb.onSuccessGetGroupListCallback = (groups) => {
 				foreach(EMGroup group in groups){
-					logText.text += group.mGroupName + "\n";
+					logText.text += "ID="+group.mGroupId + "," + group.mGroupName + "\n";
 					groupList.Add(group);
 				}
 			};
@@ -169,31 +192,73 @@ public class MainScene : MonoBehaviour {
 			};
 			EMClient.Instance.getJoinedGroupsFromServer(cb);
 		});
-		/*
-		startRecord.onClick.AddListener (delegate() {
-			EMRecordCallback rcb = new EMRecordCallback();
-			rcb.onStopRecordCallback=(path,length)=>{
-				Dropdown.OptionData dod = friendList[friendListDd.value];
 
-				EMBaseCallback cb = new EMBaseCallback();
-				cb.onSuccessCallback = () => {
-					logText.text = "send message success";
-				};
-				cb.onProgressCallback = (p,s) => {
-
-				};
-				cb.onErrorCallback = (c,m) => {
-
-				};
-				EMClient.Instance.SendVoiceMessage(path,length,dod.text,0,cb);
+		addToGroupBtn.onClick.AddListener (delegate() {
+			EMBaseCallback cb = new EMBaseCallback();
+			cb.onSuccessCallback = () => {
+				logText.text = "add user to group success";
 			};
-			EMClient.Instance.StartRecord(rcb);
+			cb.onProgressCallback = (progress,status) => {
+
+			};
+			cb.onErrorCallback = (code,msg) => {
+
+			};
+			string[] users = {groupName.text};
+			EMClient.Instance.addUsersToGroup(groupName.text,users,cb);
 		});
 
-		stopRecord.onClick.AddListener (delegate() {
-			EMClient.Instance.StopRecord();
+		inviteToGroupBtn.onClick.AddListener (delegate () {
+			EMBaseCallback cb = new EMBaseCallback();
+			cb.onSuccessCallback = () => {
+				logText.text = "invite to group success";
+			};
+			cb.onProgressCallback = (progress,status) => {
+
+			};
+			cb.onErrorCallback = (code,msg) => {
+
+			};
+			if(groupName.text.Length > 0){
+				string[] users = {groupName.text};
+				EMClient.Instance.inviteUser(groupName.text,users,"welconme",cb);
+			}
+			else
+				logText.text = "input group id first";
 		});
-		*/
+
+
+		RmUserFromGroupBtn.onClick.AddListener (delegate() {
+			EMBaseCallback cb = new EMBaseCallback();
+			cb.onSuccessCallback = () => {
+				logText.text = "removeUserFromGroup success";
+			};
+			cb.onProgressCallback = (progress,status) => {
+
+			};
+			cb.onErrorCallback = (code,msg) => {
+
+			};
+			EMClient.Instance.removeUserFromGroup(groupName.text,groupUser.text,cb);
+		});
+
+		destroyGroupBtn.onClick.AddListener (delegate () {
+			EMBaseCallback cb = new EMBaseCallback();
+			cb.onSuccessCallback = () => {
+				logText.text = "destory group success";
+			};
+			cb.onProgressCallback = (progress,status) => {
+
+			};
+			cb.onErrorCallback = (code,msg) => {
+
+			};
+			if(groupName.text.Length > 0)
+				EMClient.Instance.destroyGroup(groupName.text,cb);
+			else
+				logText.text = "input group id first";
+		});
+
 
 		getMessageBtn.onClick.AddListener (delegate() {
 			string fromuser = fromUser.text;

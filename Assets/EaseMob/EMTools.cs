@@ -68,6 +68,8 @@ namespace EaseMob{
 
 		public static EMGroup json2group(string jsondata)
 		{
+			if (jsondata.Length == 0)
+				return null;
 			JsonData jd = JsonMapper.ToObject (jsondata);
 			return json2group (jd);
 		}
