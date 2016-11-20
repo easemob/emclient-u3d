@@ -6,6 +6,5 @@
 		public int mUnreadMsgCount { set; get; }
 		public string mExtInfo{ set; get; }
 		public EMMessage mLastMsg{ set; get; }
-		public string mKey{ set; get; }
 	}
 }

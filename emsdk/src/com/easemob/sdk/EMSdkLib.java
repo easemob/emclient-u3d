@@ -382,7 +382,7 @@ public class EMSdkLib {
 		JSONArray array = new JSONArray();
 		Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
 		for(Map.Entry<String, EMConversation> entry:conversations.entrySet()){    
-		     array.put(EMTools.conversation2json(entry.getValue(),entry.getKey()));
+		     array.put(EMTools.conversation2json(entry.getValue()));
 		}   
 		return array.toString();
 	}

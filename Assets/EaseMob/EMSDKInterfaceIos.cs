@@ -23,6 +23,9 @@ namespace EaseMob{
 		private static extern string _getAllContactsFromServer ();
 
 		[DllImport ("__Internal")]
+		private static extern string _getAllConversationMessage (string username);
+
+		[DllImport ("__Internal")]
 		private static extern string _getAllConversations ();
 
 		[DllImport ("__Internal")]
@@ -139,7 +142,7 @@ namespace EaseMob{
 
 		public override string getAllConversationMessage(string username)
 		{
-			return null;
+			return _getAllConversationMessage(username);
 		}
 
 		public override string getConversationMessage(string username, string startMsgId, int pageSize)

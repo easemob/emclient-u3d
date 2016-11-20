@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using EaseMob;
+using UnityEngine.SceneManagement;
  
 public class Login : MonoBehaviour {
 
@@ -49,7 +50,7 @@ public class Login : MonoBehaviour {
 			EMBaseCallback cb = new EMBaseCallback();
 			cb.onSuccessCallback = () => {
 				logText.text = "login success";
-				Application.LoadLevel("MainScene");
+				SceneManager.LoadScene("MainScene");
 			};
 			cb.onProgressCallback = (p,s) => {
 				logText.text = ("prograss="+p+",status="+s);

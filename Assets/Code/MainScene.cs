@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using LitJson;
 using EaseMob;
+using UnityEngine.SceneManagement;
 
 public class MainScene : MonoBehaviour {
 
@@ -272,7 +273,7 @@ public class MainScene : MonoBehaviour {
 		logoutBtn.onClick.AddListener (delegate() {
 			EMBaseCallback cb = new EMBaseCallback();
 			cb.onSuccessCallback = () => {
-				Application.LoadLevel("LoginScene");
+				SceneManager.LoadScene("LoginScene");
 			};
 			cb.onProgressCallback = (progress,status) => {
 				

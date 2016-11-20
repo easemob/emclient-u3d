@@ -121,9 +121,6 @@ namespace EaseMob{
 			conversation.mExtInfo = (string)jd ["mExt"];
 			string data = (string)jd ["mLatesMsg"];
 			conversation.mLastMsg = json2message (data);
-			if (jd ["key"] != null) {
-				conversation.mKey = (string)jd ["key"];
-			}
 			return conversation;
 		}
 

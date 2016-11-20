@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "EMSDK.h"
 
-@interface EMSdkLib : NSObject <EMChatManagerDelegate,EMGroupManagerDelegate>
+@interface EMSdkLib : NSObject <EMClientDelegate, EMChatManagerDelegate,EMGroupManagerDelegate>
 
 + (instancetype) sharedSdkLib;
 
@@ -24,6 +24,8 @@
 - (void) sendFileMessage:(NSString *)path toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype;
 - (NSString *) getAllContactsFromServer;
 - (NSString *) getAllConversations;
+- (NSString *) loadMessagesStartFromId:(NSString *)msgId fromUser:(NSString *)username pageSize:(int)size;
+- (NSString *) getAllConversationMessage:(NSString *)fromUser;
 
 - (void) createGroup:(NSString *)groupName desc:(NSString *)desc members:(NSString *)ms reason:(NSString *)reason maxUsers:(int)count type:(int)type callbackId:(int)cbId;
 - (void) destroyGroup:(NSString *) aGroupId callbackId:(int) cbId;
@@ -41,7 +43,6 @@
 - (void) blockMembers:(NSString *)ms fromGroup: (NSString *) aGroupId callbackId:(int) cbId;
 - (void) unblockMembers:(NSString *)ms fromGroup: (NSString *) aGroupId callbackId:(int) cbId;
 
-- (NSString*) loadMessagesStartFromId:(NSString *)msgId fromUser:(NSString *)username pageSize:(int)size;
 - (void) blockGroupMessage:(NSString *)aGroupId callbackId:(int) cbId;
 - (void) unblockGroupMessage:(NSString *)aGroupId callbackId:(int) cbId;
 - (int) getUnreadMsgCount:(NSString *)fromUser;
@@ -50,6 +51,7 @@
 - (void) removeMessage:(NSString *)fromUser messageId:(NSString *)msgId;
 
 - (void) joinGroup:(NSString *)aGroupId callbackId:(int) cbId;
+- (void) inviterUserToJoin:(NSString *) aGroupId;
 - (void) leaveGroup:(NSString *)aGroupId callbackId:(int) cbId;
 
 - (void) approveJoinGroupRequest:(NSString *)aGroupId sender:(NSString *) aUsername callbackId:(int) cbId;
