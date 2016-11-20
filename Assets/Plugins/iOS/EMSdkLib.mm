@@ -338,8 +338,8 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
 
 - (NSString *) loadMessagesStartFromId:(NSString *)msgId fromUser:(NSString *)username pageSize:(int)size
 {
-    EMConversation *conversation =  [[EMClient sharedClient].chatManager getConversation:@"" type:EMConversationTypeChat createIfNotExist:YES];
-    NSArray *messages = [conversation loadMoreMessagesFromId:msgId limit:size direction:EMMessageSearchDirectionDown];
+    EMConversation *conversation =  [[EMClient sharedClient].chatManager getConversation:username type:EMConversationTypeChat createIfNotExist:YES];
+    NSArray *messages = [conversation loadMoreMessagesFromId:msgId limit:size direction:EMMessageSearchDirectionUp];
     NSMutableArray *retArray = [NSMutableArray array];
     if([messages count] > 0){
         for (EMMessage *msg in messages){

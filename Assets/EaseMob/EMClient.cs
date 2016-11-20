@@ -254,6 +254,7 @@ namespace EaseMob{
 			if (requestedCallbackList.ContainsKey (callbackId)) 
 			{
 				requestedCallbackList.Remove(callbackId);
+				Debug.LogError ("remove callbackId from list:"+callbackId);
 			}
 		}
 
