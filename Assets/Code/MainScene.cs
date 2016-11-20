@@ -12,6 +12,7 @@ public class MainScene : MonoBehaviour {
 	public Button friendListBtn;
 	public InputField txtContent;
 	public Button sendTxtMessageBtn;
+	public RectTransform logContent;
 	public Text logText;
 	public Dropdown friendListDd;
 	public Button screenShot;
@@ -186,7 +187,9 @@ public class MainScene : MonoBehaviour {
 				foreach(EMGroup group in groups){
 					logText.text += "ID="+group.mGroupId + "," + group.mGroupName + "\n";
 					groupList.Add(group);
+					groupName.text = group.mGroupId;
 				}
+				logContent.sizeDelta = new Vector2 (0, logText.preferredHeight+5);
 			};
 			cb.onErrorCallback = (code,msg) => {
 
@@ -205,7 +208,7 @@ public class MainScene : MonoBehaviour {
 			cb.onErrorCallback = (code,msg) => {
 
 			};
-			string[] users = {groupName.text};
+			string[] users = {groupUser.text};
 			EMClient.Instance.addUsersToGroup(groupName.text,users,cb);
 		});
 
@@ -221,7 +224,7 @@ public class MainScene : MonoBehaviour {
 
 			};
 			if(groupName.text.Length > 0){
-				string[] users = {groupName.text};
+				string[] users = {groupUser.text};
 				EMClient.Instance.inviteUser(groupName.text,users,"welconme",cb);
 			}
 			else
@@ -348,6 +351,7 @@ public class MainScene : MonoBehaviour {
 				if(msg.mType == MessageType.VOICE || msg.mType == MessageType.FILE)
 				{
 					voicePath.text = msg.mLocalPath;
+					logText.text += msg.mRemotePath;
 				}
 			}
 		};

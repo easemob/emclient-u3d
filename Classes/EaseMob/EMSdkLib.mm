@@ -717,7 +717,7 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     [dic setObject:message.isDeliverAcked?@"true":@"false" forKey:@"mIsDelivered"];
     [dic setObject:[NSNumber numberWithLong:message.localTime] forKey:@"mLocalTime"];
     [dic setObject:[NSNumber numberWithLong:message.timestamp] forKey:@"mServerTime"];
-    [dic setObject:[NSNumber numberWithInt:message.body.type] forKey:@"mType"];
+    [dic setObject:[NSNumber numberWithInt:(message.body.type-1)] forKey:@"mType"];
     [dic setObject:[NSNumber numberWithInt:message.status] forKey:@"mStatus"];
     [dic setObject:[NSNumber numberWithInt:message.direction] forKey:@"mDirection"];
     [dic setObject:[NSNumber numberWithInt:message.chatType] forKey:@"mChatType"];
