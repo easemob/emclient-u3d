@@ -271,9 +271,17 @@ public class MainScene : MonoBehaviour {
 
 		getMessageBtn.onClick.AddListener (delegate() {
 			string fromuser = fromUser.text;
+			logText.text = "";
 			if(fromuser.Length > 0){
-				string json = EMClient.Instance.GetAllConversationMessage(fromuser);
-				logText.text = json;
+				List<EMMessage> list = EMClient.Instance.GetAllConversationMessage(fromuser);
+				foreach(EMMessage msg in list){
+					logText.text += "msg id:"+msg.mMsgId+",from:"+msg.mFrom;
+					if(msg.mType == MessageType.TXT)
+						logText.text += ",txt:"+msg.mTxt;
+					if(msg.mType == MessageType.FILE)
+						logText.text += ",path:"+msg.mRemotePath;
+					logText.text += "\n";
+				}
 				logContent.sizeDelta = new Vector2 (0, logText.preferredHeight+5);
 			}
 		});

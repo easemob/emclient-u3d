@@ -98,14 +98,16 @@ namespace EaseMob{
 			sdk.stopRecord ();
 		}
 
-		public string GetAllConversationMessage(string username)
+		public List<EMMessage> GetAllConversationMessage(string username)
 		{
-			return sdk.getAllConversationMessage(username);
+			string jsonData = sdk.getAllConversationMessage (username);
+			return EMTools.json2messagelist (jsonData);
 		}
 
-		public string GetConversationMessage(string username, string startMsgId, int pageSize)
+		public List<EMMessage> GetConversationMessage(string username, string startMsgId, int pageSize)
 		{
-			return sdk.getConversationMessage(username,startMsgId,pageSize);
+			string jsonData = sdk.getConversationMessage(username,startMsgId,pageSize);
+			return EMTools.json2messagelist (jsonData);
 		}
 		public int GetUnreadMsgCount (string username)
 		{
