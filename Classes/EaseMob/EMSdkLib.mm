@@ -922,7 +922,7 @@ extern "C" {
     //todo 私有群里，如果开放了群成员邀请，群成员邀请调用下面方法
     void _inviteUser (int callbackId,const char* groupId, const char* beInvitedUsernames, const char* reason)
     {
-        
+        [[EMSdkLib sharedSdkLib] addMembers:CreateNSString(beInvitedUsernames) toGroup:CreateNSString(groupId) withMessage:CreateNSString(reason) callbackId:callbackId];
     }
     
     void _joinGroup (int callbackId,const char* groupId)
