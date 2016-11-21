@@ -22,11 +22,14 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern string _getAllContactsFromServer ();
 
-//		[DllImport ("__Internal")]
-//		private static extern string _getAllConversations ();
+		[DllImport ("__Internal")]
+		private static extern string _getAllConversationMessage (string username);
 
 		[DllImport ("__Internal")]
-		private static extern string _createGroup (int callbackId, string groupName, string desc, string strMembers, string reason, int maxUsers, int style);
+		private static extern string _getAllConversations ();
+
+		[DllImport ("__Internal")]
+		private static extern void _createGroup (int callbackId, string groupName, string desc, string strMembers, string reason, int maxUsers, int style);
 
 		[DllImport ("__Internal")]
 		private static extern void _destroyGroup (int callbackId,string groupId);
@@ -76,6 +79,20 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern void _joinGroup (int callbackId, string groupId);
 
+		[DllImport ("__Internal")]
+		private static extern string _getConversationMessage (string username, string startMsgId, int pageSize);
+
+		[DllImport ("__Internal")]
+		private static extern int _getUnreadMsgCount (string username);
+
+		[DllImport ("__Internal")]
+		private static extern void _markAllMessagesAsRead (string username);
+
+		[DllImport ("__Internal")]
+		private static extern bool _deleteConversation (string username, bool isDeleteHistory);
+
+		[DllImport ("__Internal")]
+		private static extern void _removeMessage (string username, string msgId);
 
 		public override int createAccount (string username, string password)
 		{
@@ -125,33 +142,36 @@ namespace EaseMob{
 
 		public override string getAllConversationMessage(string username)
 		{
-			return null;
+			return _getAllConversationMessage(username);
 		}
 
 		public override string getConversationMessage(string username, string startMsgId, int pageSize)
 		{
-			return null;
+			return _getConversationMessage(username,startMsgId,pageSize);
 		}
 		public override int getUnreadMsgCount (string username)
 		{
-			return 0;
+			return _getUnreadMsgCount(username);
 		}
 		public override void markAllMessagesAsRead (string username)
 		{
-
+			_markAllMessagesAsRead (username);
 		}
 		public override void markMessageAsRead (string username, string messageId)
 		{
-
+			
 		}
 		public override void markAllConversationsAsRead ()
 		{
 
 		}
+
+		//not use
 		public override int getAllMsgCount (string username)
 		{
 			return 0;
 		}
+		//not use
 		public override int getAllMessagesSize (string username)
 		{
 			return 0;
@@ -159,15 +179,16 @@ namespace EaseMob{
 
 		public override string getAllConversations ()
 		{
-			return "";
+			return _getAllConversations();
 		}
+
 		public override bool deleteConversation (string username, bool isDeleteHistory)
 		{
-			return true;
+			return _deleteConversation(username,isDeleteHistory);
 		}
 		public override void removeMessage (string username, string msgId)
 		{
-
+			_removeMessage (username, msgId);
 		}
 		public override void importMessages (string json)
 		{

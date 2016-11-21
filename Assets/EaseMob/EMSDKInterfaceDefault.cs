@@ -110,6 +110,7 @@ namespace EaseMob{
 		public override void createGroup (int callbackId,string groupName, string desc, string strMembers, string reason, int maxUsers, int style)
 		{
 			string json = "{\"on\":\"success\",\"callbackid\":1,\"data\":\"{\\\"mGroupId\\\":\\\"1479014387570\\\",\\\"mGroupName\\\":\\\"eee\\\",\\\"mIsPublic\\\":true,\\\"mIsAllowInvites\\\":false,\\\"mIsMsgBlocked\\\":false,\\\"mOwner\\\":\\\"user1\\\",\\\"mMembers\\\":\\\"[user1, ]\\\",\\\"mDescription \\\":\\\"desc:eee\\\"}\"}";
+			json = "{\"callbackid\":1,\"data\":\"{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"21\\\",\\\"mMemCount\\\":1,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:21\\\",\\\"mGroupId\\\":\\\"1479557332062\\\"}\",\"on\":\"success\"}";
 			EMSDKCallback.Instance.CreateGroupCallback (json);
 		}
 		public override void addUsersToGroup (int callbackId,string groupId, string strMembers)
@@ -142,7 +143,8 @@ namespace EaseMob{
 		}
 		public override void getJoinedGroupsFromServer (int callbackId)
 		{
-			
+			string json = "{\"callbackid\":"+callbackId+",\"data\":\"[{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"Qq\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:Qq\\\",\\\"mGroupId\\\":\\\"1479573183219\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"Ww\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:Ww\\\",\\\"mGroupId\\\":\\\"1479573487295\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"A\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:A\\\",\\\"mGroupId\\\":\\\"1479574181703\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"B\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:B\\\",\\\"mGroupId\\\":\\\"1479574291702\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"C\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:C\\\",\\\"mGroupId\\\":\\\"1479574419203\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"D\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:D\\\",\\\"mGroupId\\\":\\\"1479574867173\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"E\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:E\\\",\\\"mGroupId\\\":\\\"1479575988653\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"F\\\",\\\"mMemCount\\\":2,\\\"mMembers\\\":\\\"user8\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:F\\\",\\\"mGroupId\\\":\\\"1479576316799\\\"}]\",\"on\":\"success\"}";
+			EMSDKCallback.Instance.GetJoinedGroupsFromServerCallback (json);
 		}
 		public override string getAllGroups (){
 			return "";

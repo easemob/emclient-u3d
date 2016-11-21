@@ -6,52 +6,63 @@ namespace EaseMob{
 	
 	public class EMTools {
 
+		public static EMMessage json2message(string jsonParam)
+		{
+			JsonData jd = JsonMapper.ToObject (jsonParam);
+			return json2message (jd);
+		}
+
 		public static List<EMMessage> json2messagelist(string jsonParam)
 		{
-			Debug.LogError ("receive List:" + jsonParam);
 			List<EMMessage> list = new List<EMMessage>();
 			JsonData jd = JsonMapper.ToObject (jsonParam);
 			if(jd.IsArray){
 				for (int i = 0; i < jd.Count; i++) {
-					EMMessage message = new EMMessage ();
-					message.mMsgId = (string)jd [i] ["mMsgId"];
-					message.mFrom = (string)jd [i] ["mFrom"];
-					message.mTo = (string)jd [i] ["mTo"];
-					message.mIsUnread = ((string)jd [i] ["mIsUnread"]).Equals("true");
-					message.mIsListened = ((string)jd [i] ["mIsListened"]).Equals("true");
-					message.mIsAcked = ((string)jd [i] ["mIsAcked"]).Equals ("true");
-					message.mIsDelivered = ((string)jd [i] ["mIsDelivered"]).Equals("true");
-					message.mLocalTime = (long)jd [i] ["mLocalTime"];
-					message.mServerTime = (long)jd [i] ["mServerTime"];
-					message.mDirection = (int)jd [i] ["mDirection"];
-					message.mStatus = (int)jd [i] ["mStatus"];
-					message.mChatType = (int)jd [i] ["mChatType"];
-					int mType = (int)jd [i] ["mType"];
-					MessageType type = (MessageType)mType;
-					message.mType = type;
-
-					if (type == MessageType.VIDEO || type == MessageType.FILE || type == MessageType.IMAGE || type == MessageType.VOICE) {
-						message.mDisplayName = (string)jd [i] ["mDisplayName"];
-						message.mSecretKey = (string)jd [i] ["mSecretKey"];
-						message.mLocalPath = (string)jd [i] ["mLocalPath"];
-						message.mRemotePath = (string)jd [i] ["mRemotePath"];
-						Debug.LogError ("image");
-					} 
-					if (type == MessageType.TXT) { 
-						message.mTxt = (string)jd [i] ["mTxt"];
-					} else if (type == MessageType.IMAGE) {
-						message.mThumbnailLocalPath = (string)jd [i] ["mThumbnailLocalPath"];
-						message.mThumbnailRemotePath = (string)jd [i] ["mThumbnailRemotePath"];
-						message.mThumbnailSecretKey = (string)jd [i] ["mThumbnailSecretKey"];
-						message.mWidth = (int)jd [i] ["mWidth"];
-						message.mHeight = (int)jd [i] ["mHeight"];
-					} else if (type == MessageType.VOICE) {
-						message.mDuration = (int)jd [i] ["mDuration"];
-					}				
-					list.Add (message);
+									
+					list.Add (json2message(jd[i]));
 				}
 			}
 			return list;
+		}
+
+		public static EMMessage json2message(JsonData jd)
+		{
+			EMMessage message = new EMMessage ();
+			message.mMsgId = (string)jd ["mMsgId"];
+			message.mFrom = (string)jd ["mFrom"];
+			message.mTo = (string)jd ["mTo"];
+			message.mIsUnread = ((string)jd ["mIsUnread"]).Equals("true");
+			message.mIsListened = ((string)jd ["mIsListened"]).Equals("true");
+			message.mIsAcked = ((string)jd ["mIsAcked"]).Equals ("true");
+			message.mIsDelivered = ((string)jd ["mIsDelivered"]).Equals("true");
+			message.mLocalTime = (long)jd ["mLocalTime"];
+			message.mServerTime = (long)jd ["mServerTime"];
+			message.mDirection = (int)jd ["mDirection"];
+			message.mStatus = (int)jd ["mStatus"];
+			message.mChatType = (int)jd ["mChatType"];
+			int mType = (int)jd ["mType"];
+			MessageType type = (MessageType)mType;
+			message.mType = type;
+
+			if (type == MessageType.VIDEO || type == MessageType.FILE || type == MessageType.IMAGE || type == MessageType.VOICE) {
+				message.mDisplayName = (string)jd ["mDisplayName"];
+				message.mSecretKey = (string)jd ["mSecretKey"];
+				message.mLocalPath = (string)jd ["mLocalPath"];
+				message.mRemotePath = (string)jd ["mRemotePath"];
+				Debug.LogError ("image");
+			} 
+			if (type == MessageType.TXT) { 
+				message.mTxt = (string)jd ["mTxt"];
+			} else if (type == MessageType.IMAGE) {
+				message.mThumbnailLocalPath = (string)jd ["mThumbnailLocalPath"];
+				message.mThumbnailRemotePath = (string)jd ["mThumbnailRemotePath"];
+				message.mThumbnailSecretKey = (string)jd ["mThumbnailSecretKey"];
+				message.mWidth = (int)jd ["mWidth"];
+				message.mHeight = (int)jd ["mHeight"];
+			} else if (type == MessageType.VOICE) {
+				message.mDuration = (int)jd ["mDuration"];
+			}
+			return message;
 		}
 
 		public static List<EMGroup> json2grouplist(string jsondata)
@@ -78,12 +89,11 @@ namespace EaseMob{
 			EMGroup group = new EMGroup ();
 			group.mGroupId = (string)jd ["mGroupId"];
 			group.mGroupName = (string)jd ["mGroupName"];
-			group.mIsPublic = ((string)jd ["mIsPublic"]).Equals("true");
-			group.mIsAllowInvites = ((string)jd ["mIsAllowInvites"]).Equals("true");
-			group.mIsMsgBlocked = ((string)jd ["mIsMsgBlocked"]).Equals("true");
-			group.mOwner = (string)jd ["mOwner"];
-			group.mMembers = (string)jd ["mMembers"];
 			group.mDescription = (string)jd ["mDescription"];
+			group.mOwner = (string)jd ["mOwner"];
+			group.mIsPublic = ((string)jd ["mIsPublic"]).Equals("true");
+			group.mIsMsgBlocked = ((string)jd ["mIsMsgBlocked"]).Equals("true");
+			group.mMembers = (string)jd ["mMembers"];
 
 			return group;
 		}
@@ -107,11 +117,10 @@ namespace EaseMob{
 			int type = (int)jd ["mConversationType"];
 			ConversationType ctype = (ConversationType)type;
 			conversation.mConversationType = ctype;
-			conversation.mUsername = (string)jd ["mUsername"];
-			conversation.mIsGroup = ((string)jd ["mIsGroup"]).Equals("true");
-			if (jd ["key"] != null) {
-				conversation.mKey = (string)jd ["key"];
-			}
+			conversation.mUnreadMsgCount = (int)jd ["mUnreadMsgCount"];
+			conversation.mExtInfo = (string)jd ["mExt"];
+			string data = (string)jd ["mLatesMsg"];
+			conversation.mLastMsg = json2message (data);
 			return conversation;
 		}
 

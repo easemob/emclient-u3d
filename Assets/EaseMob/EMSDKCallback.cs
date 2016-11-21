@@ -94,7 +94,7 @@ namespace EaseMob{
 				string on = (string)jsonData ["on"];
 				if (on.Equals ("success")) {
 					cb.onSuccessCallback ();
-//					EMClient.Instance.RemoveCallbackById (callbackId);
+					EMClient.Instance.RemoveCallbackById (callbackId);
 				} else if (on.Equals ("progress")) {
 					cb.onProgressCallback ((int)jsonData ["progress"], (string)jsonData ["status"]);
 				} else if (on.Equals ("error")) {
@@ -285,6 +285,7 @@ namespace EaseMob{
 			if (on.Equals ("success")) {
 				EMGroup group = EMTools.json2group ((string)jsonData ["data"]);
 				cb.onSuccessCreateGroupCallback (group);
+				EMClient.Instance.RemoveCallbackById (callbackId);
 			} else if (on.Equals ("error")) {
 				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
 			}
@@ -335,6 +336,7 @@ namespace EaseMob{
 			if (on.Equals ("success")) {
 				List<EMGroup> groups = EMTools.json2grouplist ((string)jsonData ["data"]);
 				cb.onSuccessGetGroupListCallback (groups);
+				EMClient.Instance.RemoveCallbackById (callbackId);
 			} else if (on.Equals ("error")) {
 				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
 			}
@@ -375,6 +377,7 @@ namespace EaseMob{
 			if (on.Equals ("success")) {
 				string strUsers = (string)jsonData ["data"];
 				cb.onSuccessGetBlockedUsers(EMTools.string2list(strUsers));
+				EMClient.Instance.RemoveCallbackById (callbackId);
 			} else if (on.Equals ("error")) {
 				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
 			}
@@ -388,6 +391,7 @@ namespace EaseMob{
 			EMBaseCallback cb = EMClient.Instance.GetCallbackById (callbackId);
 			if (on.Equals ("success")) {
 				cb.onSuccessCallback ();
+				EMClient.Instance.RemoveCallbackById (callbackId);
 			} else if (on.Equals ("progress")) {
 				cb.onProgressCallback ((int)jsonData ["progress"], (string)jsonData ["status"]);
 			} else if (on.Equals ("error")) {

@@ -5,8 +5,6 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMGroup;
@@ -82,7 +80,6 @@ public class EMTools {
 		return json;
 	}
 	
-	//TODO 属性未补全
 	public static JSONObject group2json(EMGroup group)
 	{
 		JSONObject json =  new JSONObject();
@@ -94,7 +91,7 @@ public class EMTools {
 			json.put("mMemCount", group.getMemberCount());
 			json.put("mMembers", listString2String(group.getMembers()));
 			json.put("mIsPublic", group.isPublic()?"true":"false");
-			json.put("mIsAllowInvites", group.isAllowInvites()?"true":"false");
+//			json.put("mIsAllowInvites", group.isAllowInvites()?"true":"false");
 			json.put("mIsMsgBlocked", group.isMsgBlocked()?"true":"false");
 
 		} catch (JSONException e) {
@@ -103,7 +100,6 @@ public class EMTools {
 		return json;
 	}
 	
-	//TODO 属性未补全
 	public static JSONObject conversation2json(EMConversation conversation)
 	{
 		JSONObject json = new JSONObject();
@@ -113,17 +109,6 @@ public class EMTools {
 			json.put("mUnreadMsgCount", conversation.getUnreadMsgCount());
 			json.put("mExt", conversation.getExtField());
 			json.put("mLatesMsg", message2json(conversation.getLastMessage()).toString());
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return json;
-	}
-	
-	public static JSONObject conversation2json(EMConversation conversation,String key)
-	{
-		JSONObject json = conversation2json(conversation);
-		try {
-			json.put("key", key);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
