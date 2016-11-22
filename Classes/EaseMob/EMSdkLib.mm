@@ -140,6 +140,15 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     return [self toJson:[NSArray array]];
 }
 
+- (NSString *) getLatestMessage:(NSString *)fromUser
+{
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:fromUser type:EMConversationTypeChat createIfNotExist:YES];
+    EMMessage *latestMsg = [conversation latestMessage];
+    if(latestMsg != nil)
+        return [self toJson:[self message2dic:latestMsg]];
+    return @"";
+}
+
 - (void) createGroup:(NSString *)groupName desc:(NSString *)desc members:(NSString *)ms reason:(NSString *)reason maxUsers:(int)count type:(int)type callbackId:(int)cbId
 {
     NSString *cbName = @"CreateGroupCallback";
@@ -842,6 +851,11 @@ extern "C" {
     const char* _getConversationMessage(const char* username, const char* startMsgId, int pageSize)
     {
         return MakeStringCopy([[[EMSdkLib sharedSdkLib] loadMessagesStartFromId:CreateNSString(startMsgId) fromUser:CreateNSString(username) pageSize:pageSize] UTF8String]) ;
+    }
+    
+    const char* _getLatestMessage(const char* username)
+    {
+        return MakeStringCopy([[[EMSdkLib sharedSdkLib] getLatestMessage:CreateNSString(username)] UTF8String]);
     }
     
     int _getUnreadMsgCount(const char* username)

@@ -65,6 +65,10 @@ namespace EaseMob{
 		{
 			return null;
 		}
+		public override string getLatestMessage (string username)
+		{
+			return "";
+		}
 		public override int getUnreadMsgCount (string username)
 		{
 			return 0;

@@ -36,6 +36,7 @@
 		public abstract void stopRecord();
 		public abstract string getAllConversationMessage(string username);
 		public abstract string getConversationMessage(string username, string startMsgId, int pageSize);
+		public abstract string getLatestMessage (string username);
 		public abstract int getUnreadMsgCount (string username);
 		public abstract void markAllMessagesAsRead (string username);
 		public abstract void markMessageAsRead (string username, string messageId);

@@ -18,64 +18,66 @@ public class EMTools {
 	
 	public static JSONObject message2json(EMMessage message){
 		JSONObject json = new JSONObject();
-		try {
-			json.put("mMsgId", message.getMsgId());
-			json.put("mFrom", message.getFrom());
-			json.put("mTo", message.getTo());
-			json.put("mIsUnread", message.isUnread()?"true":"false");
-			json.put("mIsListened", message.isListened()?"true":"false");
-			json.put("mIsAcked", message.isAcked()?"true":"false");
-			json.put("mIsDelivered", message.isDelivered()?"true":"false");
-			json.put("mLocalTime", message.localTime());
-			json.put("mServerTime", message.getMsgTime());
-			json.put("mChatType", message.getChatType().ordinal());
-			json.put("mType", message.getType().ordinal());
-			json.put("mStatus", message.status().ordinal());
-			json.put("mDirection", message.direct().ordinal());
-
-			// set file attribute
-			if(message.getType() == Type.FILE 
-			        || message.getType() == Type.IMAGE 
-			        || message.getType() == Type.VOICE
-			        || message.getType() == Type.VIDEO)
-			{
-			    EMFileMessageBody fileBody = (EMFileMessageBody)message.getBody();
-			    json.put("mDisplayName", fileBody.getFileName());
-			    json.put("mSecretKey", fileBody.getSecret());
-			    json.put("mLocalPath", fileBody.getLocalUrl());
-			    json.put("mRemotePath", fileBody.getRemoteUrl());
+		if(message != null){
+			try {
+				json.put("mMsgId", message.getMsgId());
+				json.put("mFrom", message.getFrom());
+				json.put("mTo", message.getTo());
+				json.put("mIsUnread", message.isUnread()?"true":"false");
+				json.put("mIsListened", message.isListened()?"true":"false");
+				json.put("mIsAcked", message.isAcked()?"true":"false");
+				json.put("mIsDelivered", message.isDelivered()?"true":"false");
+				json.put("mLocalTime", message.localTime());
+				json.put("mServerTime", message.getMsgTime());
+				json.put("mChatType", message.getChatType().ordinal());
+				json.put("mType", message.getType().ordinal());
+				json.put("mStatus", message.status().ordinal());
+				json.put("mDirection", message.direct().ordinal());
+	
+				// set file attribute
+				if(message.getType() == Type.FILE 
+				        || message.getType() == Type.IMAGE 
+				        || message.getType() == Type.VOICE
+				        || message.getType() == Type.VIDEO)
+				{
+				    EMFileMessageBody fileBody = (EMFileMessageBody)message.getBody();
+				    json.put("mDisplayName", fileBody.getFileName());
+				    json.put("mSecretKey", fileBody.getSecret());
+				    json.put("mLocalPath", fileBody.getLocalUrl());
+				    json.put("mRemotePath", fileBody.getRemoteUrl());
+				}
+				
+				//set different attribute according type
+				switch(message.getType()) {
+				case TXT:
+				{
+				    EMTextMessageBody tbody = (EMTextMessageBody)message.getBody();
+		            json.put("mTxt", tbody.getMessage());
+				}
+				break;
+				case IMAGE:
+				{
+				    EMImageMessageBody ibody = (EMImageMessageBody)message.getBody();
+				    json.put("mThumbnailLocalPath", ibody.thumbnailLocalPath());
+				    json.put("mThumbnailRemotePath", ibody.getThumbnailUrl());
+				    json.put("mThumbnailSecretKey", ibody.getThumbnailSecret());
+				    json.put("mWidth", ibody.getWidth());
+				    json.put("mHeight", ibody.getHeight());
+				}
+				break;
+				case VOICE:
+				{
+				    EMVoiceMessageBody voiceBody = (EMVoiceMessageBody)message.getBody();
+				    json.put("mDuration", voiceBody.getLength());
+				}
+				break;
+	            default:
+	                break;
+				}
+				
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-			
-			//set different attribute according type
-			switch(message.getType()) {
-			case TXT:
-			{
-			    EMTextMessageBody tbody = (EMTextMessageBody)message.getBody();
-	            json.put("mTxt", tbody.getMessage());
-			}
-			break;
-			case IMAGE:
-			{
-			    EMImageMessageBody ibody = (EMImageMessageBody)message.getBody();
-			    json.put("mThumbnailLocalPath", ibody.thumbnailLocalPath());
-			    json.put("mThumbnailRemotePath", ibody.getThumbnailUrl());
-			    json.put("mThumbnailSecretKey", ibody.getThumbnailSecret());
-			    json.put("mWidth", ibody.getWidth());
-			    json.put("mHeight", ibody.getHeight());
-			}
-			break;
-			case VOICE:
-			{
-			    EMVoiceMessageBody voiceBody = (EMVoiceMessageBody)message.getBody();
-			    json.put("mDuration", voiceBody.getLength());
-			}
-			break;
-            default:
-                break;
-			}
-			
-		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return json;
 	}

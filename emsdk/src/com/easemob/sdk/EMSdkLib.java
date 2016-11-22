@@ -336,6 +336,16 @@ public class EMSdkLib {
 		return jsonArray.toString();
 	}
 	
+	//【API】
+	public String getLatestMessage(String username)
+	{
+		EMConversation conversation = EMClient.getInstance().chatManager().getConversation(username);
+		if(conversation != null && conversation.getLastMessage() != null){
+			return EMTools.message2json(conversation.getLastMessage()).toString();
+		}
+		return "";
+	}
+	
 	//【API】获取指定会话未读消息数量
 	public int getUnreadMsgCount(String username)
 	{

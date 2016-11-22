@@ -83,6 +83,9 @@ namespace EaseMob{
 		private static extern string _getConversationMessage (string username, string startMsgId, int pageSize);
 
 		[DllImport ("__Internal")]
+		private static extern string _getLatestMessage(string username);
+
+		[DllImport ("__Internal")]
 		private static extern int _getUnreadMsgCount (string username);
 
 		[DllImport ("__Internal")]
@@ -148,6 +151,10 @@ namespace EaseMob{
 		public override string getConversationMessage(string username, string startMsgId, int pageSize)
 		{
 			return _getConversationMessage(username,startMsgId,pageSize);
+		}
+		public override string getLatestMessage (string username)
+		{
+			return _getLatestMessage (username);
 		}
 		public override int getUnreadMsgCount (string username)
 		{
