@@ -26,6 +26,7 @@
 - (NSString *) getAllConversations;
 - (NSString *) loadMessagesStartFromId:(NSString *)msgId fromUser:(NSString *)username pageSize:(int)size;
 - (NSString *) getAllConversationMessage:(NSString *)fromUser;
+- (NSString *) getLatestMessage:(NSString *)fromUser;
 
 - (void) createGroup:(NSString *)groupName desc:(NSString *)desc members:(NSString *)ms reason:(NSString *)reason maxUsers:(int)count type:(int)type callbackId:(int)cbId;
 - (void) destroyGroup:(NSString *) aGroupId callbackId:(int) cbId;

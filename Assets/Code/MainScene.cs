@@ -18,7 +18,9 @@ public class MainScene : MonoBehaviour {
 	public Dropdown friendListDd;
 	public Button screenShot;
 	public InputField fromUser;
+	public InputField msgId;
 	public Button getMessageBtn;
+	public Button getLastMsgBtn;
 	public Button logoutBtn;
 	public RawImage rawImage;
 	public InputField filePath;
@@ -51,6 +53,7 @@ public class MainScene : MonoBehaviour {
 
 		friendListBtn.onClick.AddListener (delegate {
 			friendList.Clear();
+			friendListDd.ClearOptions();
 			string names = EMClient.Instance.GetAllContactsFromServer();
 			Dropdown.OptionData od = new Dropdown.OptionData();
 			od.text = "choose";
@@ -269,11 +272,35 @@ public class MainScene : MonoBehaviour {
 		});
 
 
+		getLastMsgBtn.onClick.AddListener (delegate() {
+			if(fromUser.text.Length == 0)
+			{
+				fromUser.placeholder.GetComponent<Text>().text = "input here first";
+				return;
+			}
+			EMMessage message = EMClient.Instance.GetLatestMessage(fromUser.text);
+			if(message != null){
+				msgId.text = message.mMsgId;
+				logText.text = message.mMsgId;
+			}
+
+		});
+
 		getMessageBtn.onClick.AddListener (delegate() {
-			string fromuser = fromUser.text;
+			if(fromUser.text.Length == 0)
+			{
+				fromUser.placeholder.GetComponent<Text>().text = "input here first";
+				return;
+			}
+			if(msgId.text.Length == 0)
+			{
+				msgId.placeholder.GetComponent<Text>().text = "input here first";
+				return;
+			}
+
 			logText.text = "";
-			if(fromuser.Length > 0){
-				List<EMMessage> list = EMClient.Instance.GetAllConversationMessage(fromuser);
+
+			List<EMMessage> list = EMClient.Instance.GetConversationMessage(fromUser.text,msgId.text,20);
 				foreach(EMMessage msg in list){
 					logText.text += "msg id:"+msg.mMsgId+",from:"+msg.mFrom;
 					if(msg.mType == MessageType.TXT)
@@ -281,7 +308,7 @@ public class MainScene : MonoBehaviour {
 					if(msg.mType == MessageType.FILE)
 						logText.text += ",path:"+msg.mRemotePath;
 					logText.text += "\n";
-				}
+
 				logContent.sizeDelta = new Vector2 (0, logText.preferredHeight+5);
 			}
 		});

@@ -98,6 +98,7 @@ namespace EaseMob{
 			sdk.stopRecord ();
 		}
 
+		[System.Obsolete("This method not in Use.",true)]
 		public List<EMMessage> GetAllConversationMessage(string username)
 		{
 			string jsonData = sdk.getAllConversationMessage (username);
@@ -108,6 +109,12 @@ namespace EaseMob{
 		{
 			string jsonData = sdk.getConversationMessage(username,startMsgId,pageSize);
 			return EMTools.json2messagelist (jsonData);
+		}
+
+		public EMMessage GetLatestMessage (string username)
+		{
+			string retData = sdk.getLatestMessage (username);
+			return EMTools.json2message (retData);
 		}
 		public int GetUnreadMsgCount (string username)
 		{

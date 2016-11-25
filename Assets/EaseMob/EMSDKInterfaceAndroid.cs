@@ -105,6 +105,12 @@ namespace EaseMob{
 		{
 			return SDKCall<string>("getConversationMessage",username,startMsgId,pageSize);
 		}
+
+		public override string getLatestMessage (string username)
+		{
+			return SDKCall<string> ("getLatestMessage",username);
+		}
+
 		public override int getUnreadMsgCount (string username)
 		{
 			return SDKCall<int>("getUnreadMsgCount",username);
