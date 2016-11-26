@@ -71,6 +71,7 @@
 		public abstract void blockUser (int callbackId,string groupId, string username);
 		public abstract void unblockUser(int callbackId,string groupId,string username);
 		public abstract void getBlockedUsers(int callbackId,string groupId);
+		public abstract void downloadAttachment(int callbackId,string username,string msgId);
 
 	}
 

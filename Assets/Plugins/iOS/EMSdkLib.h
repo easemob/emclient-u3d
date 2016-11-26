@@ -59,6 +59,7 @@
 - (void) declineJoinGroupRequest:(NSString *)aGroupId sender:(NSString *) aUsername reason:(NSString *)aReason callbackId:(int) cbId;
 - (void) acceptInvitationFromGroup:(NSString *)aGroupId inviter:(NSString *) aUsername callbackId:(int) cbId;
 - (void) declineInvitationFromGroup:(NSString *)aGroupId inviter:(NSString *) aUsername reason:(NSString *)aReason callbackId:(int) cbId;
+- (void) downloadAttachmentFrom:(NSString *)username messageId:(NSString *)msgId callbackId:(int)cbId;
 
 
 @end

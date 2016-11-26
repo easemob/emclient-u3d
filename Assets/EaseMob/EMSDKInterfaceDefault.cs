@@ -182,6 +182,12 @@ namespace EaseMob{
 			
 		}
 
+		public override void downloadAttachment(int callbackId,string username,string msgId)
+		{
+
+		}
+
+
 	}
 
 }

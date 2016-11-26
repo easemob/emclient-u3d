@@ -914,6 +914,30 @@ public class EMSdkLib {
 		}
 	};
 	
+	public void downloadAttachment(final int callbackId,String username,String msgId)
+	{
+		final String cbName = "DownloadAttachmentCallback";
+		EMMessage message = EMClient.getInstance().chatManager().getMessage(msgId);
+		message.setMessageStatusCallback(new EMCallBack() {
+			
+			@Override
+			public void onSuccess() {
+				sendSuccCallback(callbackId, cbName);
+			}
+			
+			@Override
+			public void onProgress(int progress, String status) {
+				sendInProgressCallback(cbName, progress, status);
+			}
+			
+			@Override
+			public void onError(int code, String message) {
+				sendErrorCallbac(cbName, code, message);
+			}
+		});
+		EMClient.getInstance().chatManager().downloadAttachment(message);
+	}
+	
 	public void sendCallback(String objName, String cbName, final String jsonParams)
 	{
 		Log.d(TAG,"return objName="+ objName+",cbName="+cbName+",data="+jsonParams);

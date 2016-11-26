@@ -382,6 +382,11 @@ namespace EaseMob{
 				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
 			}
 		}
+
+		public void DownloadAttachmentCallback(string jsonParam)
+		{
+			doBaseCallback (jsonParam);
+		}
 			
 		private void doBaseCallback(string jsonParam)
 		{
