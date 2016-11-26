@@ -1011,7 +1011,7 @@ extern "C" {
         [[EMSdkLib sharedSdkLib] declineInvitationFromGroup:CreateNSString(groupId) inviter:CreateNSString(inviter) reason:CreateNSString(reason) callbackId:callbackId];
     }
 
-    void _downloadAttachment(int callbackId,string username,string msgId)
+    void _downloadAttachment(int cbId,const char* username,const char* msgId)
     {
         [[EMSdkLib sharedSdkLib] downloadAttachmentFrom:CreateNSString(username) messageId:CreateNSString(msgId) callbackId:(int)cbId];
     }

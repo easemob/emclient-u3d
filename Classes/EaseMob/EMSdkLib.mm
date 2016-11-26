@@ -615,6 +615,23 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     
 }
 
+- (void)downloadAttachmentFrom:(NSString *)username messageId:(NSString *)msgId callbackId:(int)cbId
+{
+    NSString *cbName = @"DownloadAttachmentCallback";
+    
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:username type:EMConversationTypeGroupChat createIfNotExist:YES];
+    EMMessage *message = [conversation loadMessageWithId:msgId error:nil];
+    [[EMClient sharedClient].chatManager downloadMessageAttachment:(EMMessage *)message
+                                                          progress:^(int progress){
+                                                              [self sendInProgressCallback:cbName CallbackId:cbId Progress:progress];
+                                                          }
+                                                        completion:^(EMMessage *message, EMError *error){
+                                                            if(error)
+                                                                [self sendErrorCallback:cbName CallbackId:cbId withError:error];
+                                                            else
+                                                                [self sendSuccessCallback:cbName CallbackId:cbId];
+                                                        }];
+}
 
 
 - (void) sendMessage:(EMMessage *)message CallbackId:(int)callbackId
@@ -992,6 +1009,11 @@ extern "C" {
     void _declineInvitationFromGroup(int callbackId, const char* groupId, const char* inviter, const char* reason)
     {
         [[EMSdkLib sharedSdkLib] declineInvitationFromGroup:CreateNSString(groupId) inviter:CreateNSString(inviter) reason:CreateNSString(reason) callbackId:callbackId];
+    }
+
+    void _downloadAttachment(int cbId,const char* username,const char* msgId)
+    {
+        [[EMSdkLib sharedSdkLib] downloadAttachmentFrom:CreateNSString(username) messageId:CreateNSString(msgId) callbackId:(int)cbId];
     }
 
 }
