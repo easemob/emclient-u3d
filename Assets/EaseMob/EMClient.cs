@@ -159,6 +159,12 @@ namespace EaseMob{
 			sdk.importMessages (json);
 		}
 
+		public void DownloadAttachment(string username,string msgId,EMBaseCallback cb)
+		{
+			AddCallbackToList (cb);
+			sdk.downloadAttachment (cb.CallbackId,username,msgId);
+		}
+
 		#region
 		public void createGroup (string groupName, string desc, string[] members, string reason, int maxUsers, GroupStyle style,EMGroupCallback cb)
 		{

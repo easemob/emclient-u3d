@@ -391,6 +391,18 @@ public class MainScene : MonoBehaviour {
 				if(msg.mType == MessageType.VOICE || msg.mType == MessageType.FILE)
 				{
 					logText.text += msg.mRemotePath;
+
+					EMBaseCallback cb = new EMBaseCallback();
+					cb.onSuccessCallback = () => {
+						logText.text = "recv file success:" + msg.mLocalPath;
+					};
+					cb.onProgressCallback = (progress,status) => {
+
+					};
+					cb.onErrorCallback = (code,msg1) => {
+						logText.text = "recv file failure:" + msg.mLocalPath;
+					};
+					EMClient.Instance.DownloadAttachment(msg.mFrom, msg.mMsgId, cb);
 				}
 			}
 		};

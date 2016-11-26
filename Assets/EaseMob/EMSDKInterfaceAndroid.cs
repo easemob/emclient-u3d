@@ -218,6 +218,11 @@ namespace EaseMob{
 		{
 			SDKCall ("getBlockedUsers",callbackId, groupId);
 		}
+
+		public override void downloadAttachment(int callbackId,string username,string msgId)
+		{
+			SDKCall ("downloadAttachment",callbackId,username,msgId);
+		}
 	}
 
 }

@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 namespace EaseMob{
 
@@ -96,6 +96,9 @@ namespace EaseMob{
 
 		[DllImport ("__Internal")]
 		private static extern void _removeMessage (string username, string msgId);
+
+		[DllImport ("__Internal")]
+		private static extern void _downloadAttachment(int callbackId,string username,string msgId);
 
 		public override int createAccount (string username, string password)
 		{
@@ -269,6 +272,11 @@ namespace EaseMob{
 		public override void getBlockedUsers(int callbackId,string groupId)
 		{
 			_getBlockedUsers (callbackId, groupId);
+		}
+
+		public override void downloadAttachment(int callbackId,string username,string msgId)
+		{
+			_downloadAttachment(callbackId,username, msgId);
 		}
 	}
 
