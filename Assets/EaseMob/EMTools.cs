@@ -112,6 +112,14 @@ namespace EaseMob{
 			return list;
 		}
 
+		public static EMConversation json2conversation(string jsondata)
+		{
+			if(jsondata == null || jsondata.Length == 0)
+				return null;
+			JsonData jd = JsonMapper.ToObject (jsondata);
+			return json2conversation (jd);
+		}
+
 		public static EMConversation json2conversation(JsonData jd)
 		{
 			EMConversation conversation = new EMConversation ();

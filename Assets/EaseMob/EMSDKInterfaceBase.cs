@@ -72,6 +72,11 @@
 		public abstract void unblockUser(int callbackId,string groupId,string username);
 		public abstract void getBlockedUsers(int callbackId,string groupId);
 		public abstract void downloadAttachment(int callbackId,string username,string msgId);
+		public abstract void approveJoinGroupRequest (int callbackId, string groupId, string username);
+		public abstract void declineJoinGroupRequest (int callbackId, string groupId, string username, string reason);
+		public abstract void acceptInvitationFromGroup (int callbackId, string groupId, string username);
+		public abstract void declineInvitationFromGroup (int callbackId, string groupId, string username, string reason);
+		public abstract string getConversation (string cid, int type, bool createIfNotExists);
 
 	}
 

@@ -223,6 +223,27 @@ namespace EaseMob{
 		{
 			SDKCall ("downloadAttachment",callbackId,username,msgId);
 		}
+
+		public override void approveJoinGroupRequest (int callbackId, string groupId, string username)
+		{
+			SDKCall ("approveJoinGroupRequest",callbackId,groupId,username);
+		}
+		public override void declineJoinGroupRequest (int callbackId, string groupId, string username, string reason)
+		{
+			SDKCall ("declineJoinGroupRequest",callbackId,groupId,username,reason);
+		}
+		public override void acceptInvitationFromGroup (int callbackId, string groupId, string username)
+		{
+			SDKCall ("acceptInvitationFromGroup",callbackId,groupId,username);
+		}
+		public override void declineInvitationFromGroup (int callbackId, string groupId, string username, string reason)
+		{
+			SDKCall ("declineInvitationFromGroup",callbackId,groupId,username,reason);
+		}
+		public override string getConversation (string cid, int type, bool createIfNotExists)
+		{
+			return SDKCall<string> ("getConversation",cid,type,createIfNotExists);
+		}
 	}
 
 }

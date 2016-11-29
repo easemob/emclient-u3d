@@ -100,6 +100,24 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern void _downloadAttachment(int callbackId,string username,string msgId);
 
+		[DllImport ("__Internal")]
+		private static extern void _approveJoinGroupRequest (int callbackId, string groupId, string username);
+
+		[DllImport ("__Internal")]
+		private static extern void _declineJoinGroupRequest (int callbackId, string groupId, string username, string reason);
+
+		[DllImport ("__Internal")]
+		private static extern void _acceptInvitationFromGroup (int callbackId, string groupId, string username);
+
+		[DllImport ("__Internal")]
+		private static extern void _declineInvitationFromGroup (int callbackId, string groupId, string username, string reason);
+
+		[DllImport ("__Internal")]
+		private static extern string _getConversation (string cid, int type, bool createIfNotExists);
+
+
+
+
 		public override int createAccount (string username, string password)
 		{
 			return _createAccount(username,password);
@@ -277,6 +295,27 @@ namespace EaseMob{
 		public override void downloadAttachment(int callbackId,string username,string msgId)
 		{
 			_downloadAttachment(callbackId,username, msgId);
+		}
+
+		public override void approveJoinGroupRequest (int callbackId, string groupId, string username)
+		{
+			_approveJoinGroupRequest (callbackId, groupId, username);
+		}
+		public override void declineJoinGroupRequest (int callbackId, string groupId, string username, string reason)
+		{
+			_declineJoinGroupRequest (callbackId, groupId, username, reason);
+		}
+		public override void acceptInvitationFromGroup (int callbackId, string groupId, string username)
+		{
+			_acceptInvitationFromGroup (callbackId, groupId, username);
+		}
+		public override void declineInvitationFromGroup (int callbackId, string groupId, string username, string reason)
+		{
+			_declineInvitationFromGroup (callbackId, groupId, username, reason);
+		}
+		public override string getConversation (string cid, int type, bool createIfNotExists)
+		{
+			return _getConversation (cid, type, createIfNotExists);
 		}
 	}
 

@@ -187,6 +187,27 @@ namespace EaseMob{
 
 		}
 
+		public override void approveJoinGroupRequest (int callbackId, string groupId, string username)
+		{
+
+		}
+		public override void declineJoinGroupRequest (int callbackId, string groupId, string username, string reason)
+		{
+
+		}
+		public override void acceptInvitationFromGroup (int callbackId, string groupId, string username)
+		{
+
+		}
+		public override void declineInvitationFromGroup (int callbackId, string groupId, string username, string reason)
+		{
+
+		}
+		public override string getConversation (string cid, int type, bool createIfNotExists)
+		{
+			return "";
+		}
+
 
 	}
 

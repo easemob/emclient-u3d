@@ -387,6 +387,37 @@ namespace EaseMob{
 		{
 			doBaseCallback (jsonParam);
 		}
+
+		public void ApproveJoinGroupRequestCallback(string jsonParam)
+		{
+			doBaseCallback (jsonParam);
+		}
+
+		public void DeclineJoinGroupRequestCallback(string jsonParam)
+		{
+			doBaseCallback (jsonParam);
+		}
+
+		public void AcceptInvitationFromGroupCallback(string jsonParam)
+		{
+			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			int callbackId = (int)jsonData ["callbackid"];
+			string on = (string)jsonData ["on"];
+			EMGroupCallback cb = (EMGroupCallback)EMClient.Instance.GetCallbackById (callbackId);
+
+			if (on.Equals ("success")) {
+				EMGroup group = EMTools.json2group ((string)jsonData ["data"]);
+				cb.onSuccessJoinGroupCallback (group);
+				EMClient.Instance.RemoveCallbackById (callbackId);
+			} else if (on.Equals ("error")) {
+				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+			}
+		}
+
+		public void DeclineInvitationFromGroupCallback(string jsonParam)
+		{
+			doBaseCallback (jsonParam);
+		}
 			
 		private void doBaseCallback(string jsonParam)
 		{

@@ -9,8 +9,11 @@ namespace EaseMob{
 
 		public delegate void SuccessGetGroupListCallback(List<EMGroup> groups);
 
+		public delegate void SuccessJoinGroupCallback(EMGroup group);
+
 		public SuccessGetBlockedUsers onSuccessGetBlockedUsers;
 		public SuccessCreateGroupCallback onSuccessCreateGroupCallback;
 		public SuccessGetGroupListCallback onSuccessGetGroupListCallback;
+		public SuccessJoinGroupCallback onSuccessJoinGroupCallback;
 	}
 }

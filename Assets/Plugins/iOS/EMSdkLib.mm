@@ -458,7 +458,7 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     NSString *cbName = @"AcceptInvitationFromGroupCallback";
     [[EMClient sharedClient].groupManager acceptInvitationFromGroup:aGroupId inviter:aUsername completion:^(EMGroup *aGroup, EMError *aError) {
         if (!aError) {
-            [self sendSuccessCallback:cbName CallbackId: cbId];
+            [self sendSuccessCallback:cbName CallbackId: cbId data:[self toJson:[self group2dic:aGroup]]];
         }
         else if (aError){
             [self sendErrorCallback:cbName withError:aError];
@@ -633,6 +633,27 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
                                                         }];
 }
 
+- (NSString *)getConversation:(NSString *)cid type:(int)type createIfNotExists:(bool)createIfNotExists
+{
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:cid type:(EMConversationType)type createIfNotExist:createIfNotExists];
+    return [self toJson:[self conversation2dic:conversation]];
+}
+
+- (void) acceptJoinApplication:(NSString *)aGroupId applicant:(NSString *)aUsername
+{
+    [[EMClient sharedClient].groupManager acceptJoinApplication:aGroupId applicant:aUsername];
+}
+
+- (void) declineJoinApplication:(NSString *)aGroupId applicant:(NSString *)aUsername reason:(NSString *)aReason
+{
+    [[EMClient sharedClient].groupManager declineJoinApplication:aGroupId applicant:aUsername reason:aReason];
+}
+
+- (void) acceptInvitationFromGroup:(NSString *)aGroupId inviter:(NSString *)aUsername
+{
+    EMError *error = nil;
+    [[EMClient sharedClient].groupManager acceptInvitationFromGroup:aGroupId inviter:aUsername error:&error];
+}
 
 - (void) sendMessage:(EMMessage *)message CallbackId:(int)callbackId
 {
@@ -1016,4 +1037,8 @@ extern "C" {
         [[EMSdkLib sharedSdkLib] downloadAttachmentFrom:CreateNSString(username) messageId:CreateNSString(msgId) callbackId:(int)cbId];
     }
 
+    const char* _getConversation (const char* cid, int type, bool createIfNotExists)
+    {
+        return MakeStringCopy([[[EMSdkLib sharedSdkLib] getConversation:CreateNSString(cid) type:type createIfNotExists:createIfNotExists] UTF8String]);
+    }
 }
