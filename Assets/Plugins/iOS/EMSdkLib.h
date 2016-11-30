@@ -60,6 +60,6 @@
 - (void) acceptInvitationFromGroup:(NSString *)aGroupId inviter:(NSString *) aUsername callbackId:(int) cbId;
 - (void) declineInvitationFromGroup:(NSString *)aGroupId inviter:(NSString *) aUsername reason:(NSString *)aReason callbackId:(int) cbId;
 - (void) downloadAttachmentFrom:(NSString *)username messageId:(NSString *)msgId callbackId:(int)cbId;
-
+- (NSString *)getConversation:(NSString *)cid type:(int)type createIfNotExists:(bool)createIfNotExists;
 
 @end

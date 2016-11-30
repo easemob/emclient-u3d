@@ -251,6 +251,39 @@ namespace EaseMob{
 			sdk.getBlockedUsers (cb.CallbackId, groupId);
 		}
 		#endregion
+
+		#region
+		public void approveJoinGroupRequest (string groupId, string username,EMBaseCallback cb)
+		{
+			AddCallbackToList (cb);
+			sdk.approveJoinGroupRequest (cb.CallbackId, groupId, username);
+		}
+
+		public void declineJoinGroupRequest (string groupId, string username, string reason,EMBaseCallback cb)
+		{
+			AddCallbackToList (cb);
+			sdk.declineJoinGroupRequest (cb.CallbackId, groupId, username, reason);
+		}
+
+		public void acceptInvitationFromGroup(string groupId, string username,EMGroupCallback cb)
+		{
+			AddCallbackToList (cb);
+			sdk.acceptInvitationFromGroup (cb.CallbackId, groupId, username);
+		}
+
+		public void declineInvitationFromGroup (string groupId, string username, string reason,EMBaseCallback cb)
+		{
+			AddCallbackToList (cb);
+			sdk.declineInvitationFromGroup (cb.CallbackId, groupId, username, reason);
+		}
+
+		public EMConversation getConversation (string cid, ConversationType type, bool createIfNotExists)
+		{
+			string data = sdk.getConversation (cid, (int)type, createIfNotExists);
+			return EMTools.json2conversation (data);
+		}
+
+		#endregion
 			
 		public EMBaseCallback GetCallbackById(int callbackId)
 		{

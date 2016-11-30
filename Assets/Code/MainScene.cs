@@ -44,8 +44,6 @@ public class MainScene : MonoBehaviour {
 		
 		rawImage.gameObject.SetActive(false);
 
-		setConnectionListener ();
-
 		setMessageRecvListener ();
 
 		setGroupListener ();
@@ -355,18 +353,7 @@ public class MainScene : MonoBehaviour {
 		filePath.text = path;
 	}
 
-	private void setConnectionListener()
-	{
-		EMConnListenerCallback connCb = new EMConnListenerCallback ();
-		connCb.onConnectionCallback = () => {
 
-		};
-		connCb.onDisconnectedCallback = (code) => {
-			logText.color = new Color (255, 0, 0);
-			logText.text = "Disconnected! code=" + code;
-		};
-		EMClient.Instance.connListenerCallback = connCb;
-	}
 
 	private void setMessageRecvListener()
 	{

@@ -9,6 +9,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.bool;
+import android.R.integer;
 import android.app.Application;
 import android.util.Log;
 
@@ -20,6 +22,7 @@ import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMGroup;
+import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMGroupManager.EMGroupOptions;
 import com.hyphenate.chat.EMGroupManager.EMGroupStyle;
 import com.hyphenate.chat.EMMessage;
@@ -310,6 +313,14 @@ public class EMSdkLib {
 			e.printStackTrace();
 			return "";
 		}
+	}
+	
+	public String getConversation(String cid, int type, boolean createIfNotExists)
+	{
+		EMConversation conversation = EMClient.getInstance().chatManager().getConversation(cid, EMConversationType.values()[type], createIfNotExists);
+		if(conversation != null)
+			return EMTools.conversation2json(conversation).toString();
+		return "";
 	}
 	
 	//【API】获取指定会话聊天记录
@@ -676,6 +687,12 @@ public class EMSdkLib {
 	public String getGroup(String groupId)
 	{
 		EMGroup group = EMClient.getInstance().groupManager().getGroup(groupId);
+		if(group == null)
+			try {
+				group = EMClient.getInstance().groupManager().getGroupFromServer(groupId);
+			} catch (HyphenateException e) {
+				e.printStackTrace();
+			}
 		return EMTools.group2json(group).toString();
 	}
 	
@@ -936,6 +953,89 @@ public class EMSdkLib {
 			}
 		});
 		EMClient.getInstance().chatManager().downloadAttachment(message);
+	}
+	
+	public void approveJoinGroupRequest(final int callbackId,String groupId,String username)
+	{
+		final String cbName = "ApproveJoinGroupRequestCallback";
+		EMClient.getInstance().groupManager().asyncAcceptApplication(username, groupId, new EMCallBack() {
+			
+			@Override
+			public void onSuccess() {
+				sendSuccCallback(callbackId, cbName);
+			}
+			
+			@Override
+			public void onProgress(int progress, String status) {
+				sendInProgressCallback(callbackId, cbName, progress, status);
+			}
+			
+			@Override
+			public void onError(int code, String message) {
+				sendErrorCallbac(callbackId, cbName, code, message);
+			}
+		});
+	}
+	
+	public void declineJoinGroupRequest(final int callbackId,String groupId,String username,String reason)
+	{
+		final String cbName = "DeclineJoinGroupRequestCallback";
+		EMClient.getInstance().groupManager().asyncDeclineApplication(username, groupId, reason,new EMCallBack() {
+			
+			@Override
+			public void onSuccess() {
+				sendSuccCallback(callbackId, cbName);
+			}
+			
+			@Override
+			public void onProgress(int progress, String status) {
+				sendInProgressCallback(cbName, progress, status);
+			}
+			
+			@Override
+			public void onError(int code, String message) {
+				sendErrorCallbac(cbName, code, message);
+			}
+		});
+	}
+	
+	public void acceptInvitationFromGroup(final int callbackId,String groupId,String username)
+	{
+		final String cbName = "AcceptInvitationFromGroupCallback";
+		EMClient.getInstance().groupManager().asyncAcceptInvitation(groupId, username, new EMValueCallBack<EMGroup>() {
+
+			@Override
+			public void onError(int code, String message) {
+				sendErrorCallbac(cbName, code, message);
+			}
+
+			@Override
+			public void onSuccess(EMGroup group) {
+				sendSuccCallback(callbackId, cbName, EMTools.group2json(group).toString());
+			}
+		});
+	}
+	
+	public void declineInvitationFromGroup(final int callbackId,String groupId,String username,String reason)
+	{
+		final String cbName = "DeclineInvitationFromGroupCallback";
+		EMClient.getInstance().groupManager().asyncDeclineInvitation(groupId, username,reason, new EMCallBack() {
+			
+			@Override
+			public void onSuccess() {
+				sendSuccCallback(callbackId, cbName);
+			}
+			
+			@Override
+			public void onProgress(int progress, String status) {
+				sendInProgressCallback(callbackId, cbName, progress, status);
+			}
+			
+			@Override
+			public void onError(int code, String message) {
+				sendErrorCallbac(callbackId, cbName, code, message);
+			}
+		});
 	}
 	
 	public void sendCallback(String objName, String cbName, final String jsonParams)
