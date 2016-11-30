@@ -639,22 +639,6 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     return [self toJson:[self conversation2dic:conversation]];
 }
 
-- (void) acceptJoinApplication:(NSString *)aGroupId applicant:(NSString *)aUsername
-{
-    [[EMClient sharedClient].groupManager acceptJoinApplication:aGroupId applicant:aUsername];
-}
-
-- (void) declineJoinApplication:(NSString *)aGroupId applicant:(NSString *)aUsername reason:(NSString *)aReason
-{
-    [[EMClient sharedClient].groupManager declineJoinApplication:aGroupId applicant:aUsername reason:aReason];
-}
-
-- (void) acceptInvitationFromGroup:(NSString *)aGroupId inviter:(NSString *)aUsername
-{
-    EMError *error = nil;
-    [[EMClient sharedClient].groupManager acceptInvitationFromGroup:aGroupId inviter:aUsername error:&error];
-}
-
 - (void) sendMessage:(EMMessage *)message CallbackId:(int)callbackId
 {
     NSString *cbName = @"SendMessageCallback";
