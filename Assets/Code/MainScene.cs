@@ -28,13 +28,23 @@ public class MainScene : MonoBehaviour {
 	public Button sendGroupFileMsgBtn;
 	public InputField groupName;
 	public InputField groupUser;
-	public Button createGroupBtn;
+	public Button createApprovalPublicGroupBtn;
+	public Button createOpenPublicGroupBtn;
+	public Button createOwnerInvitePrivateGroupBtn;
+	public Button createMemberInvitePrivateGroupBtn;
 	public Button leaveGroupBtn;
 	public Button getGroupsBtn;
 	public Button addToGroupBtn;
 	public Button inviteToGroupBtn;
 	public Button RmUserFromGroupBtn;
 	public Button destroyGroupBtn;
+	public Button joinGroupBtn;
+	public Button applyToJoinGroupBtn;
+	public Button acceptApplicationBtn;
+	public Button rejectApplicationBtn;
+	public Button acceptInvitationBtn;
+	public Button rejectInvitationBtn;
+	public Button getConversationsBtn;
 
 	private List<Dropdown.OptionData> friendList = new List<Dropdown.OptionData>();
 	private List<EMGroup> groupList = new List<EMGroup>();
@@ -155,17 +165,71 @@ public class MainScene : MonoBehaviour {
 			EMClient.Instance.SendFileMessage(filePath.text,groupName.text,ChatType.GroupChat,cb);
 		});
 
-		createGroupBtn.onClick.AddListener (delegate () {
-			if(groupName.text.Length > 0){
-				EMGroupCallback cb  = new EMGroupCallback();
-				cb.onSuccessCreateGroupCallback = (group) => {
-					logText.text = "create suc. groupId="+group.mGroupId;
-				};
-				cb.onErrorCallback = (code,msg) => {
+//		createOpenPublicGroupBtn.onClick.AddListener (delegate () {
+//			if(groupName.text.Length > 0){
+//				EMGroupCallback cb  = new EMGroupCallback();
+//				cb.onSuccessCreateGroupCallback = (group) => {
+//					logText.text = "create suc. groupId="+group.mGroupId;
+//				};
+//				cb.onErrorCallback = (code,msg) => {
+//
+//				};
+//				EMClient.Instance.createGroup(groupName.text,"desc:"+groupName.text,new string[0],"reason",200,GroupStyle.GroupStylePublicOpenJoin,cb);
+//			}
+//		});
+		Dictionary<Button, GroupStyle> dictCreateGroupButtons = new Dictionary<Button, GroupStyle> ();
+		dictCreateGroupButtons.Add (createApprovalPublicGroupBtn, GroupStyle.GroupStylePublicJoinNeedApproval);
+		dictCreateGroupButtons.Add (createOpenPublicGroupBtn, GroupStyle.GroupStylePublicOpenJoin);
+		dictCreateGroupButtons.Add (createOwnerInvitePrivateGroupBtn, GroupStyle.GroupStylePrivateOnlyOwnerInvite);
+		dictCreateGroupButtons.Add (createMemberInvitePrivateGroupBtn, GroupStyle.GroupStylePrivateMemberCanInvite);
 
-				};
-				EMClient.Instance.createGroup(groupName.text,"desc:"+groupName.text,new string[0],"reason",200,GroupStyle.GroupStylePublicOpenJoin,cb);
-			}
+		foreach (var item in dictCreateGroupButtons) {
+			item.Key.onClick.AddListener (delegate () {
+				if(groupName.text.Length > 0){
+					EMGroupCallback cb  = new EMGroupCallback();
+					cb.onSuccessCreateGroupCallback = (group) => {
+						logText.text = "create suc. groupId="+group.mGroupId;
+					};
+					cb.onErrorCallback = (code,msg) => {
+
+					};
+					EMClient.Instance.createGroup(groupName.text,"desc:"+groupName.text,new string[0],"reason",200,item.Value,cb);
+				}
+			});
+		}
+
+		joinGroupBtn.onClick.AddListener (delegate () {
+			EMBaseCallback cb = new EMBaseCallback();
+			cb.onSuccessCallback = () => {
+				logText.text = "join group success";
+			};
+			cb.onProgressCallback = (progress,status) => {
+
+			};
+			cb.onErrorCallback = (code,msg) => {
+				logText.text = "join group failure";
+			};
+			if(groupName.text.Length > 0)
+				EMClient.Instance.joinGroup(groupName.text,cb);
+			else
+				logText.text = "input group id first";
+		});
+
+		applyToJoinGroupBtn.onClick.AddListener (delegate () {
+			EMBaseCallback cb = new EMBaseCallback();
+			cb.onSuccessCallback = () => {
+				logText.text = "join group success";
+			};
+			cb.onProgressCallback = (progress,status) => {
+
+			};
+			cb.onErrorCallback = (code,msg) => {
+				logText.text = "join group failure";
+			};
+			if(groupName.text.Length > 0)
+				EMClient.Instance.applyJoinToGroup(groupName.text,"pls",cb);
+			else
+				logText.text = "input group id first";
 		});
 
 		leaveGroupBtn.onClick.AddListener (delegate () {
@@ -184,7 +248,7 @@ public class MainScene : MonoBehaviour {
 			else
 				logText.text = "input group id first";
 		});
-
+				
 		getGroupsBtn.onClick.AddListener (delegate() {
 			logText.text = "";
 			groupList.Clear();
@@ -201,6 +265,14 @@ public class MainScene : MonoBehaviour {
 
 			};
 			EMClient.Instance.getJoinedGroupsFromServer(cb);
+		});
+
+		getConversationsBtn.onClick.AddListener (delegate() {
+			logText.text = "conversation list:\n";
+			List<EMConversation> conversations = EMClient.Instance.GetAllConversations();
+			foreach(EMConversation conv in conversations){
+				logText.text += conv.mConversationId + ":" + conv.mLastMsg.mTxt + conv.mLastMsg.mLocalPath + "\n";
+			}
 		});
 
 		addToGroupBtn.onClick.AddListener (delegate() {
@@ -265,6 +337,79 @@ public class MainScene : MonoBehaviour {
 			};
 			if(groupName.text.Length > 0)
 				EMClient.Instance.destroyGroup(groupName.text,cb);
+			else
+				logText.text = "input group id first";
+		});
+
+		acceptApplicationBtn.onClick.AddListener (delegate () {
+			EMBaseCallback cb = new EMBaseCallback();
+			cb.onSuccessCallback = () => {
+				logText.text = "accept group application success";
+			};
+			cb.onProgressCallback = (progress,status) => {
+
+			};
+			cb.onErrorCallback = (code,msg) => {
+				logText.text = "accept group application failure";
+			};
+			if(groupName.text.Length > 0){
+				string user = groupUser.text;
+				EMClient.Instance.approveJoinGroupRequest(groupName.text,user,cb);
+			}
+			else
+				logText.text = "input group id first";
+		});
+
+		rejectApplicationBtn.onClick.AddListener (delegate () {
+			EMBaseCallback cb = new EMBaseCallback();
+			cb.onSuccessCallback = () => {
+				logText.text = "reject group application success";
+			};
+			cb.onProgressCallback = (progress,status) => {
+
+			};
+			cb.onErrorCallback = (code,msg) => {
+				logText.text = "reject group application failure";
+			};
+			if(groupName.text.Length > 0){
+				string user = groupUser.text;
+				EMClient.Instance.declineJoinGroupRequest(groupName.text,user,"sorry",cb);
+			}
+			else
+				logText.text = "input group id first";
+		});
+
+		acceptInvitationBtn.onClick.AddListener (delegate () {
+			EMGroupCallback cb  = new EMGroupCallback();
+			cb.onSuccessJoinGroupCallback = (group) => {
+				logText.text = "accept invitation suc. groupId="+group.mGroupId;
+			};
+			cb.onErrorCallback = (code,msg) => {
+
+			};
+			if(groupName.text.Length > 0){
+				string user = groupUser.text;
+				EMClient.Instance.acceptInvitationFromGroup(groupName.text,user,cb);
+			}
+			else
+				logText.text = "input group id first";
+		});
+
+		rejectInvitationBtn.onClick.AddListener (delegate () {
+			EMBaseCallback cb = new EMBaseCallback();
+			cb.onSuccessCallback = () => {
+				logText.text = "reject group invitation success";
+			};
+			cb.onProgressCallback = (progress,status) => {
+
+			};
+			cb.onErrorCallback = (code,msg) => {
+				logText.text = "reject group invitation failure";
+			};
+			if(groupName.text.Length > 0){
+				string user = groupUser.text;
+				EMClient.Instance.declineInvitationFromGroup(groupName.text,user,"sorry",cb);
+			}
 			else
 				logText.text = "input group id first";
 		});
