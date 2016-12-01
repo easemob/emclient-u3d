@@ -433,6 +433,7 @@ public class EMSdkLib {
 	//【API】
 	public void createGroup(final int callbackId, final String groupName, final String desc,final String strMembers,final String reason, final int maxUsers,final int style)
 	{
+		Log.d(TAG, "createGroup style="+style);
 		EMGroupOptions options = new EMGroupOptions();
 		options.maxUsers = maxUsers;
 		switch (style) {
@@ -1036,6 +1037,30 @@ public class EMSdkLib {
 				sendErrorCallbac(callbackId, cbName, code, message);
 			}
 		});
+	}
+	
+	public void deleteMessagesAsExitGroup(boolean del)
+	{
+		EMOptions options = EMClient.getInstance().getOptions();
+		options.setDeleteMessagesAsExitGroup(del);
+	}
+	
+	public void isAutoAcceptGroupInvitation(boolean isAuto)
+	{
+		EMOptions options = EMClient.getInstance().getOptions();
+		options.setAutoAcceptGroupInvitation(isAuto);
+	}
+	
+	public void isSortMessageByServerTime(boolean isSort)
+	{
+		EMOptions options = EMClient.getInstance().getOptions();
+		options.setSortMessageByServerTime(isSort);
+	}
+	
+	public void requireDeliveryAck(boolean isReq)
+	{
+		EMOptions options = EMClient.getInstance().getOptions();
+		options.setRequireDeliveryAck(isReq);
 	}
 	
 	public void sendCallback(String objName, String cbName, final String jsonParams)

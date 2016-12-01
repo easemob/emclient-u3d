@@ -93,8 +93,9 @@ public class EMTools {
 			json.put("mMemCount", group.getMemberCount());
 			json.put("mMembers", listString2String(group.getMembers()));
 			json.put("mIsPublic", group.isPublic()?"true":"false");
-//			json.put("mIsAllowInvites", group.isAllowInvites()?"true":"false");
+			json.put("mIsAllowInvites", group.isAllowInvites()?"true":"false");
 			json.put("mIsMsgBlocked", group.isMsgBlocked()?"true":"false");
+			json.put("mIsNeedApproval", group.isMembersOnly()?"true":"false");
 
 		} catch (JSONException e) {
 			e.printStackTrace();

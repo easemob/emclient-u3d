@@ -115,7 +115,17 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern string _getConversation (string cid, int type, bool createIfNotExists);
 
+		[DllImport ("__Internal")]
+		private static extern void _deleteMessagesAsExitGroup (bool del);
 
+		[DllImport ("__Internal")]
+		private static extern void _isAutoAcceptGroupInvitation (bool isAuto);
+
+		[DllImport ("__Internal")]
+		private static extern void _isSortMessageByServerTime(bool isSort);
+
+		[DllImport ("__Internal")]
+		private static extern void _requireDeliveryAck(bool isReq);
 
 
 		public override int createAccount (string username, string password)
@@ -316,6 +326,22 @@ namespace EaseMob{
 		public override string getConversation (string cid, int type, bool createIfNotExists)
 		{
 			return _getConversation (cid, type, createIfNotExists);
+		}
+		public override void deleteMessagesAsExitGroup (bool del)
+		{
+			_deleteMessagesAsExitGroup (del);
+		}
+		public override void isAutoAcceptGroupInvitation(bool isAuto)
+		{
+			_isAutoAcceptGroupInvitation (isAuto);
+		}
+		public override void isSortMessageByServerTime(bool isSort)
+		{
+			_isSortMessageByServerTime (isSort);
+		}
+		public override void requireDeliveryAck(bool isReq)
+		{
+			_requireDeliveryAck (isReq);
 		}
 	}
 

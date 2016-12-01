@@ -208,6 +208,22 @@ namespace EaseMob{
 			return "";
 		}
 
+		public override void deleteMessagesAsExitGroup (bool del)
+		{
+
+		}
+		public override void isAutoAcceptGroupInvitation(bool isAuto)
+		{
+
+		}
+		public override void isSortMessageByServerTime(bool isSort)
+		{
+
+		}
+		public override void requireDeliveryAck(bool isReq)
+		{
+
+		}
 
 	}
 

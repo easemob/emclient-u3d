@@ -96,6 +96,8 @@ namespace EaseMob{
 			group.mIsPublic = ((string)jd ["mIsPublic"]).Equals("true");
 			group.mIsMsgBlocked = ((string)jd ["mIsMsgBlocked"]).Equals("true");
 			group.mMembers = (string)jd ["mMembers"];
+			group.mIsAllowInvites = ((string)jd ["mIsAllowInvites"]).Equals ("true");
+			group.mIsNeedApproval = ((string)jd ["mIsNeedApproval"]).Equals ("true");
 
 			return group;
 		}
