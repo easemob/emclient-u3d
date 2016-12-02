@@ -431,9 +431,11 @@ namespace EaseMob{
 			} else if (on.Equals ("progress")) {
 				cb.onProgressCallback ((int)jsonData ["progress"], (string)jsonData ["status"]);
 			} else if (on.Equals ("error")) {
-				EMClient.Instance.loginCallback.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+				EMClient.Instance.RemoveCallbackById (callbackId);
 			} else {
-				EMClient.Instance.loginCallback.onErrorCallback (-999999, "unknown error");
+				cb.onErrorCallback (-999999, "unknown error");
+				EMClient.Instance.RemoveCallbackById (callbackId);
 			}
 		}
 			

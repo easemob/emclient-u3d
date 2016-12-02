@@ -265,7 +265,7 @@ public class MainScene : MonoBehaviour {
 
 			};
 			cb.onErrorCallback = (code,msg) => {
-
+				logText.text = "failed to addUsersToGroup: " + msg;
 			};
 			string[] users = {groupUser.text};
 			EMClient.Instance.addUsersToGroup(groupName.text,users,cb);
@@ -280,7 +280,7 @@ public class MainScene : MonoBehaviour {
 
 			};
 			cb.onErrorCallback = (code,msg) => {
-
+				logText.text = "failed to inviteUser: " + msg;
 			};
 			if(groupName.text.Length > 0){
 				string[] users = {groupUser.text};
@@ -545,8 +545,8 @@ public class MainScene : MonoBehaviour {
 		groupListenerCallback.onUserRemovedCallback = (groupId,groupName) => {
 			logText.text = "received onUserRemovedCallback:[groupId="+groupId+",groupName="+groupName;
 		};
-		groupListenerCallback.onInvitationAccepted = (groupId, inviter, reason) => {
-			logText.text = "received onInvitationAccepted:[groupId="+groupId+",inviter="+inviter+",reason="+reason;
+		groupListenerCallback.onInvitationReceived = (groupId, groupName, inviter, reason) => {
+			logText.text = "received onInvitationReceived:[groupId="+groupId+",inviter="+inviter+",reason="+reason;
 		};
 		groupListenerCallback.onInvitationDeclined = (groupId, invitee, reason) => {
 			logText.text = "received onInvitationDeclined:[groupId="+groupId+",invitee="+invitee+",reason="+reason;
