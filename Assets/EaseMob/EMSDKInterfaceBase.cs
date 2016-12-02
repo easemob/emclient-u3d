@@ -77,6 +77,10 @@
 		public abstract void acceptInvitationFromGroup (int callbackId, string groupId, string username);
 		public abstract void declineInvitationFromGroup (int callbackId, string groupId, string username, string reason);
 		public abstract string getConversation (string cid, int type, bool createIfNotExists);
+		public abstract void deleteMessagesAsExitGroup (bool del);
+		public abstract void isAutoAcceptGroupInvitation(bool isAuto);
+		public abstract void isSortMessageByServerTime(bool isSort);
+		public abstract void requireDeliveryAck(bool isReq);
 
 	}
 

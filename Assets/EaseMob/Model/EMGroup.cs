@@ -9,5 +9,7 @@
 		public string mMembers{ set; get; }
 		public bool mIsPublic{ set; get; }
 		public bool mIsMsgBlocked{ set; get; }
+		public bool mIsAllowInvites{ set; get; }
+		public bool mIsNeedApproval{ set; get; }
 	}
 }

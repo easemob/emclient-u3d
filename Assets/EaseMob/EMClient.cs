@@ -283,6 +283,23 @@ namespace EaseMob{
 			return EMTools.json2conversation (data);
 		}
 
+		public void deleteMessagesAsExitGroup (bool del)
+		{
+			sdk.deleteMessagesAsExitGroup (del);
+		}
+		public void isAutoAcceptGroupInvitation(bool isAuto)
+		{
+			sdk.isAutoAcceptGroupInvitation (isAuto);
+		}
+		public void isSortMessageByServerTime(bool isSort)
+		{
+			sdk.isSortMessageByServerTime (isSort);
+		}
+		public void requireDeliveryAck(bool isReq)
+		{
+			sdk.requireDeliveryAck (isReq);
+		}
+			
 		#endregion
 			
 		public EMBaseCallback GetCallbackById(int callbackId)

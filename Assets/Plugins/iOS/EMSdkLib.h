@@ -19,7 +19,7 @@
 
 - (int) createAccount:(NSString *)username withPwd: (NSString *)password;
 - (void) login:(NSString *)username withPwd: (NSString *)password;
-- (void) logout:(bool)flag;
+- (void) logout:(BOOL)flag;
 - (void) sendTextMessage:(NSString *)content toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype;
 - (void) sendFileMessage:(NSString *)path toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype;
 - (NSString *) getAllContactsFromServer;
@@ -48,7 +48,7 @@
 - (void) unblockGroupMessage:(NSString *)aGroupId callbackId:(int) cbId;
 - (int) getUnreadMsgCount:(NSString *)fromUser;
 - (void) markAllMessagesAsRead:(NSString *)fromUser;
-- (bool) deleteConversation:(NSString *)fromUser delHistory:(bool)flag;
+- (BOOL) deleteConversation:(NSString *)fromUser delHistory:(BOOL)flag;
 - (void) removeMessage:(NSString *)fromUser messageId:(NSString *)msgId;
 
 - (void) joinGroup:(NSString *)aGroupId callbackId:(int) cbId;
@@ -60,6 +60,10 @@
 - (void) acceptInvitationFromGroup:(NSString *)aGroupId inviter:(NSString *) aUsername callbackId:(int) cbId;
 - (void) declineInvitationFromGroup:(NSString *)aGroupId inviter:(NSString *) aUsername reason:(NSString *)aReason callbackId:(int) cbId;
 - (void) downloadAttachmentFrom:(NSString *)username messageId:(NSString *)msgId callbackId:(int)cbId;
-- (NSString *)getConversation:(NSString *)cid type:(int)type createIfNotExists:(bool)createIfNotExists;
+- (NSString *)getConversation:(NSString *)cid type:(int)type createIfNotExists:(BOOL)createIfNotExists;
+- (void) deleteMessagesAsExitGroup:(BOOL)del;
+- (void) isAutoAcceptGroupInvitation:(BOOL)isAuto;
+- (void) isSortMessageByServerTime:(BOOL)isSort;
+- (void) requireDeliveryAck:(BOOL)isReq;
 
 @end

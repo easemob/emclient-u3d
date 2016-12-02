@@ -244,6 +244,22 @@ namespace EaseMob{
 		{
 			return SDKCall<string> ("getConversation",cid,type,createIfNotExists);
 		}
+		public override void deleteMessagesAsExitGroup (bool del)
+		{
+			SDKCall ("deleteMessagesAsExitGroup",del);
+		}
+		public override void isAutoAcceptGroupInvitation(bool isAuto)
+		{
+			SDKCall ("isAutoAcceptGroupInvitation",isAuto);
+		}
+		public override void isSortMessageByServerTime(bool isSort)
+		{
+			SDKCall ("isSortMessageByServerTime",isSort);
+		}
+		public override void requireDeliveryAck(bool isReq)
+		{
+			SDKCall ("requireDeliveryAck",isReq);
+		}
 	}
 
 }

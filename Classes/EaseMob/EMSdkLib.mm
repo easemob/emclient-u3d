@@ -393,7 +393,7 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     [conversation markAllMessagesAsRead:nil];
 }
 
-- (bool) deleteConversation:(NSString *)fromUser delHistory:(bool)flag
+- (BOOL) deleteConversation:(NSString *)fromUser delHistory:(BOOL)flag
 {
     [[EMClient sharedClient].chatManager deleteConversation:fromUser isDeleteMessages:flag completion:nil];
     return YES;
@@ -633,26 +633,30 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
                                                         }];
 }
 
-- (NSString *)getConversation:(NSString *)cid type:(int)type createIfNotExists:(bool)createIfNotExists
+- (NSString *)getConversation:(NSString *)cid type:(int)type createIfNotExists:(BOOL)createIfNotExists
 {
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:cid type:(EMConversationType)type createIfNotExist:createIfNotExists];
     return [self toJson:[self conversation2dic:conversation]];
 }
 
-- (void) acceptJoinApplication:(NSString *)aGroupId applicant:(NSString *)aUsername
+- (void) deleteMessagesAsExitGroup:(BOOL)del
 {
-    [[EMClient sharedClient].groupManager acceptJoinApplication:aGroupId applicant:aUsername];
+    [EMClient sharedClient].options.isDeleteMessagesWhenExitGroup = del;
 }
 
-- (void) declineJoinApplication:(NSString *)aGroupId applicant:(NSString *)aUsername reason:(NSString *)aReason
+- (void) isAutoAcceptGroupInvitation:(BOOL)isAuto
 {
-    [[EMClient sharedClient].groupManager declineJoinApplication:aGroupId applicant:aUsername reason:aReason];
+    [EMClient sharedClient].options.isAutoAcceptGroupInvitation = isAuto;
 }
 
-- (void) acceptInvitationFromGroup:(NSString *)aGroupId inviter:(NSString *)aUsername
+- (void) isSortMessageByServerTime:(BOOL)isSort
 {
-    EMError *error = nil;
-    [[EMClient sharedClient].groupManager acceptInvitationFromGroup:aGroupId inviter:aUsername error:&error];
+    [EMClient sharedClient].options.sortMessageByServerTime = isSort;
+}
+
+- (void) requireDeliveryAck:(BOOL)isReq
+{
+    [EMClient sharedClient].options.enableDeliveryAck = isReq;
 }
 
 - (void) sendMessage:(EMMessage *)message CallbackId:(int)callbackId
@@ -798,8 +802,16 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     else
         [dic setObject:@"" forKey:@"mMembers"];
     [dic setObject:group.isPublic?@"true":@"false" forKey:@"mIsPublic"];
-//    [dic setObject:@"true" forKey:@"mIsAllowInvites"];//TODO
     [dic setObject:group.isBlocked?@"true":@"false" forKey:@"mIsMsgBlocked"];
+    if(group.setting.style == EMGroupStylePrivateMemberCanInvite)
+        [dic setObject:@"true" forKey:@"mIsAllowInvites"];
+    else
+        [dic setObject:@"false" forKey:@"mIsAllowInvites"];
+    if(group.setting.style == EMGroupStylePublicOpenJoin)
+        [dic setObject:@"false" forKey:@"mIsNeedApproval"];
+    else
+        [dic setObject:@"true" forKey:@"mIsNeedApproval"];
+
     return [NSDictionary dictionaryWithDictionary:dic];
 }
 
@@ -906,7 +918,7 @@ extern "C" {
         [[EMSdkLib sharedSdkLib] markAllMessagesAsRead:CreateNSString(username)];
     }
     
-    bool _deleteConversation (const char* username, bool isDeleteHistory)
+    BOOL _deleteConversation (const char* username, bool isDeleteHistory)
     {
         return [[EMSdkLib sharedSdkLib] deleteConversation:CreateNSString(username) delHistory:isDeleteHistory];
     }
@@ -1040,5 +1052,21 @@ extern "C" {
     const char* _getConversation (const char* cid, int type, bool createIfNotExists)
     {
         return MakeStringCopy([[[EMSdkLib sharedSdkLib] getConversation:CreateNSString(cid) type:type createIfNotExists:createIfNotExists] UTF8String]);
+    }
+    void _deleteMessagesAsExitGroup (bool del)
+    {
+        [[EMSdkLib sharedSdkLib] deleteMessagesAsExitGroup:del];
+    }
+    void _isAutoAcceptGroupInvitation(bool isAuto)
+    {
+        [[EMSdkLib sharedSdkLib] isAutoAcceptGroupInvitation:isAuto];
+    }
+    void _isSortMessageByServerTime(bool isSort)
+    {
+        [[EMSdkLib sharedSdkLib] isSortMessageByServerTime:isSort];
+    }
+    void _requireDeliveryAck(bool isReq)
+    {
+        [[EMSdkLib sharedSdkLib] requireDeliveryAck:isReq];
     }
 }

@@ -28,10 +28,8 @@ public class MainScene : MonoBehaviour {
 	public Button sendGroupFileMsgBtn;
 	public InputField groupName;
 	public InputField groupUser;
-	public Button createApprovalPublicGroupBtn;
-	public Button createOpenPublicGroupBtn;
-	public Button createOwnerInvitePrivateGroupBtn;
-	public Button createMemberInvitePrivateGroupBtn;
+	public Button createGroupBtn;
+	public Dropdown groupStyle;
 	public Button leaveGroupBtn;
 	public Button getGroupsBtn;
 	public Button addToGroupBtn;
@@ -165,38 +163,21 @@ public class MainScene : MonoBehaviour {
 			EMClient.Instance.SendFileMessage(filePath.text,groupName.text,ChatType.GroupChat,cb);
 		});
 
-//		createOpenPublicGroupBtn.onClick.AddListener (delegate () {
-//			if(groupName.text.Length > 0){
-//				EMGroupCallback cb  = new EMGroupCallback();
-//				cb.onSuccessCreateGroupCallback = (group) => {
-//					logText.text = "create suc. groupId="+group.mGroupId;
-//				};
-//				cb.onErrorCallback = (code,msg) => {
-//
-//				};
-//				EMClient.Instance.createGroup(groupName.text,"desc:"+groupName.text,new string[0],"reason",200,GroupStyle.GroupStylePublicOpenJoin,cb);
-//			}
-//		});
-		Dictionary<Button, GroupStyle> dictCreateGroupButtons = new Dictionary<Button, GroupStyle> ();
-		dictCreateGroupButtons.Add (createApprovalPublicGroupBtn, GroupStyle.GroupStylePublicJoinNeedApproval);
-		dictCreateGroupButtons.Add (createOpenPublicGroupBtn, GroupStyle.GroupStylePublicOpenJoin);
-		dictCreateGroupButtons.Add (createOwnerInvitePrivateGroupBtn, GroupStyle.GroupStylePrivateOnlyOwnerInvite);
-		dictCreateGroupButtons.Add (createMemberInvitePrivateGroupBtn, GroupStyle.GroupStylePrivateMemberCanInvite);
+		createGroupBtn.onClick.AddListener (delegate () {
+			if (groupName.text.Length > 0) {
 
-		foreach (var item in dictCreateGroupButtons) {
-			item.Key.onClick.AddListener (delegate () {
-				if(groupName.text.Length > 0){
-					EMGroupCallback cb  = new EMGroupCallback();
-					cb.onSuccessCreateGroupCallback = (group) => {
-						logText.text = "create suc. groupId="+group.mGroupId;
-					};
-					cb.onErrorCallback = (code,msg) => {
+				EMGroupCallback cb = new EMGroupCallback ();
+				cb.onSuccessCreateGroupCallback = (group) => {
+					logText.text = "create group success";
+				};
+				cb.onErrorCallback = (code, msg) => {
 
-					};
-					EMClient.Instance.createGroup(groupName.text,"desc:"+groupName.text,new string[0],"reason",200,item.Value,cb);
-				}
-			});
-		}
+				};
+				EMClient.Instance.createGroup (groupName.text, "desc:" + groupName.text, new string[0], "reason", 200, (GroupStyle)groupStyle.value, cb);
+			}
+		});
+					
+			
 
 		joinGroupBtn.onClick.AddListener (delegate () {
 			EMBaseCallback cb = new EMBaseCallback();
