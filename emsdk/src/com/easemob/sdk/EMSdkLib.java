@@ -9,8 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.bool;
-import android.R.integer;
 import android.app.Application;
 import android.util.Log;
 
@@ -105,9 +103,9 @@ public class EMSdkLib {
 			
 			@Override
 			public void onSuccess() {
+		        sendSuccCallback(cbName);
 				EMClient.getInstance().groupManager().loadAllGroups();
 		        EMClient.getInstance().chatManager().loadAllConversations();
-		        sendSuccCallback(cbName);
 			}
 			
 			@Override
