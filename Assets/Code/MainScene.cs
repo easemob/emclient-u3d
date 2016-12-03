@@ -52,10 +52,9 @@ public class MainScene : MonoBehaviour {
 		
 		rawImage.gameObject.SetActive(false);
 
+		EMClient.Instance.isAutoAcceptGroupInvitation (false);
+
 		setMessageRecvListener ();
-
-		setGroupListener ();
-
 
 		friendListBtn.onClick.AddListener (delegate {
 			friendList.Clear();
@@ -442,6 +441,7 @@ public class MainScene : MonoBehaviour {
 			EMBaseCallback cb = new EMBaseCallback();
 			cb.onSuccessCallback = () => {
 				SceneManager.LoadScene("LoginScene");
+				GlobalListener.Instance.listenerInfo = "";
 			};
 			cb.onProgressCallback = (progress,status) => {
 				
@@ -451,6 +451,8 @@ public class MainScene : MonoBehaviour {
 			};
 			EMClient.Instance.Logout(true,cb);
 		});
+
+		logText.text = GlobalListener.Instance.listenerInfo;
 	}
 			
 	IEnumerator GenCapture()
@@ -538,38 +540,4 @@ public class MainScene : MonoBehaviour {
 		EMClient.Instance.receiveMessageCallback = receiveMessageCallback;
 	}
 
-	private void setGroupListener()
-	{
-		
-		EMGroupListenerCallback groupListenerCallback = new EMGroupListenerCallback ();
-		groupListenerCallback.onUserRemovedCallback = (groupId,groupName) => {
-			logText.text = "received onUserRemovedCallback:[groupId="+groupId+",groupName="+groupName;
-		};
-		groupListenerCallback.onInvitationReceived = (groupId, groupName, inviter, reason) => {
-			logText.text = "received onInvitationReceived:[groupId="+groupId+",inviter="+inviter+",reason="+reason;
-		};
-		groupListenerCallback.onInvitationDeclined = (groupId, invitee, reason) => {
-			logText.text = "received onInvitationDeclined:[groupId="+groupId+",invitee="+invitee+",reason="+reason;
-		};
-		groupListenerCallback.onInvitationAccepted = (groupId, inviter, reason) => {
-			logText.text = "received onInvitationAccepted:[groupId="+groupId+",inviter="+inviter+",reason="+reason;
-		};
-		groupListenerCallback.onGroupDestroyed = (groupId, groupName) => {
-			logText.text = "received onGroupDestroyed:[groupId="+groupId+",groupName="+groupName;
-		};
-		groupListenerCallback.onAutoAcceptInvitationFromGroup = (groupId, inviter, inviteMessage) => {
-			logText.text = "received onAutoAcceptInvitationFromGroup:[groupId="+groupId+",inviter="+inviter+",inviteMessage="+inviteMessage;
-		};
-		groupListenerCallback.onApplicationReceived = (groupId, groupName, applicant, reason) => {
-			logText.text = "received onApplicationReceived:[groupId="+groupId+",groupName="+groupName+",applicant="+applicant+",reason="+reason;
-		};
-		groupListenerCallback.onApplicationDeclined = (groupId, groupName, decliner, reason) => {
-			logText.text = "received onApplicationDeclined:[groupId="+groupId+",groupName="+groupName+",decliner="+decliner+",reason="+reason;
-		};
-		groupListenerCallback.onApplicationAccept = (groupId, groupName, accepter) => {
-			logText.text = "received onApplicationAccept:[groupId="+groupId+",groupName="+groupName+",accepter="+accepter;
-		};
-		EMClient.Instance.groupListenerCallback = groupListenerCallback;
-
-	}
 }
