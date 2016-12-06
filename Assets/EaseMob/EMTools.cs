@@ -8,7 +8,7 @@ namespace EaseMob{
 
 		public static EMMessage json2message(string jsonParam)
 		{
-			if(jsonParam == null || jsonParam.Length == 0)
+			if(jsonParam == null || jsonParam.Length <= 3)
 				return null;
 			JsonData jd = JsonMapper.ToObject (jsonParam);
 			return json2message (jd);
@@ -81,7 +81,7 @@ namespace EaseMob{
 
 		public static EMGroup json2group(string jsondata)
 		{
-			if (jsondata == null || jsondata.Length == 0)
+			if (jsondata == null || jsondata.Length <= 3)
 				return null;
 			JsonData jd = JsonMapper.ToObject (jsondata);
 			return json2group (jd);
@@ -116,7 +116,7 @@ namespace EaseMob{
 
 		public static EMConversation json2conversation(string jsondata)
 		{
-			if(jsondata == null || jsondata.Length == 0)
+			if(jsondata == null || jsondata.Length <= 3)
 				return null;
 			JsonData jd = JsonMapper.ToObject (jsondata);
 			return json2conversation (jd);
