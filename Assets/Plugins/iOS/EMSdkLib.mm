@@ -821,9 +821,8 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     [dic setObject:conversation.conversationId forKey:@"mConversationId"];
     [dic setObject:[NSNumber numberWithInt:conversation.type] forKey:@"mConversationType"];
     [dic setObject:[NSNumber numberWithInt:conversation.unreadMessagesCount] forKey:@"mUnreadMsgCount"];
-    NSString *ext = [self toJson:conversation.ext];
-    if(ext != nil)
-        [dic setObject:ext forKey:@"mExt"];
+    if(conversation.ext != nil)
+        [dic setObject:[self toJson:conversation.ext] forKey:@"mExt"];
     else
         [dic setObject:@"" forKey:@"mExt"];
     if(conversation.latestMessage != nil)

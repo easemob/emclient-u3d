@@ -251,7 +251,10 @@ public class MainScene : MonoBehaviour {
 			logText.text = "conversation list:\n";
 			List<EMConversation> conversations = EMClient.Instance.GetAllConversations();
 			foreach(EMConversation conv in conversations){
-				logText.text += conv.mConversationId + ":" + conv.mLastMsg.mTxt + conv.mLastMsg.mLocalPath + "\n";
+				logText.text += conv.mConversationId;
+				if(conv.mLastMsg != null)
+					logText.text += ",lastmsgId=" + conv.mLastMsg.mMsgId;
+				logText.text += "\n";
 			}
 		});
 
@@ -413,11 +416,6 @@ public class MainScene : MonoBehaviour {
 			if(fromUser.text.Length == 0)
 			{
 				fromUser.placeholder.GetComponent<Text>().text = "input here first";
-				return;
-			}
-			if(msgId.text.Length == 0)
-			{
-				msgId.placeholder.GetComponent<Text>().text = "input here first";
 				return;
 			}
 
