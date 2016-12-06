@@ -198,13 +198,13 @@ public class MainScene : MonoBehaviour {
 		applyToJoinGroupBtn.onClick.AddListener (delegate () {
 			EMBaseCallback cb = new EMBaseCallback();
 			cb.onSuccessCallback = () => {
-				logText.text = "join group success";
+				logText.text = "applyToJoin group success";
 			};
 			cb.onProgressCallback = (progress,status) => {
 
 			};
 			cb.onErrorCallback = (code,msg) => {
-				logText.text = "join group failure";
+				logText.text = "applyToJoin group failure";
 			};
 			if(groupName.text.Length > 0)
 				EMClient.Instance.applyJoinToGroup(groupName.text,"pls",cb);

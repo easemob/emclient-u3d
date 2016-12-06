@@ -416,6 +416,17 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     }];
 }
 
+- (void) requestToJoinPublicGroup:(NSString *)aGroupId reason:(NSString *)reason callbackId:(int)cbId
+{
+    NSString *cbName = @"ApplyJoinToGroupCallback";
+    [[EMClient sharedClient].groupManager requestToJoinPublicGroup:aGroupId message:reason completion:^(EMGroup *group,EMError *error){
+        if(!error)
+            [self sendSuccessCallback:cbName CallbackId:cbId];
+        else
+            [self sendErrorCallback:cbName withError:error];
+    }];
+}
+
 - (void) leaveGroup:(NSString *)aGroupId callbackId:(int) cbId
 {
     NSString *cbName = @"LeaveGroupCallback";
@@ -934,7 +945,7 @@ extern "C" {
     
     void _applyJoinToGroup (int callbackId,const char* groupId, const char* reason)
     {
-        
+        [[EMSdkLib sharedSdkLib] requestToJoinPublicGroup:CreateNSString(groupId) reason:CreateNSString(reason) callbackId:callbackId];
     }
 
     void _destroyGroup(int callbackId, const char* groupId)
