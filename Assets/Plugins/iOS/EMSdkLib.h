@@ -52,6 +52,7 @@
 - (void) removeMessage:(NSString *)fromUser messageId:(NSString *)msgId;
 
 - (void) joinGroup:(NSString *)aGroupId callbackId:(int) cbId;
+- (void) requestToJoinPublicGroup:(NSString *)aGroupId reason:(NSString *)reason callbackId:(int)cbId;
 - (void) inviterUserToJoin:(NSString *) aGroupId;
 - (void) leaveGroup:(NSString *)aGroupId callbackId:(int) cbId;
 
