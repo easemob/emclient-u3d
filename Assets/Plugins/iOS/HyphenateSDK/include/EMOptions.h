@@ -14,6 +14,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "EMCommonDefs.h"
+
 /*!
  *  \~chinese 
  *  日志输出级别
@@ -64,26 +66,13 @@ typedef enum {
 @property (nonatomic, assign) EMLogLevel logLevel;
 
 /*!
- *  \~chinese 
- *  是否使用https, 默认为YES
- *
- *  \~english 
- *  Whether using https, default is YES
- */
-@property (nonatomic, assign) BOOL usingHttps;
-
-/*!
- *  \~chinese 
- *  是否使用开发环境, 默认为NO
- *
- *  只能在[EMClient initializeSDKWithOptions:]时设置，不能在程序运行过程中动态修改
+ *  \~chinese
+ *  是否只使用https, 默认为YES
  *
  *  \~english
- *  Whether using development environment, default is NO
- *
- *  Can only be set when initializing the sdk with [EMClient initializeSDKWithOptions:], can't be altered in runtime.
+ *  Whether using https only, default is YES
  */
-@property (nonatomic, assign) BOOL isSandboxMode;
+@property (nonatomic, assign) BOOL usingHttpsOnly;
 
 /*!
  *  \~chinese 
@@ -114,7 +103,7 @@ typedef enum {
  *  \~english 
  *  Whether to delete all the chat room messages when leaving the chat room, default is YES
  */
-@property (nonatomic, assign) BOOL isDeleteMessagesWhenExitChatRoom;
+//@property (nonatomic, assign) BOOL isDeleteMessagesWhenExitChatRoom;
 
 /*!
  *  \~chinese 
@@ -123,7 +112,7 @@ typedef enum {
  *  \~english
  *  Whether chat room's owner can leave the chat room, default is YES.
  */
-@property (nonatomic, assign) BOOL isChatroomOwnerLeaveAllowed;
+//@property (nonatomic, assign) BOOL isChatroomOwnerLeaveAllowed;
 
 /*!
  *  \~chinese 
@@ -141,7 +130,7 @@ typedef enum {
  *  \~english 
  *  Whether to automatically approve friend request, default is NO
  */
-@property (nonatomic, assign) BOOL isAutoAcceptFriendInvitation;
+//@property (nonatomic, assign) BOOL isAutoAcceptFriendInvitation;
 
 /*!
  *  \~chinese 

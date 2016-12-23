@@ -26,6 +26,7 @@ public class MainScene : MonoBehaviour {
 	public InputField filePath;
 	public Button sendFileMessageBtn;
 	public Button sendGroupFileMsgBtn;
+	public Button getConversationsBtn;
 	public InputField groupName;
 	public InputField groupUser;
 	public Button createGroupBtn;
@@ -33,16 +34,8 @@ public class MainScene : MonoBehaviour {
 	public Button leaveGroupBtn;
 	public Button getGroupsBtn;
 	public Button addToGroupBtn;
-	public Button inviteToGroupBtn;
-	public Button RmUserFromGroupBtn;
-	public Button destroyGroupBtn;
 	public Button joinGroupBtn;
-	public Button applyToJoinGroupBtn;
-	public Button acceptApplicationBtn;
-	public Button rejectApplicationBtn;
-	public Button acceptInvitationBtn;
-	public Button rejectInvitationBtn;
-	public Button getConversationsBtn;
+	public Button GroupInfoBtn;
 
 	private List<Dropdown.OptionData> friendList = new List<Dropdown.OptionData>();
 	private List<EMGroup> groupList = new List<EMGroup>();
@@ -170,13 +163,11 @@ public class MainScene : MonoBehaviour {
 					logText.text = "create group success";
 				};
 				cb.onErrorCallback = (code, msg) => {
-
+					logText.text = msg;
 				};
 				EMClient.Instance.createGroup (groupName.text, "desc:" + groupName.text, new string[0], "reason", 200, (GroupStyle)groupStyle.value, cb);
 			}
 		});
-					
-			
 
 		joinGroupBtn.onClick.AddListener (delegate () {
 			EMBaseCallback cb = new EMBaseCallback();
@@ -187,27 +178,10 @@ public class MainScene : MonoBehaviour {
 
 			};
 			cb.onErrorCallback = (code,msg) => {
-				logText.text = "join group failure";
+				logText.text = "join group failure msg=" + msg;
 			};
 			if(groupName.text.Length > 0)
 				EMClient.Instance.joinGroup(groupName.text,cb);
-			else
-				logText.text = "input group id first";
-		});
-
-		applyToJoinGroupBtn.onClick.AddListener (delegate () {
-			EMBaseCallback cb = new EMBaseCallback();
-			cb.onSuccessCallback = () => {
-				logText.text = "applyToJoin group success";
-			};
-			cb.onProgressCallback = (progress,status) => {
-
-			};
-			cb.onErrorCallback = (code,msg) => {
-				logText.text = "applyToJoin group failure";
-			};
-			if(groupName.text.Length > 0)
-				EMClient.Instance.applyJoinToGroup(groupName.text,"pls",cb);
 			else
 				logText.text = "input group id first";
 		});
@@ -221,7 +195,7 @@ public class MainScene : MonoBehaviour {
 
 			};
 			cb.onErrorCallback = (code,msg) => {
-
+				logText.text = msg;
 			};
 			if(groupName.text.Length > 0)
 				EMClient.Instance.leaveGroup(groupName.text,cb);
@@ -242,7 +216,7 @@ public class MainScene : MonoBehaviour {
 				logContent.sizeDelta = new Vector2 (0, logText.preferredHeight+5);
 			};
 			cb.onErrorCallback = (code,msg) => {
-
+				logText.text = msg;
 			};
 			EMClient.Instance.getJoinedGroupsFromServer(cb);
 		});
@@ -273,130 +247,16 @@ public class MainScene : MonoBehaviour {
 			EMClient.Instance.addUsersToGroup(groupName.text,users,cb);
 		});
 
-		inviteToGroupBtn.onClick.AddListener (delegate () {
-			EMBaseCallback cb = new EMBaseCallback();
-			cb.onSuccessCallback = () => {
-				logText.text = "invite to group success";
-			};
-			cb.onProgressCallback = (progress,status) => {
-
-			};
-			cb.onErrorCallback = (code,msg) => {
-				logText.text = "failed to inviteUser: " + msg;
-			};
+		GroupInfoBtn.onClick.AddListener(delegate() {
 			if(groupName.text.Length > 0){
-				string[] users = {groupUser.text};
-				EMClient.Instance.inviteUser(groupName.text,users,"welconme",cb);
+				EMGroup group = EMClient.Instance.getGroup(groupName.text);
+				if(group != null)
+					logText.text = "name="+group.mGroupName+",id="+group.mGroupId;
 			}
 			else
 				logText.text = "input group id first";
+			
 		});
-
-
-		RmUserFromGroupBtn.onClick.AddListener (delegate() {
-			EMBaseCallback cb = new EMBaseCallback();
-			cb.onSuccessCallback = () => {
-				logText.text = "removeUserFromGroup success";
-			};
-			cb.onProgressCallback = (progress,status) => {
-
-			};
-			cb.onErrorCallback = (code,msg) => {
-
-			};
-			EMClient.Instance.removeUserFromGroup(groupName.text,groupUser.text,cb);
-		});
-
-		destroyGroupBtn.onClick.AddListener (delegate () {
-			EMBaseCallback cb = new EMBaseCallback();
-			cb.onSuccessCallback = () => {
-				logText.text = "destory group success";
-			};
-			cb.onProgressCallback = (progress,status) => {
-
-			};
-			cb.onErrorCallback = (code,msg) => {
-
-			};
-			if(groupName.text.Length > 0)
-				EMClient.Instance.destroyGroup(groupName.text,cb);
-			else
-				logText.text = "input group id first";
-		});
-
-		acceptApplicationBtn.onClick.AddListener (delegate () {
-			EMBaseCallback cb = new EMBaseCallback();
-			cb.onSuccessCallback = () => {
-				logText.text = "accept group application success";
-			};
-			cb.onProgressCallback = (progress,status) => {
-
-			};
-			cb.onErrorCallback = (code,msg) => {
-				logText.text = "accept group application failure";
-			};
-			if(groupName.text.Length > 0){
-				string user = groupUser.text;
-				EMClient.Instance.approveJoinGroupRequest(groupName.text,user,cb);
-			}
-			else
-				logText.text = "input group id first";
-		});
-
-		rejectApplicationBtn.onClick.AddListener (delegate () {
-			EMBaseCallback cb = new EMBaseCallback();
-			cb.onSuccessCallback = () => {
-				logText.text = "reject group application success";
-			};
-			cb.onProgressCallback = (progress,status) => {
-
-			};
-			cb.onErrorCallback = (code,msg) => {
-				logText.text = "reject group application failure";
-			};
-			if(groupName.text.Length > 0){
-				string user = groupUser.text;
-				EMClient.Instance.declineJoinGroupRequest(groupName.text,user,"sorry",cb);
-			}
-			else
-				logText.text = "input group id first";
-		});
-
-		acceptInvitationBtn.onClick.AddListener (delegate () {
-			EMGroupCallback cb  = new EMGroupCallback();
-			cb.onSuccessJoinGroupCallback = (group) => {
-				logText.text = "accept invitation suc. groupId="+group.mGroupId;
-			};
-			cb.onErrorCallback = (code,msg) => {
-
-			};
-			if(groupName.text.Length > 0){
-				string user = groupUser.text;
-				EMClient.Instance.acceptInvitationFromGroup(groupName.text,user,cb);
-			}
-			else
-				logText.text = "input group id first";
-		});
-
-		rejectInvitationBtn.onClick.AddListener (delegate () {
-			EMBaseCallback cb = new EMBaseCallback();
-			cb.onSuccessCallback = () => {
-				logText.text = "reject group invitation success";
-			};
-			cb.onProgressCallback = (progress,status) => {
-
-			};
-			cb.onErrorCallback = (code,msg) => {
-				logText.text = "reject group invitation failure";
-			};
-			if(groupName.text.Length > 0){
-				string user = groupUser.text;
-				EMClient.Instance.declineInvitationFromGroup(groupName.text,user,"sorry",cb);
-			}
-			else
-				logText.text = "input group id first";
-		});
-
 
 		getLastMsgBtn.onClick.AddListener (delegate() {
 			if(fromUser.text.Length == 0)
