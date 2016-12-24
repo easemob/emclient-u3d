@@ -59,7 +59,6 @@
  *  \~english
  *  The total number of group members
  */
-@property (nonatomic, readonly) NSInteger occupantsCount __deprecated_msg("Use - membersCount");
 @property (nonatomic, readonly) NSInteger membersCount;
 
 /*!
@@ -104,7 +103,6 @@
  *
  *  Need owner's authority to access, return nil if user is not the group owner.
  */
-@property (nonatomic, strong, readonly) NSArray *bans __deprecated_msg("Use - blackList");
 @property (nonatomic, strong, readonly) NSArray *blackList;
 
 /*!
@@ -145,8 +143,27 @@
 
 /*!
  *  \~chinese
+ *  获取群组实例，如果不存在则创建
+ *
+ *  @param aGroupId    群组ID
+ *
+ *  @result 群组实例
+ *
+ *  \~english
+ *  Get group instance, create a instance if it does not exist
+ *
+ *  @param aGroupId  Group id
+ *
+ *  @result Group instance
+ */
++ (instancetype)groupWithId:(NSString *)aGroupId;
+
+#pragma mark - EM_DEPRECATED_IOS < 3.2.3
+
+/*!
+ *  \~chinese
  *  初始化群组实例
- *  
+ *
  *  请使用+groupWithId:方法
  *
  *  @result nil
@@ -162,19 +179,24 @@
 
 /*!
  *  \~chinese
- *  获取群组实例，如果不存在则创建
- *
- *  @param aGroupId    群组ID
- *
- *  @result 群组实例
+ *  群组当前的成员数量，需要获取群详情
  *
  *  \~english
- *  Get group instance, create a instance if it does not exist
- *
- *  @param aGroupId  Group id
- *
- *  @result Group instance
+ *  The total number of group members
  */
-+ (instancetype)groupWithId:(NSString *)aGroupId;
+@property (nonatomic, readonly) NSInteger occupantsCount __deprecated_msg("Use - membersCount");
+
+/*!
+ *  \~chinese
+ *  群组的黑名单，需要先调用获取群黑名单方法
+ *
+ *  需要owner权限才能查看，非owner返回nil
+ *
+ *  \~english
+ *  Group‘s blacklist of blocked users
+ *
+ *  Need owner's authority to access, return nil if user is not the group owner.
+ */
+@property (nonatomic, strong, readonly) NSArray *bans __deprecated_msg("Use - blackList");
 
 @end

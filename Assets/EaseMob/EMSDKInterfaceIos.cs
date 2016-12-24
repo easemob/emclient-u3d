@@ -31,14 +31,14 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern void _createGroup (int callbackId, string groupName, string desc, string strMembers, string reason, int maxUsers, int style);
 
-		[DllImport ("__Internal")]
-		private static extern void _destroyGroup (int callbackId,string groupId);
+//		[DllImport ("__Internal")]
+//		private static extern void _destroyGroup (int callbackId,string groupId);
 
-		[DllImport ("__Internal")]
-		private static extern void _changeGroupName (int callbackId, string groupId, string groupName);
+//		[DllImport ("__Internal")]
+//		private static extern void _changeGroupName (int callbackId, string groupId, string groupName);
 
-		[DllImport ("__Internal")]
-		private static extern void _inviteUser (int callbackId,string groupId, string beInvitedUsernames, string reason);
+//		[DllImport ("__Internal")]
+//		private static extern void _inviteUser (int callbackId,string groupId, string beInvitedUsernames, string reason);
 
 		[DllImport ("__Internal")]
 		private static extern void _leaveGroup (int callbackId, string groupId);
@@ -46,32 +46,32 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern void _getJoinedGroupsFromServer (int callbackId);
 
-		[DllImport ("__Internal")]
-		private static extern string _getJoinedGroups ();
+//		[DllImport ("__Internal")]
+//		private static extern string _getJoinedGroups ();
 
 		[DllImport ("__Internal")]
 		private static extern string _getGroup (string groupId);
 
-		[DllImport ("__Internal")]
-		private static extern void _blockGroupMessage (int callbackId,string groupId);
+//		[DllImport ("__Internal")]
+//		private static extern void _blockGroupMessage (int callbackId,string groupId);
+//
+//		[DllImport ("__Internal")]
+//		private static extern void _unblockGroupMessage (int callbackId,string groupId);
 
-		[DllImport ("__Internal")]
-		private static extern void _unblockGroupMessage (int callbackId,string groupId);
+//		[DllImport ("__Internal")]
+//		private static extern void _blockUser (int callbackId, string groupId, string username);
 
-		[DllImport ("__Internal")]
-		private static extern void _blockUser (int callbackId, string groupId, string username);
+//		[DllImport ("__Internal")]
+//		private static extern void _unblockUser (int callbackId, string groupId, string username);
+//
+//		[DllImport ("__Internal")]
+//		private static extern void _getBlockedUsers (int callbackId, string groupId);
 
-		[DllImport ("__Internal")]
-		private static extern void _unblockUser (int callbackId, string groupId, string username);
-
-		[DllImport ("__Internal")]
-		private static extern void _getBlockedUsers (int callbackId, string groupId);
-
-		[DllImport ("__Internal")]
-		private static extern void _applyJoinToGroup (int callbackId,string groupId, string reason);
-
-		[DllImport ("__Internal")]
-		private static extern void _removeUserFromGroup (int callbackId, string groupId, string username);
+//		[DllImport ("__Internal")]
+//		private static extern void _applyJoinToGroup (int callbackId,string groupId, string reason);
+//
+//		[DllImport ("__Internal")]
+//		private static extern void _removeUserFromGroup (int callbackId, string groupId, string username);
 
 		[DllImport ("__Internal")]
 		private static extern void _addUsersToGroup (int callbackId, string groupId, string strMembers);
@@ -100,18 +100,18 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern void _downloadAttachment(int callbackId,string username,string msgId);
 
-		[DllImport ("__Internal")]
-		private static extern void _approveJoinGroupRequest (int callbackId, string groupId, string username);
+//		[DllImport ("__Internal")]
+//		private static extern void _approveJoinGroupRequest (int callbackId, string groupId, string username);
 
-		[DllImport ("__Internal")]
-		private static extern void _declineJoinGroupRequest (int callbackId, string groupId, string username, string reason);
+//		[DllImport ("__Internal")]
+//		private static extern void _declineJoinGroupRequest (int callbackId, string groupId, string username, string reason);
 
-		[DllImport ("__Internal")]
-		private static extern void _acceptInvitationFromGroup (int callbackId, string groupId, string username);
-
-		[DllImport ("__Internal")]
-		private static extern void _declineInvitationFromGroup (int callbackId, string groupId, string username, string reason);
-
+//		[DllImport ("__Internal")]
+//		private static extern void _acceptInvitationFromGroup (int callbackId, string groupId, string username);
+//
+//		[DllImport ("__Internal")]
+//		private static extern void _declineInvitationFromGroup (int callbackId, string groupId, string username, string reason);
+//
 		[DllImport ("__Internal")]
 		private static extern string _getConversation (string cid, int type, bool createIfNotExists);
 
@@ -243,11 +243,11 @@ namespace EaseMob{
 		}
 		public override void inviteUser (int callbackId,string groupId, string beInvitedUsernames, string reason)
 		{
-			_inviteUser (callbackId, groupId, beInvitedUsernames, reason);
+//			_inviteUser (callbackId, groupId, beInvitedUsernames, reason);
 		}
 		public override void removeUserFromGroup (int callbackId,string groupId, string username)
 		{
-			_removeUserFromGroup (callbackId, groupId, username);
+//			_removeUserFromGroup (callbackId, groupId, username);
 		}
 		public override void joinGroup (int callbackId,string groupId)
 		{
@@ -255,7 +255,7 @@ namespace EaseMob{
 		}
 		public override void applyJoinToGroup (int callbackId,string groupId, string reason)
 		{
-			_applyJoinToGroup(callbackId,groupId,reason);
+//			_applyJoinToGroup(callbackId,groupId,reason);
 		}
 		public override void leaveGroup (int callbackId,string groupId)
 		{
@@ -263,7 +263,7 @@ namespace EaseMob{
 		}
 		public override void destroyGroup (int callbackId,string groupId)
 		{
-			_destroyGroup (callbackId, groupId);
+//			_destroyGroup (callbackId, groupId);
 		}
 		public override void getJoinedGroupsFromServer (int callbackId)
 		{
@@ -271,11 +271,12 @@ namespace EaseMob{
 		}
 		public override string getAllGroups ()
 		{
-			return _getJoinedGroups();
+//			return _getJoinedGroups();
+			return "";
 		}
 		public override void changeGroupName (int callbackId,string groupId,string groupName)
 		{
-			_changeGroupName (callbackId, groupId, groupName);
+//			_changeGroupName (callbackId, groupId, groupName);
 		}
 		public override string getGroup (string groupId)
 		{
@@ -283,23 +284,23 @@ namespace EaseMob{
 		}
 		public override void blockGroupMessage (int callbackId,string groupId)
 		{
-			_blockGroupMessage (callbackId, groupId);
+//			_blockGroupMessage (callbackId, groupId);
 		}
 		public override void unblockGroupMessage (int callbackId,string groupId)
 		{
-			_unblockGroupMessage (callbackId, groupId);
+//			_unblockGroupMessage (callbackId, groupId);
 		}
 		public override void blockUser (int callbackId,string groupId, string username)
 		{
-			_blockUser (callbackId, groupId, username);
+//			_blockUser (callbackId, groupId, username);
 		}
 		public override void unblockUser(int callbackId,string groupId,string username)
 		{
-			_unblockUser (callbackId, groupId, username);
+//			_unblockUser (callbackId, groupId, username);
 		}
 		public override void getBlockedUsers(int callbackId,string groupId)
 		{
-			_getBlockedUsers (callbackId, groupId);
+//			_getBlockedUsers (callbackId, groupId);
 		}
 
 		public override void downloadAttachment(int callbackId,string username,string msgId)
@@ -309,19 +310,19 @@ namespace EaseMob{
 
 		public override void approveJoinGroupRequest (int callbackId, string groupId, string username)
 		{
-			_approveJoinGroupRequest (callbackId, groupId, username);
+//			_approveJoinGroupRequest (callbackId, groupId, username);
 		}
 		public override void declineJoinGroupRequest (int callbackId, string groupId, string username, string reason)
 		{
-			_declineJoinGroupRequest (callbackId, groupId, username, reason);
+//			_declineJoinGroupRequest (callbackId, groupId, username, reason);
 		}
 		public override void acceptInvitationFromGroup (int callbackId, string groupId, string username)
 		{
-			_acceptInvitationFromGroup (callbackId, groupId, username);
+//			_acceptInvitationFromGroup (callbackId, groupId, username);
 		}
 		public override void declineInvitationFromGroup (int callbackId, string groupId, string username, string reason)
 		{
-			_declineInvitationFromGroup (callbackId, groupId, username, reason);
+//			_declineInvitationFromGroup (callbackId, groupId, username, reason);
 		}
 		public override string getConversation (string cid, int type, bool createIfNotExists)
 		{
