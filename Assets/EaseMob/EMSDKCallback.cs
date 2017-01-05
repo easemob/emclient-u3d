@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
-using LitJson;
+using SimpleJSON;
 using System.Collections.Generic;
 
 namespace EaseMob{
@@ -52,14 +51,14 @@ namespace EaseMob{
 			if (EMClient.Instance.loginCallback == null) {
 				throw new System.Exception ("NOT set login callback");
 			}
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			string on = (string)jsonData ["on"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			string on = jsonData ["on"].Value;
 			if (on.Equals ("success")) {
 				EMClient.Instance.loginCallback.onSuccessCallback ();
 			} else if (on.Equals ("progress")) {
-				EMClient.Instance.loginCallback.onProgressCallback ((int)jsonData ["progress"], (string)jsonData ["status"]);
+				EMClient.Instance.loginCallback.onProgressCallback (jsonData ["progress"].AsInt, jsonData ["status"].Value);
 			} else if (on.Equals ("error")) {
-				EMClient.Instance.loginCallback.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+				EMClient.Instance.loginCallback.onErrorCallback (jsonData ["code"].AsInt, jsonData ["message"].Value);
 			} else {
 				EMClient.Instance.loginCallback.onErrorCallback (-999999, "unknown error");
 			}
@@ -70,14 +69,14 @@ namespace EaseMob{
 			if (EMClient.Instance.logoutCallback == null) {
 				throw new System.Exception ("NOT set logout callback");
 			}
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			string on = (string)jsonData ["on"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			string on = jsonData ["on"].Value;
 			if (on.Equals ("success")) {
 				EMClient.Instance.logoutCallback.onSuccessCallback ();
 			} else if (on.Equals ("progress")) {
-				EMClient.Instance.logoutCallback.onProgressCallback ((int)jsonData ["progress"], (string)jsonData ["status"]);
+				EMClient.Instance.logoutCallback.onProgressCallback (jsonData ["progress"].AsInt, jsonData ["status"].Value);
 			} else if (on.Equals ("error")) {
-				EMClient.Instance.logoutCallback.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+				EMClient.Instance.logoutCallback.onErrorCallback (jsonData ["code"].AsInt, jsonData ["message"].Value);
 			} else {
 				EMClient.Instance.logoutCallback.onErrorCallback (-999999, "unknown error");
 			}
@@ -86,35 +85,35 @@ namespace EaseMob{
 		//TODO 成功接收消息回到后应该从消息列表中删除消息【 invoke EMClient.Instance.RemoveCallbackById（）】
 		public void SendMessageCallback(string jsonParam)
 		{
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			int callbackId = (int)jsonData ["callbackid"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			int callbackId = jsonData ["callbackid"].AsInt;
 			Debug.LogError ("callbackId=" + callbackId);
 			EMBaseCallback cb = EMClient.Instance.GetCallbackById (callbackId);
 			if (cb != null) {
-				string on = (string)jsonData ["on"];
+				string on = jsonData ["on"].Value;
 				if (on.Equals ("success")) {
 					cb.onSuccessCallback ();
 					EMClient.Instance.RemoveCallbackById (callbackId);
 				} else if (on.Equals ("progress")) {
-					cb.onProgressCallback ((int)jsonData ["progress"], (string)jsonData ["status"]);
+					cb.onProgressCallback (jsonData ["progress"].AsInt, jsonData ["status"].Value);
 				} else if (on.Equals ("error")) {
-					cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+					cb.onErrorCallback (jsonData ["code"].AsInt, jsonData ["message"].Value);
 				} else {
 					cb.onErrorCallback (-999999, "unknown error");
 				}
 			}
 		}
 
-		public void StopRecordCallback(string jsonParam)
-		{
-			if (EMClient.Instance.recordCallback == null) {
-				throw new System.Exception ("NOT set record callback");
-			}
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			string path = (string)jsonData ["path"];
-			int length = (int)jsonData ["length"];
-			EMClient.Instance.recordCallback.onStopRecordCallback (path, length);
-		}
+//		public void StopRecordCallback(string jsonParam)
+//		{
+//			if (EMClient.Instance.recordCallback == null) {
+//				throw new System.Exception ("NOT set record callback");
+//			}
+//			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+//			string path = (string)jsonData ["path"];
+//			int length = (int)jsonData ["length"];
+//			EMClient.Instance.recordCallback.onStopRecordCallback (path, length);
+//		}
 
 		public void MessageReceivedCallback(string jsonParam)
 		{
@@ -170,7 +169,7 @@ namespace EaseMob{
 			if (EMClient.Instance.groupListenerCallback == null) {
 				throw new System.Exception ("NOT set group callback");
 			}
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			JSONNode jsonData = JSON.Parse (jsonParam);
 			string groupId = (string)jsonData ["groupId"];
 			string groupName = (string)jsonData ["groupName"];
 			EMClient.Instance.groupListenerCallback.onUserRemovedCallback (groupId, groupName);
@@ -181,7 +180,7 @@ namespace EaseMob{
 			if (EMClient.Instance.groupListenerCallback == null) {
 				throw new System.Exception ("NOT set group callback");
 			}
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			JSONNode jsonData = JSON.Parse (jsonParam);
 			string groupId = (string)jsonData ["groupId"];
 			string groupName = (string)jsonData ["groupName"];
 			string inviter = (string)jsonData ["inviter"];
@@ -194,7 +193,7 @@ namespace EaseMob{
 			if (EMClient.Instance.groupListenerCallback == null) {
 				throw new System.Exception ("NOT set group callback");
 			}
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			JSONNode jsonData = JSON.Parse (jsonParam);
 			string groupId = (string)jsonData ["groupId"];
 			string invitee = (string)jsonData ["invitee"];
 			string reason = (string)jsonData ["reason"];
@@ -206,7 +205,7 @@ namespace EaseMob{
 			if (EMClient.Instance.groupListenerCallback == null) {
 				throw new System.Exception ("NOT set group callback");
 			}
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
+			JSONNode jsonData = JSON.Parse (jsonParam);
 			string groupId = (string)jsonData ["groupId"];
 			string inviter = (string)jsonData ["inviter"];
 			string reason = (string)jsonData ["reason"];
@@ -218,9 +217,9 @@ namespace EaseMob{
 			if (EMClient.Instance.groupListenerCallback == null) {
 				throw new System.Exception ("NOT set group callback");
 			}
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			string groupId = (string)jsonData ["groupId"];
-			string groupName = (string)jsonData ["groupName"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			string groupId = jsonData ["groupId"].Value;
+			string groupName = jsonData ["groupName"].Value;
 			EMClient.Instance.groupListenerCallback.onGroupDestroyed (groupId, groupName);
 		}
 
@@ -229,10 +228,10 @@ namespace EaseMob{
 			if (EMClient.Instance.groupListenerCallback == null) {
 				throw new System.Exception ("NOT set group callback");
 			}
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			string groupId = (string)jsonData ["groupId"];
-			string inviter = (string)jsonData ["inviter"];
-			string inviteMessage = (string)jsonData ["inviteMessage"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			string groupId = jsonData ["groupId"].Value;
+			string inviter = jsonData ["inviter"].Value;
+			string inviteMessage = jsonData ["inviteMessage"].Value;
 			EMClient.Instance.groupListenerCallback.onAutoAcceptInvitationFromGroup (groupId, inviter, inviteMessage);
 		}
 
@@ -241,11 +240,11 @@ namespace EaseMob{
 			if (EMClient.Instance.groupListenerCallback == null) {
 				throw new System.Exception ("NOT set group callback");
 			}
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			string groupId = (string)jsonData ["groupId"];
-			string groupName = (string)jsonData ["groupName"];
-			string applicant = (string)jsonData ["applicant"];
-			string reason = (string)jsonData ["reason"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			string groupId = jsonData ["groupId"].Value;
+			string groupName = jsonData ["groupName"].Value;
+			string applicant = jsonData ["applicant"].Value;
+			string reason = jsonData ["reason"].Value;
 			EMClient.Instance.groupListenerCallback.onApplicationReceived (groupId, groupName, applicant, reason);
 		}
 
@@ -254,11 +253,11 @@ namespace EaseMob{
 			if (EMClient.Instance.groupListenerCallback == null) {
 				throw new System.Exception ("NOT set group callback");
 			}
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			string groupId = (string)jsonData ["groupId"];
-			string groupName = (string)jsonData ["groupName"];
-			string decliner = (string)jsonData ["decliner"];
-			string reason = (string)jsonData ["reason"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			string groupId = jsonData ["groupId"].Value;
+			string groupName = jsonData ["groupName"].Value;
+			string decliner = jsonData ["decliner"].Value;
+			string reason = jsonData ["reason"].Value;
 			EMClient.Instance.groupListenerCallback.onApplicationDeclined (groupId, groupName, decliner, reason);
 		}
 
@@ -267,27 +266,27 @@ namespace EaseMob{
 			if (EMClient.Instance.groupListenerCallback == null) {
 				throw new System.Exception ("NOT set group callback");
 			}
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			string groupId = (string)jsonData ["groupId"];
-			string groupName = (string)jsonData ["groupName"];
-			string accepter = (string)jsonData ["accepter"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			string groupId = jsonData ["groupId"].Value;
+			string groupName = jsonData ["groupName"].Value;
+			string accepter = jsonData ["accepter"].Value;
 			EMClient.Instance.groupListenerCallback.onApplicationAccept (groupId, groupName, accepter);
 		}
 
 		//
 		public void CreateGroupCallback(string jsonParam)
 		{
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			int callbackId = (int)jsonData ["callbackid"];
-			string on = (string)jsonData ["on"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			int callbackId = jsonData ["callbackid"].AsInt;
+			string on = jsonData ["on"].Value;
 			EMGroupCallback cb = (EMGroupCallback)EMClient.Instance.GetCallbackById (callbackId);
 
 			if (on.Equals ("success")) {
-				EMGroup group = EMTools.json2group ((string)jsonData ["data"]);
+				EMGroup group = EMTools.json2group (jsonData ["data"].Value);
 				cb.onSuccessCreateGroupCallback (group);
 				EMClient.Instance.RemoveCallbackById (callbackId);
 			} else if (on.Equals ("error")) {
-				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+				cb.onErrorCallback (jsonData ["code"].AsInt, jsonData ["message"].Value);
 			}
 		}
 
@@ -328,17 +327,17 @@ namespace EaseMob{
 
 		public void GetJoinedGroupsFromServerCallback(string jsonParam)
 		{
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			int callbackId = (int)jsonData ["callbackid"];
-			string on = (string)jsonData ["on"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			int callbackId = jsonData ["callbackid"].AsInt;
+			string on = jsonData ["on"].Value;
 			EMGroupCallback cb = (EMGroupCallback)EMClient.Instance.GetCallbackById (callbackId);
 
 			if (on.Equals ("success")) {
-				List<EMGroup> groups = EMTools.json2grouplist ((string)jsonData ["data"]);
+				List<EMGroup> groups = EMTools.json2grouplist (jsonData ["data"].Value);
 				cb.onSuccessGetGroupListCallback (groups);
 				EMClient.Instance.RemoveCallbackById (callbackId);
 			} else if (on.Equals ("error")) {
-				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+				cb.onErrorCallback (jsonData ["code"].AsInt, jsonData ["message"].Value);
 			}
 		}
 
@@ -369,17 +368,17 @@ namespace EaseMob{
 
 		public void GetBlockedUsersCallback(string jsonParam)
 		{
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			int callbackId = (int)jsonData ["callbackid"];
-			string on = (string)jsonData ["on"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			int callbackId = jsonData ["callbackid"].AsInt;
+			string on = jsonData ["on"].Value;
 			EMGroupCallback cb = (EMGroupCallback)EMClient.Instance.GetCallbackById (callbackId);
 
 			if (on.Equals ("success")) {
-				string strUsers = (string)jsonData ["data"];
+				string strUsers = jsonData ["data"].Value;
 				cb.onSuccessGetBlockedUsers(EMTools.string2list(strUsers));
 				EMClient.Instance.RemoveCallbackById (callbackId);
 			} else if (on.Equals ("error")) {
-				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+				cb.onErrorCallback (jsonData ["code"].AsInt, jsonData ["message"].Value);
 			}
 		}
 
@@ -400,17 +399,17 @@ namespace EaseMob{
 
 		public void AcceptInvitationFromGroupCallback(string jsonParam)
 		{
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			int callbackId = (int)jsonData ["callbackid"];
-			string on = (string)jsonData ["on"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			int callbackId = jsonData ["callbackid"].AsInt;
+			string on = jsonData ["on"].Value;
 			EMGroupCallback cb = (EMGroupCallback)EMClient.Instance.GetCallbackById (callbackId);
 
 			if (on.Equals ("success")) {
-				EMGroup group = EMTools.json2group ((string)jsonData ["data"]);
+				EMGroup group = EMTools.json2group (jsonData ["data"].Value);
 				cb.onSuccessJoinGroupCallback (group);
 				EMClient.Instance.RemoveCallbackById (callbackId);
 			} else if (on.Equals ("error")) {
-				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+				cb.onErrorCallback (jsonData ["code"].AsInt, jsonData ["message"].Value);
 			}
 		}
 
@@ -421,17 +420,17 @@ namespace EaseMob{
 			
 		private void doBaseCallback(string jsonParam)
 		{
-			JsonData jsonData = JsonMapper.ToObject (jsonParam);
-			int callbackId = (int)jsonData ["callbackid"];
+			JSONNode jsonData = JSON.Parse (jsonParam);
+			int callbackId = jsonData ["callbackid"].AsInt;
 			string on = (string)jsonData ["on"];
 			EMBaseCallback cb = EMClient.Instance.GetCallbackById (callbackId);
 			if (on.Equals ("success")) {
 				cb.onSuccessCallback ();
 				EMClient.Instance.RemoveCallbackById (callbackId);
 			} else if (on.Equals ("progress")) {
-				cb.onProgressCallback ((int)jsonData ["progress"], (string)jsonData ["status"]);
+				cb.onProgressCallback (jsonData ["progress"].AsInt, jsonData ["status"].Value);
 			} else if (on.Equals ("error")) {
-				cb.onErrorCallback ((int)jsonData ["code"], (string)jsonData ["message"]);
+				cb.onErrorCallback (jsonData ["code"].AsInt, jsonData ["message"].Value);
 				EMClient.Instance.RemoveCallbackById (callbackId);
 			} else {
 				cb.onErrorCallback (-999999, "unknown error");

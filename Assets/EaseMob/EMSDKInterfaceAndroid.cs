@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System;
+﻿#if UNITY_ANDROID
+using UnityEngine;
 
 namespace EaseMob{
 
@@ -29,7 +29,7 @@ namespace EaseMob{
 		{
 			try {
 				return jo.Call<T> (method, param);
-			} catch (Exception e) {
+			} catch (System.Exception e) {
 				Debug.LogError (e);
 			}
 			return default(T);
@@ -39,7 +39,7 @@ namespace EaseMob{
 		{
 			try {
 				jo.Call(method, param);
-			} catch (Exception e) {
+			} catch (System.Exception e) {
 				Debug.LogError (e);
 			}
 		}
@@ -63,22 +63,22 @@ namespace EaseMob{
 		{
 			SDKCall ("sendTextMessage", content, to,callbackId, chattype);
 		}
-		public override void sendVoiceMessage (string path, int length, string to, int callbackId, int chattype)
-		{
-			SDKCall ("sendVoiceMessage", path, length, to,callbackId, chattype);
-		}
-		public override void sendPictureMessage (string path, bool isSrcImage, string to, int callbackId, int chattype)
-		{
-			SDKCall ("sendPictureMessage", path, isSrcImage, to,callbackId, chattype);
-		}
-		public override void sendVideoMessage (string path, string thumbPath,int length, string to, int callbackId, int chattype)
-		{
-			SDKCall ("sendVideoMessage", path, thumbPath, length, to,callbackId, chattype);
-		}
-		public override void sendLocationMessage (double latitude, double longitude, string locationAddress, string to, int callbackId, int chattype)
-		{
-			SDKCall ("sendLocationMessage", latitude, longitude, locationAddress, to,callbackId, chattype);
-		}
+//		public override void sendVoiceMessage (string path, int length, string to, int callbackId, int chattype)
+//		{
+//			SDKCall ("sendVoiceMessage", path, length, to,callbackId, chattype);
+//		}
+//		public override void sendPictureMessage (string path, bool isSrcImage, string to, int callbackId, int chattype)
+//		{
+//			SDKCall ("sendPictureMessage", path, isSrcImage, to,callbackId, chattype);
+//		}
+//		public override void sendVideoMessage (string path, string thumbPath,int length, string to, int callbackId, int chattype)
+//		{
+//			SDKCall ("sendVideoMessage", path, thumbPath, length, to,callbackId, chattype);
+//		}
+//		public override void sendLocationMessage (double latitude, double longitude, string locationAddress, string to, int callbackId, int chattype)
+//		{
+//			SDKCall ("sendLocationMessage", latitude, longitude, locationAddress, to,callbackId, chattype);
+//		}
 		public override void sendFileMessage (string path, string to, int callbackId, int chattype)
 		{
 			SDKCall ("sendFileMessage", path, to,callbackId, chattype);
@@ -87,15 +87,6 @@ namespace EaseMob{
 		{
 			return SDKCall<string> ("getAllContactsFromServer");
 		}
-		public override void startRecord()
-		{
-			SDKCall ("startRecord");
-		}
-		public override void stopRecord()
-		{
-			SDKCall ("stopRecord");
-		}
-
 		public override string getAllConversationMessage(string username)
 		{
 			return SDKCall<string>("getAllConversationMessage",username);
@@ -127,14 +118,6 @@ namespace EaseMob{
 		{
 			SDKCall ("markAllConversationsAsRead");
 		}
-		public override int getAllMsgCount (string username)
-		{
-			return SDKCall<int>("getAllMsgCount",username);
-		}
-		public override int getAllMessagesSize (string username)
-		{
-			return SDKCall<int> ("getAllMessagesSize", username);
-		}
 		public override string getAllConversations ()
 		{
 			return SDKCall<string>("getAllConversations");
@@ -159,64 +142,21 @@ namespace EaseMob{
 		{
 			SDKCall ("addUsersToGroup",callbackId, groupId, strMembers);
 		}
-		public override void inviteUser (int callbackId, string groupId, string beInvitedUsernames, string reason)
-		{
-			SDKCall ("inviteUser",callbackId, groupId, beInvitedUsernames, reason);
-		}
-		public override void removeUserFromGroup (int callbackId,string groupId, string username)
-		{
-			SDKCall ("removeUserFromGroup",callbackId, groupId, username);
-		}
 		public override void joinGroup (int callbackId,string groupId)
 		{
 			SDKCall ("joinGroup",callbackId, groupId);
-		}
-		public override void applyJoinToGroup (int callbackId,string groupId, string reason)
-		{
-			SDKCall ("applyJoinToGroup",callbackId, groupId, reason);
 		}
 		public override void leaveGroup (int callbackId,string groupId)
 		{
 			SDKCall ("leaveGroup",callbackId, groupId);
 		}
-		public override void destroyGroup (int callbackId,string groupId)
-		{
-			SDKCall ("destroyGroup",callbackId, groupId);
-		}
 		public override void getJoinedGroupsFromServer (int callbackId)
 		{
 			SDKCall ("getJoinedGroupsFromServer",callbackId);
 		}
-		public override string getAllGroups (){
-			return SDKCall<string> ("getAllGroups");
-		}
-		public override void changeGroupName (int callbackId,string groupId,string groupName)
-		{
-			SDKCall ("changeGroupName",callbackId, groupId, groupName);
-		}
 		public override string getGroup (string groupId)
 		{
 			return SDKCall<string> ("getGroup", groupId);
-		}
-		public override void blockGroupMessage (int callbackId,string groupId)
-		{
-			SDKCall ("blockGroupMessage",callbackId, groupId);
-		}
-		public override void unblockGroupMessage (int callbackId,string groupId)
-		{
-			SDKCall ("unblockGroupMessage",callbackId, groupId);
-		}
-		public override void blockUser (int callbackId, string groupId, string username)
-		{
-			SDKCall ("blockUser",callbackId, groupId, username);
-		}
-		public override void unblockUser(int callbackId, string groupId,string username)
-		{
-			SDKCall ("unblockUser",callbackId, groupId, username);
-		}
-		public override void getBlockedUsers(int callbackId,string groupId)
-		{
-			SDKCall ("getBlockedUsers",callbackId, groupId);
 		}
 
 		public override void downloadAttachment(int callbackId,string username,string msgId)
@@ -224,22 +164,6 @@ namespace EaseMob{
 			SDKCall ("downloadAttachment",callbackId,username,msgId);
 		}
 
-		public override void approveJoinGroupRequest (int callbackId, string groupId, string username)
-		{
-			SDKCall ("approveJoinGroupRequest",callbackId,groupId,username);
-		}
-		public override void declineJoinGroupRequest (int callbackId, string groupId, string username, string reason)
-		{
-			SDKCall ("declineJoinGroupRequest",callbackId,groupId,username,reason);
-		}
-		public override void acceptInvitationFromGroup (int callbackId, string groupId, string username)
-		{
-			SDKCall ("acceptInvitationFromGroup",callbackId,groupId,username);
-		}
-		public override void declineInvitationFromGroup (int callbackId, string groupId, string username, string reason)
-		{
-			SDKCall ("declineInvitationFromGroup",callbackId,groupId,username,reason);
-		}
 		public override string getConversation (string cid, int type, bool createIfNotExists)
 		{
 			return SDKCall<string> ("getConversation",cid,type,createIfNotExists);
@@ -263,3 +187,4 @@ namespace EaseMob{
 	}
 
 }
+#endif
