@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR || UNITY_STANDLONE
+using UnityEngine;
 
 namespace EaseMob{
 
@@ -28,22 +29,22 @@ namespace EaseMob{
 		{
 			
 		}
-		public override void sendVoiceMessage (string path, int length, string to, int callbackId,int chattype)
-		{
-			
-		}
-		public override void sendPictureMessage (string path, bool isSrcImage, string to, int callbackId,int chattype)
-		{
-			
-		}
-		public override void sendVideoMessage (string path, string thumbPath,int length, string to, int callbackId,int chattype)
-		{
-			
-		}
-		public override void sendLocationMessage (double latitude, double longitude, string locationAddress, string to, int callbackId,int chattype)
-		{
-			
-		}
+//		public override void sendVoiceMessage (string path, int length, string to, int callbackId,int chattype)
+//		{
+//			
+//		}
+//		public override void sendPictureMessage (string path, bool isSrcImage, string to, int callbackId,int chattype)
+//		{
+//			
+//		}
+//		public override void sendVideoMessage (string path, string thumbPath,int length, string to, int callbackId,int chattype)
+//		{
+//			
+//		}
+//		public override void sendLocationMessage (double latitude, double longitude, string locationAddress, string to, int callbackId,int chattype)
+//		{
+//			
+//		}
 		public override void sendFileMessage (string path, string to, int callbackId,int chattype)
 		{
 			
@@ -52,9 +53,6 @@ namespace EaseMob{
 		{
 			return "user2,user3,user4";
 		}
-
-		public override void startRecord(){}
-		public override void stopRecord(){}
 
 		public override string getAllConversationMessage(string username)
 		{
@@ -85,14 +83,6 @@ namespace EaseMob{
 		{
 
 		}
-		public override int getAllMsgCount (string username)
-		{
-			return 0;
-		}
-		public override int getAllMessagesSize (string username)
-		{
-			return 0;
-		}
 
 		public override string getAllConversations ()
 		{
@@ -121,27 +111,11 @@ namespace EaseMob{
 		{
 			
 		}
-		public override void inviteUser (int callbackId,string groupId, string beInvitedUsernames, string reason)
-		{
-			
-		}
-		public override void removeUserFromGroup (int callbackId,string groupId, string username)
-		{
-			
-		}
 		public override void joinGroup (int callbackId,string groupId)
 		{
 			
 		}
-		public override void applyJoinToGroup (int callbackId,string groupId, string reason)
-		{
-			
-		}
 		public override void leaveGroup (int callbackId,string groupId)
-		{
-			
-		}
-		public override void destroyGroup (int callbackId,string groupId)
 		{
 			
 		}
@@ -150,59 +124,17 @@ namespace EaseMob{
 			string json = "{\"callbackid\":"+callbackId+",\"data\":\"[{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"Qq\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:Qq\\\",\\\"mGroupId\\\":\\\"1479573183219\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"Ww\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:Ww\\\",\\\"mGroupId\\\":\\\"1479573487295\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"A\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:A\\\",\\\"mGroupId\\\":\\\"1479574181703\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"B\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:B\\\",\\\"mGroupId\\\":\\\"1479574291702\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"C\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:C\\\",\\\"mGroupId\\\":\\\"1479574419203\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"D\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:D\\\",\\\"mGroupId\\\":\\\"1479574867173\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"E\\\",\\\"mMemCount\\\":0,\\\"mMembers\\\":\\\"\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:E\\\",\\\"mGroupId\\\":\\\"1479575988653\\\"},{\\\"mIsPublic\\\":\\\"true\\\",\\\"mOwner\\\":\\\"user1\\\",\\\"mGroupName\\\":\\\"F\\\",\\\"mMemCount\\\":2,\\\"mMembers\\\":\\\"user8\\\",\\\"mIsMsgBlocked\\\":\\\"false\\\",\\\"mDescription\\\":\\\"desc:F\\\",\\\"mGroupId\\\":\\\"1479576316799\\\"}]\",\"on\":\"success\"}";
 			EMSDKCallback.Instance.GetJoinedGroupsFromServerCallback (json);
 		}
-		public override string getAllGroups (){
-			return "";
-		}
-		public override void changeGroupName (int callbackId,string groupId,string groupName)
-		{
-			
-		}
+
 		public override string getGroup (string groupId)
 		{
 			return "";
-		}
-		public override void blockGroupMessage (int callbackId,string groupId)
-		{
-			
-		}
-		public override void unblockGroupMessage (int callbackId,string groupId)
-		{
-			
-		}
-		public override void blockUser (int callbackId,string groupId, string username)
-		{
-			
-		}
-		public override void unblockUser(int callbackId,string groupId,string username)
-		{
-			
-		}
-		public override void getBlockedUsers(int callbackId,string groupId)
-		{
-			
 		}
 
 		public override void downloadAttachment(int callbackId,string username,string msgId)
 		{
 
 		}
-
-		public override void approveJoinGroupRequest (int callbackId, string groupId, string username)
-		{
-
-		}
-		public override void declineJoinGroupRequest (int callbackId, string groupId, string username, string reason)
-		{
-
-		}
-		public override void acceptInvitationFromGroup (int callbackId, string groupId, string username)
-		{
-
-		}
-		public override void declineInvitationFromGroup (int callbackId, string groupId, string username, string reason)
-		{
-
-		}
+			
 		public override string getConversation (string cid, int type, bool createIfNotExists)
 		{
 			return "";
@@ -228,3 +160,4 @@ namespace EaseMob{
 	}
 
 }
+#endif

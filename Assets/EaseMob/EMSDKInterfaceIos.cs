@@ -1,3 +1,4 @@
+#if UNITY_IOS
 using System.Runtime.InteropServices;
 
 namespace EaseMob{
@@ -102,22 +103,22 @@ namespace EaseMob{
 		{
 			_sendTextMessage(content, to, callbackId, chattype);
 		}
-		public override void sendVoiceMessage (string path, int length, string to, int callbackId,int chattype)
-		{
-
-		}
-		public override void sendPictureMessage (string path, bool isSrcImage, string to, int callbackId,int chattype)
-		{
-
-		}
-		public override void sendVideoMessage (string path, string thumbPath,int length, string to, int callbackId,int chattype)
-		{
-
-		}
-		public override void sendLocationMessage (double latitude, double longitude, string locationAddress, string to, int callbackId,int chattype)
-		{
-
-		}
+//		public override void sendVoiceMessage (string path, int length, string to, int callbackId,int chattype)
+//		{
+//
+//		}
+//		public override void sendPictureMessage (string path, bool isSrcImage, string to, int callbackId,int chattype)
+//		{
+//
+//		}
+//		public override void sendVideoMessage (string path, string thumbPath,int length, string to, int callbackId,int chattype)
+//		{
+//
+//		}
+//		public override void sendLocationMessage (double latitude, double longitude, string locationAddress, string to, int callbackId,int chattype)
+//		{
+//
+//		}
 		public override void sendFileMessage (string path, string to, int callbackId,int chattype)
 		{
 			_sendFileMessage (path, to, callbackId, chattype);
@@ -126,8 +127,6 @@ namespace EaseMob{
 		{
 			return _getAllContactsFromServer();
 		}
-		public override void startRecord(){}
-		public override void stopRecord(){}
 
 		public override string getAllConversationMessage(string username)
 		{
@@ -158,18 +157,6 @@ namespace EaseMob{
 		{
 
 		}
-
-		//not use
-		public override int getAllMsgCount (string username)
-		{
-			return 0;
-		}
-		//not use
-		public override int getAllMessagesSize (string username)
-		{
-			return 0;
-		}
-
 		public override string getAllConversations ()
 		{
 			return _getAllConversations();
@@ -196,66 +183,23 @@ namespace EaseMob{
 		{
 			_addUsersToGroup (callbackId, groupId, strMembers);
 		}
-		public override void inviteUser (int callbackId,string groupId, string beInvitedUsernames, string reason)
-		{
-//			_inviteUser (callbackId, groupId, beInvitedUsernames, reason);
-		}
-		public override void removeUserFromGroup (int callbackId,string groupId, string username)
-		{
-//			_removeUserFromGroup (callbackId, groupId, username);
-		}
 		public override void joinGroup (int callbackId,string groupId)
 		{
 			_joinGroup (callbackId, groupId);
-		}
-		public override void applyJoinToGroup (int callbackId,string groupId, string reason)
-		{
-//			_applyJoinToGroup(callbackId,groupId,reason);
 		}
 		public override void leaveGroup (int callbackId,string groupId)
 		{
 			_leaveGroup (callbackId, groupId);
 		}
-		public override void destroyGroup (int callbackId,string groupId)
-		{
-//			_destroyGroup (callbackId, groupId);
-		}
+
 		public override void getJoinedGroupsFromServer (int callbackId)
 		{
 			_getJoinedGroupsFromServer (callbackId);
 		}
-		public override string getAllGroups ()
-		{
-//			return _getJoinedGroups();
-			return "";
-		}
-		public override void changeGroupName (int callbackId,string groupId,string groupName)
-		{
-//			_changeGroupName (callbackId, groupId, groupName);
-		}
+
 		public override string getGroup (string groupId)
 		{
 			return _getGroup(groupId);
-		}
-		public override void blockGroupMessage (int callbackId,string groupId)
-		{
-//			_blockGroupMessage (callbackId, groupId);
-		}
-		public override void unblockGroupMessage (int callbackId,string groupId)
-		{
-//			_unblockGroupMessage (callbackId, groupId);
-		}
-		public override void blockUser (int callbackId,string groupId, string username)
-		{
-//			_blockUser (callbackId, groupId, username);
-		}
-		public override void unblockUser(int callbackId,string groupId,string username)
-		{
-//			_unblockUser (callbackId, groupId, username);
-		}
-		public override void getBlockedUsers(int callbackId,string groupId)
-		{
-//			_getBlockedUsers (callbackId, groupId);
 		}
 
 		public override void downloadAttachment(int callbackId,string username,string msgId)
@@ -263,22 +207,6 @@ namespace EaseMob{
 			_downloadAttachment(callbackId,username, msgId);
 		}
 
-		public override void approveJoinGroupRequest (int callbackId, string groupId, string username)
-		{
-//			_approveJoinGroupRequest (callbackId, groupId, username);
-		}
-		public override void declineJoinGroupRequest (int callbackId, string groupId, string username, string reason)
-		{
-//			_declineJoinGroupRequest (callbackId, groupId, username, reason);
-		}
-		public override void acceptInvitationFromGroup (int callbackId, string groupId, string username)
-		{
-//			_acceptInvitationFromGroup (callbackId, groupId, username);
-		}
-		public override void declineInvitationFromGroup (int callbackId, string groupId, string username, string reason)
-		{
-//			_declineInvitationFromGroup (callbackId, groupId, username, reason);
-		}
 		public override string getConversation (string cid, int type, bool createIfNotExists)
 		{
 			return _getConversation (cid, type, createIfNotExists);
@@ -302,3 +230,4 @@ namespace EaseMob{
 	}
 
 }
+#endif

@@ -69,33 +69,22 @@ namespace EaseMob{
 			sdk.sendTextMessage (content, to, cb.CallbackId,(int)chattype);
 		}
 
-		public void SendVoiceMessage (string path, int length, string to, ChatType chattype, EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.sendVoiceMessage (path, length, to, cb.CallbackId,(int)chattype);
-		}
-
-		public void SendPictureMessage (string path, bool isSrcImage, string to, ChatType chattype,EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.sendPictureMessage (path, isSrcImage, to, cb.CallbackId, (int)chattype);
-		}
+//		public void SendVoiceMessage (string path, int length, string to, ChatType chattype, EMBaseCallback cb)
+//		{
+//			AddCallbackToList (cb);
+//			sdk.sendVoiceMessage (path, length, to, cb.CallbackId,(int)chattype);
+//		}
+//
+//		public void SendPictureMessage (string path, bool isSrcImage, string to, ChatType chattype,EMBaseCallback cb)
+//		{
+//			AddCallbackToList (cb);
+//			sdk.sendPictureMessage (path, isSrcImage, to, cb.CallbackId, (int)chattype);
+//		}
 
 		public void SendFileMessage (string path, string to,ChatType chattype,EMBaseCallback cb)
 		{
 			AddCallbackToList (cb);
 			sdk.sendFileMessage (path, to, cb.CallbackId, (int)chattype);
-		}
-
-		public void StartRecord(EMRecordCallback cb)
-		{
-			recordCallback = cb;
-			sdk.startRecord ();
-		}
-
-		public void StopRecord()
-		{
-			sdk.stopRecord ();
 		}
 
 		[System.Obsolete("This method not in Use.",true)]
@@ -131,14 +120,6 @@ namespace EaseMob{
 		public void MarkAllConversationsAsRead ()
 		{
 			sdk.markAllConversationsAsRead ();
-		}
-		public int GetAllMsgCount (string username)
-		{
-			return sdk.getAllMsgCount(username);
-		}
-		public int GetAllMessagesSize (string username)
-		{
-			return sdk.getAllMessagesSize(username);
 		}
 
 		public List<EMConversation> GetAllConversations ()
@@ -176,107 +157,31 @@ namespace EaseMob{
 			AddCallbackToList (cb);
 			sdk.addUsersToGroup (cb.CallbackId, groupId, string.Join(",",strMembers));
 		}
-		public void inviteUser (string groupId, string[] beInvitedUsernames, string reason,EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.inviteUser (cb.CallbackId, groupId, string.Join (",", beInvitedUsernames), reason);
-		}
-		public void removeUserFromGroup (string groupId, string username, EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.removeUserFromGroup (cb.CallbackId, groupId, username);
-		}
 		public void joinGroup (string groupId,EMBaseCallback cb)
 		{
 			AddCallbackToList (cb);
 			sdk.joinGroup (cb.CallbackId, groupId);
-		}
-		public void applyJoinToGroup (string groupId, string reason,EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.applyJoinToGroup (cb.CallbackId, groupId, reason);
 		}
 		public void leaveGroup (string groupId,EMBaseCallback cb)
 		{
 			AddCallbackToList (cb);
 			sdk.leaveGroup (cb.CallbackId,groupId);
 		}
-		public void destroyGroup (string groupId,EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.destroyGroup (cb.CallbackId,groupId);
-		}
+
 		public void getJoinedGroupsFromServer (EMBaseCallback cb)
 		{
 			AddCallbackToList (cb);
 			sdk.getJoinedGroupsFromServer (cb.CallbackId);
 		}
-		public List<EMGroup> getAllGroups (){
-			string jsondata = sdk.getAllGroups ();
-			return EMTools.json2grouplist(jsondata);
-		}
-		public void changeGroupName (string groupId,string groupName,EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.changeGroupName (cb.CallbackId,groupId, groupName);
-		}
+			
 		public EMGroup getGroup (string groupId)
 		{
 			string jsondata = sdk.getGroup (groupId);
 			return EMTools.json2group(jsondata);
 		}
-		public void blockGroupMessage (string groupId,EMBaseCallback cb)
-		{
-			AddCallbackToList(cb);
-			sdk.blockGroupMessage (cb.CallbackId, groupId);
-		}
-		public void unblockGroupMessage (string groupId,EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.unblockGroupMessage (cb.CallbackId, groupId);
-		}
-		public void blockUser (string groupId, string username,EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.blockUser (cb.CallbackId,groupId, username);
-		}
-		public void unblockUser(string groupId,string username,EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.unblockUser (cb.CallbackId, groupId, username);
-		}
-		public void getBlockedUsers(string groupId,EMGroupCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.getBlockedUsers (cb.CallbackId, groupId);
-		}
 		#endregion
 
 		#region
-		public void approveJoinGroupRequest (string groupId, string username,EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.approveJoinGroupRequest (cb.CallbackId, groupId, username);
-		}
-
-		public void declineJoinGroupRequest (string groupId, string username, string reason,EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.declineJoinGroupRequest (cb.CallbackId, groupId, username, reason);
-		}
-
-		public void acceptInvitationFromGroup(string groupId, string username,EMGroupCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.acceptInvitationFromGroup (cb.CallbackId, groupId, username);
-		}
-
-		public void declineInvitationFromGroup (string groupId, string username, string reason,EMBaseCallback cb)
-		{
-			AddCallbackToList (cb);
-			sdk.declineInvitationFromGroup (cb.CallbackId, groupId, username, reason);
-		}
-
 		public EMConversation getConversation (string cid, ConversationType type, bool createIfNotExists)
 		{
 			string data = sdk.getConversation (cid, (int)type, createIfNotExists);
@@ -299,7 +204,6 @@ namespace EaseMob{
 		{
 			sdk.requireDeliveryAck (isReq);
 		}
-			
 		#endregion
 			
 		public EMBaseCallback GetCallbackById(int callbackId)
