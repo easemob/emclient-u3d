@@ -31,47 +31,14 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern void _createGroup (int callbackId, string groupName, string desc, string strMembers, string reason, int maxUsers, int style);
 
-//		[DllImport ("__Internal")]
-//		private static extern void _destroyGroup (int callbackId,string groupId);
-
-//		[DllImport ("__Internal")]
-//		private static extern void _changeGroupName (int callbackId, string groupId, string groupName);
-
-//		[DllImport ("__Internal")]
-//		private static extern void _inviteUser (int callbackId,string groupId, string beInvitedUsernames, string reason);
-
 		[DllImport ("__Internal")]
 		private static extern void _leaveGroup (int callbackId, string groupId);
 
 		[DllImport ("__Internal")]
 		private static extern void _getJoinedGroupsFromServer (int callbackId);
 
-//		[DllImport ("__Internal")]
-//		private static extern string _getJoinedGroups ();
-
 		[DllImport ("__Internal")]
 		private static extern string _getGroup (string groupId);
-
-//		[DllImport ("__Internal")]
-//		private static extern void _blockGroupMessage (int callbackId,string groupId);
-//
-//		[DllImport ("__Internal")]
-//		private static extern void _unblockGroupMessage (int callbackId,string groupId);
-
-//		[DllImport ("__Internal")]
-//		private static extern void _blockUser (int callbackId, string groupId, string username);
-
-//		[DllImport ("__Internal")]
-//		private static extern void _unblockUser (int callbackId, string groupId, string username);
-//
-//		[DllImport ("__Internal")]
-//		private static extern void _getBlockedUsers (int callbackId, string groupId);
-
-//		[DllImport ("__Internal")]
-//		private static extern void _applyJoinToGroup (int callbackId,string groupId, string reason);
-//
-//		[DllImport ("__Internal")]
-//		private static extern void _removeUserFromGroup (int callbackId, string groupId, string username);
 
 		[DllImport ("__Internal")]
 		private static extern void _addUsersToGroup (int callbackId, string groupId, string strMembers);
@@ -100,18 +67,6 @@ namespace EaseMob{
 		[DllImport ("__Internal")]
 		private static extern void _downloadAttachment(int callbackId,string username,string msgId);
 
-//		[DllImport ("__Internal")]
-//		private static extern void _approveJoinGroupRequest (int callbackId, string groupId, string username);
-
-//		[DllImport ("__Internal")]
-//		private static extern void _declineJoinGroupRequest (int callbackId, string groupId, string username, string reason);
-
-//		[DllImport ("__Internal")]
-//		private static extern void _acceptInvitationFromGroup (int callbackId, string groupId, string username);
-//
-//		[DllImport ("__Internal")]
-//		private static extern void _declineInvitationFromGroup (int callbackId, string groupId, string username, string reason);
-//
 		[DllImport ("__Internal")]
 		private static extern string _getConversation (string cid, int type, bool createIfNotExists);
 

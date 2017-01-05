@@ -1,5 +1,4 @@
-﻿
-namespace EaseMob{
+﻿namespace EaseMob{
 	
 	public class EMBaseCallbackData {
 

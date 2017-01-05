@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 
 namespace EaseMob{
 
@@ -29,7 +28,7 @@ namespace EaseMob{
 		{
 			try {
 				return jo.Call<T> (method, param);
-			} catch (Exception e) {
+			} catch (System.Exception e) {
 				Debug.LogError (e);
 			}
 			return default(T);
@@ -39,7 +38,7 @@ namespace EaseMob{
 		{
 			try {
 				jo.Call(method, param);
-			} catch (Exception e) {
+			} catch (System.Exception e) {
 				Debug.LogError (e);
 			}
 		}
