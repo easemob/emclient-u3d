@@ -15,7 +15,6 @@ namespace EaseMob{
 		public EMBaseCallback loginCallback{ set; get; }
 		public EMBaseCallback regCallback{ set; get; }
 		public EMBaseCallback logoutCallback{ set; get; }
-		public EMRecordCallback recordCallback{ set; get; }
 		public EMMessageListenerCallback receiveMessageCallback{ set; get; }
 		public EMConnListenerCallback connListenerCallback{ set; get; }
 		public EMGroupListenerCallback groupListenerCallback{ set; get; }
