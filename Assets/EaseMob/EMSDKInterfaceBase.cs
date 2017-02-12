@@ -26,11 +26,13 @@
 		public abstract void login(string username, string password);
 		public abstract void logout (bool flag);
 		public abstract void sendTextMessage (string content, string to, int callbackId, int chattype);
+		public abstract void sendTextMessageExt (string content, string to, int callbackId, int chattype,string extjson);
 //		public abstract void sendVoiceMessage (string path, int length, string to, int callbackId, int chattype);
 //		public abstract void sendPictureMessage (string path, bool isSrcImage, string to, int callbackId,int chattype);
 //		public abstract void sendVideoMessage (string path, string thumbPath,int length, string to, int callbackId,int chattype);
 //		public abstract void sendLocationMessage (double latitude, double longitude, string locationAddress, string to, int callbackId, int chattype);
 		public abstract void sendFileMessage (string path, string to, int callbackId,int chattype);
+		public abstract void sendFileMessageExt (string path, string to, int callbackId,int chattype,string extjson);
 		public abstract string getAllContactsFromServer();
 		public abstract string getAllConversationMessage(string username);
 		public abstract string getConversationMessage(string username, string startMsgId, int pageSize);

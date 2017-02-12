@@ -29,6 +29,11 @@ namespace EaseMob{
 		{
 			
 		}
+		public override void sendTextMessageExt (string content, string to, int callbackId, int chattype,string extjson)
+		{
+
+		}
+
 //		public override void sendVoiceMessage (string path, int length, string to, int callbackId,int chattype)
 //		{
 //			
@@ -49,6 +54,12 @@ namespace EaseMob{
 		{
 			
 		}
+
+		public override void sendFileMessageExt (string path, string to, int callbackId,int chattype,string extjson)
+		{
+
+		}
+
 		public override string getAllContactsFromServer()
 		{
 			return "user2,user3,user4";

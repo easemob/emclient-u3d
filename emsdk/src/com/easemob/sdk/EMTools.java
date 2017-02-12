@@ -33,6 +33,13 @@ public class EMTools {
 				json.put("mType", message.getType().ordinal());
 				json.put("mStatus", message.status().ordinal());
 				json.put("mDirection", message.direct().ordinal());
+				try {
+					String extjson = message.getStringAttribute("extkey");
+					if( extjson != null){
+						json.put("mExtJsonStr", extjson);
+					}
+				} catch (Exception e) {
+				}
 	
 				// set file attribute
 				if(message.getType() == Type.FILE 
