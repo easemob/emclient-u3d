@@ -176,21 +176,12 @@ public class EMSdkLib {
   	}
   	
   	//【API】
-  	public void sendTextMessage(final String content,final String toChatUsername, final int callbackId,final int chatType)
+  	public void sendTextMessage(final String content,final String toChatUsername, final int callbackId,final int chatType, final String extjson)
   	{
   		EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
   		setMessageType(message, chatType);
   		setMessageStatusCallback(message, callbackId);
-  		EMClient.getInstance().chatManager().sendMessage(message);
-  	}
-  	
-  	//【API】
-  	public void sendTextMessageExt(final String content,final String toChatUsername, final int callbackId,final int chatType,final String extjson)
-  	{
-  		EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
-  		setMessageType(message, chatType);
-  		setMessageStatusCallback(message, callbackId);
-  		if(extjson != null)
+		if(extjson != null && !extjson.empty())
   			message.setAttribute("extkey", extjson);
   		EMClient.getInstance().chatManager().sendMessage(message);
   	}
@@ -230,21 +221,12 @@ public class EMSdkLib {
   		EMClient.getInstance().chatManager().sendMessage(message);
   	}
   	//【API】
-  	public void sendFileMessage(final String filePath,final String toChatUsername, final int callbackId,final int chatType)
+  	public void sendFileMessage(final String filePath,final String toChatUsername, final int callbackId,final int chatType,final String extjson)
   	{
   		EMMessage message = EMMessage.createFileSendMessage(filePath, toChatUsername);
   		setMessageType(message, chatType);
   		setMessageStatusCallback(message, callbackId);
-  		EMClient.getInstance().chatManager().sendMessage(message);
-  	}
-  	
-  	//【API】
-  	public void sendFileMessageExt(final String filePath,final String toChatUsername, final int callbackId,final int chatType,final String extjson)
-  	{
-  		EMMessage message = EMMessage.createFileSendMessage(filePath, toChatUsername);
-  		setMessageType(message, chatType);
-  		setMessageStatusCallback(message, callbackId);
-  		if(extjson != null)
+		if(extjson != null && !extjson.empty())
   			message.setAttribute("extkey", extjson);
   		EMClient.getInstance().chatManager().sendMessage(message);
   	}

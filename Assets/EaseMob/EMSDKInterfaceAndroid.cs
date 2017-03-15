@@ -59,13 +59,9 @@ namespace EaseMob{
 			SDKCall ("logout", flag);
 		}
 
-		public override void sendTextMessage (string content, string to, int callbackId, int chattype)
+		public override void sendTextMessage (string content, string to, int callbackId, int chattype, string extjson = "")
 		{
-			SDKCall ("sendTextMessage", content, to,callbackId, chattype);
-		}
-		public override void sendTextMessageExt (string content, string to, int callbackId, int chattype,string extjson)
-		{
-			SDKCall ("sendTextMessageExt", content, to, callbackId, chattype, extjson);
+			SDKCall ("sendTextMessage", content, to,callbackId, chattype, extjson);
 		}
 
 //		public override void sendVoiceMessage (string path, int length, string to, int callbackId, int chattype)
@@ -84,13 +80,9 @@ namespace EaseMob{
 //		{
 //			SDKCall ("sendLocationMessage", latitude, longitude, locationAddress, to,callbackId, chattype);
 //		}
-		public override void sendFileMessage (string path, string to, int callbackId, int chattype)
+		public override void sendFileMessage (string path, string to, int callbackId, int chattype, string extjson = "")
 		{
-			SDKCall ("sendFileMessage", path, to,callbackId, chattype);
-		}
-		public override void sendFileMessageExt (string path, string to, int callbackId,int chattype,string extjson)
-		{
-			SDKCall ("sendFileMessageExt", path, to,callbackId, chattype,extjson);
+			SDKCall ("sendFileMessage", path, to,callbackId, chattype, extjson);
 		}
 
 		public override string getAllContactsFromServer()

@@ -15,16 +15,10 @@ namespace EaseMob{
 		private static extern void _logout(bool flag);
 
 		[DllImport ("__Internal")]
-		private static extern void _sendTextMessage(string content, string to, int callbackId,int chattype);
+		private static extern void _sendTextMessage(string content, string to, int callbackId,int chattype, string extjson);
 
 		[DllImport ("__Internal")]
-		private static extern void _sendTextMessageExt(string content, string to, int callbackId,int chattype, string extjson);
-
-		[DllImport ("__Internal")]
-		private static extern void _sendFileMessage(string path, string to, int callbackId,int chattype);
-
-		[DllImport ("__Internal")]
-		private static extern void _sendFileMessageExt(string path, string to, int callbackId,int chattype, string extjson);
+		private static extern void _sendFileMessage(string path, string to, int callbackId,int chattype, string extjson);
 
 		[DllImport ("__Internal")]
 		private static extern string _getAllContactsFromServer ();
@@ -105,13 +99,9 @@ namespace EaseMob{
 			_logout(flag);
 		}
 
-		public override void sendTextMessage (string content, string to, int callbackId,int chattype)
+		public override void sendTextMessage (string content, string to, int callbackId, int chattype, string extjson)
 		{
-			_sendTextMessage(content, to, callbackId, chattype);
-		}
-		public override void sendTextMessageExt (string content, string to, int callbackId, int chattype,string extjson)
-		{
-			_sendTextMessageExt (content, to, callbackId, chattype, extjson);
+			_sendTextMessage(content, to, callbackId, chattype, extjson);
 		}
 //		public override void sendVoiceMessage (string path, int length, string to, int callbackId,int chattype)
 //		{
@@ -129,13 +119,9 @@ namespace EaseMob{
 //		{
 //
 //		}
-		public override void sendFileMessage (string path, string to, int callbackId,int chattype)
+		public override void sendFileMessage (string path, string to, int callbackId, int chattype, string extjson)
 		{
-			_sendFileMessage (path, to, callbackId, chattype);
-		}
-		public override void sendFileMessageExt (string path, string to, int callbackId,int chattype,string extjson)
-		{
-			_sendFileMessageExt (path, to, callbackId, chattype, extjson);
+			_sendFileMessage (path, to, callbackId, chattype, extjson);
 		}
 		public override string getAllContactsFromServer()
 		{

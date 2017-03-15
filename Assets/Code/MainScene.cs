@@ -295,7 +295,7 @@ public class MainScene : MonoBehaviour {
 
 			};
 			string jsonstr = "{\"key\":\"extinfotext\"}";
-			EMClient.Instance.SendTextMessageExt(txtContent.text, toUser.text, ChatType.Chat, cb,jsonstr);
+			EMClient.Instance.SendTextMessage(txtContent.text, toUser.text, ChatType.Chat, cb,jsonstr);
 
 		});
 	}

@@ -82,42 +82,19 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     }];
 }
 
-- (void) sendTextMessage:(NSString *)content toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype
-{
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:content];
-    NSString *from = [[EMClient sharedClient] currentUsername];
-    
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:nil];
-    if(chattype == 0)
-        message.chatType = EMChatTypeChat;// 设置为单聊消息
-    else if (chattype == 1)
-        message.chatType = EMChatTypeGroupChat;
-    
-    [self sendMessage:message CallbackId:callbackId];
-}
-
 - (void) sendTextMessage:(NSString *)content toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype ext:(NSString*) ext
 {
     EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:content];
     NSString *from = [[EMClient sharedClient] currentUsername];
     
-    NSDictionary *dic =[NSDictionary dictionaryWithObject:ext forKey:@"extkey"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:dic];
-    if(chattype == 0)
-        message.chatType = EMChatTypeChat;// 设置为单聊消息
-    else if (chattype == 1)
-        message.chatType = EMChatTypeGroupChat;
-    
-    [self sendMessage:message CallbackId:callbackId];
-}
+    EMMessage *message = nil;
+    if ([ext length] > 0) {
+        NSDictionary *dic =[NSDictionary dictionaryWithObject:ext forKey:@"extkey"];
+        message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:dic];
+    } else {
+        message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:nil];
+    }
 
-
-- (void) sendFileMessage:(NSString *)path toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype
-{
-    EMFileMessageBody *body = [[EMFileMessageBody alloc] initWithLocalPath:path displayName:[path lastPathComponent]];
-    NSString *from = [[EMClient sharedClient] currentUsername];
-    
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:nil];
     if(chattype == 0)
         message.chatType = EMChatTypeChat;// 设置为单聊消息
     else if (chattype == 1)
@@ -131,8 +108,14 @@ static NSString* EM_U3D_OBJECT = @"emsdk_cb_object";
     EMFileMessageBody *body = [[EMFileMessageBody alloc] initWithLocalPath:path displayName:[path lastPathComponent]];
     NSString *from = [[EMClient sharedClient] currentUsername];
     
-    NSDictionary *dic =[NSDictionary dictionaryWithObject:ext forKey:@"extkey"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:dic];
+    EMMessage *message = nil;
+    if ([ext length] > 0) {
+        NSDictionary *dic =[NSDictionary dictionaryWithObject:ext forKey:@"extkey"];
+        message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:dic];
+    } else {
+        message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:nil];
+    }
+
     if(chattype == 0)
         message.chatType = EMChatTypeChat;// 设置为单聊消息
     else if (chattype == 1)
@@ -711,22 +694,12 @@ extern "C" {
         [[EMSdkLib sharedSdkLib] logout:flag];
     }
 
-    void _sendTextMessage(const char* content, const char* to, int callbackId,int chattype)
-    {
-        [[EMSdkLib sharedSdkLib] sendTextMessage:CreateNSString(content) toUser:CreateNSString(to) callbackId:callbackId chattype:chattype];
-    }
-    
-    void _sendTextMessageExt(const char* content, const char* to, int callbackId,int chattype,const char* ext)
+    void _sendTextMessage(const char* content, const char* to, int callbackId,int chattype, const char* ext)
     {
         [[EMSdkLib sharedSdkLib] sendTextMessage:CreateNSString(content) toUser:CreateNSString(to) callbackId:callbackId chattype:chattype ext:CreateNSString(ext)];
     }
 
-    void _sendFileMessage(const char* path, const char* to, int callbackId,int chattype)
-    {
-        [[EMSdkLib sharedSdkLib] sendFileMessage:CreateNSString(path) toUser:CreateNSString(to) callbackId:callbackId chattype:chattype];
-    }
-    
-    void _sendFileMessageExt(const char* path, const char* to, int callbackId,int chattype,const char* ext)
+    void _sendFileMessage(const char* path, const char* to, int callbackId,int chattype, const char* ext)
     {
         [[EMSdkLib sharedSdkLib] sendFileMessage:CreateNSString(path) toUser:CreateNSString(to) callbackId:callbackId chattype:chattype ext:CreateNSString(ext)];
     }
