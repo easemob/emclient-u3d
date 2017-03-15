@@ -45,6 +45,7 @@ namespace EaseMob{
 			int mType = jd ["mType"].AsInt;
 			MessageType type = (MessageType)mType;
 			message.mType = type;
+			message.ext = jd ["mExtJsonStr"].Value;
 
 			if (type == MessageType.VIDEO || type == MessageType.FILE || type == MessageType.IMAGE || type == MessageType.VOICE) {
 				message.mDisplayName = jd ["mDisplayName"].Value;

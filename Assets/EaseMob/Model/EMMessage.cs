@@ -25,6 +25,7 @@
 		public int mWidth { set; get; }
 		public int mHeight { set; get; }
 		public int mDuration { set; get; }
+		public string ext{ set; get; }
 	}
 
 }

@@ -63,6 +63,11 @@ namespace EaseMob{
 		{
 			SDKCall ("sendTextMessage", content, to,callbackId, chattype);
 		}
+		public override void sendTextMessageExt (string content, string to, int callbackId, int chattype,string extjson)
+		{
+			SDKCall ("sendTextMessageExt", content, to, callbackId, chattype, extjson);
+		}
+
 //		public override void sendVoiceMessage (string path, int length, string to, int callbackId, int chattype)
 //		{
 //			SDKCall ("sendVoiceMessage", path, length, to,callbackId, chattype);
@@ -83,6 +88,11 @@ namespace EaseMob{
 		{
 			SDKCall ("sendFileMessage", path, to,callbackId, chattype);
 		}
+		public override void sendFileMessageExt (string path, string to, int callbackId,int chattype,string extjson)
+		{
+			SDKCall ("sendFileMessageExt", path, to,callbackId, chattype,extjson);
+		}
+
 		public override string getAllContactsFromServer()
 		{
 			return SDKCall<string> ("getAllContactsFromServer");

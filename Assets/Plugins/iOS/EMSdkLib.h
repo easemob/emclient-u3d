@@ -22,9 +22,11 @@
 - (void) logout:(BOOL)flag;
 - (void) sendTextMessage:(NSString *)content toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype;
 - (void) sendFileMessage:(NSString *)path toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype;
+- (void) sendTextMessage:(NSString *)content toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype ext:(NSString*) ext;
+- (void) sendFileMessage:(NSString *)path toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype ext:(NSString*) ext;
 - (NSString *) getAllContactsFromServer;
-- (NSString *) getAllConversations;
 - (NSString *) getAllConversationMessage:(NSString *)fromUser;
+- (NSString *) getAllConversations;
 - (NSString *) getLatestMessage:(NSString *)fromUser;
 - (NSString *) loadMessagesStartFromId:(NSString *)msgId fromUser:(NSString *)username pageSize:(int)size;
 

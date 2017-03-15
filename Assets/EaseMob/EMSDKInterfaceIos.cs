@@ -18,7 +18,13 @@ namespace EaseMob{
 		private static extern void _sendTextMessage(string content, string to, int callbackId,int chattype);
 
 		[DllImport ("__Internal")]
+		private static extern void _sendTextMessageExt(string content, string to, int callbackId,int chattype, string extjson);
+
+		[DllImport ("__Internal")]
 		private static extern void _sendFileMessage(string path, string to, int callbackId,int chattype);
+
+		[DllImport ("__Internal")]
+		private static extern void _sendFileMessageExt(string path, string to, int callbackId,int chattype, string extjson);
 
 		[DllImport ("__Internal")]
 		private static extern string _getAllContactsFromServer ();
@@ -103,6 +109,10 @@ namespace EaseMob{
 		{
 			_sendTextMessage(content, to, callbackId, chattype);
 		}
+		public override void sendTextMessageExt (string content, string to, int callbackId, int chattype,string extjson)
+		{
+			_sendTextMessageExt (content, to, callbackId, chattype, extjson);
+		}
 //		public override void sendVoiceMessage (string path, int length, string to, int callbackId,int chattype)
 //		{
 //
@@ -122,6 +132,10 @@ namespace EaseMob{
 		public override void sendFileMessage (string path, string to, int callbackId,int chattype)
 		{
 			_sendFileMessage (path, to, callbackId, chattype);
+		}
+		public override void sendFileMessageExt (string path, string to, int callbackId,int chattype,string extjson)
+		{
+			_sendFileMessageExt (path, to, callbackId, chattype, extjson);
 		}
 		public override string getAllContactsFromServer()
 		{

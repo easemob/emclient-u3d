@@ -185,6 +185,17 @@ public class EMSdkLib {
   	}
   	
   	//【API】
+  	public void sendTextMessageExt(final String content,final String toChatUsername, final int callbackId,final int chatType,final String extjson)
+  	{
+  		EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
+  		setMessageType(message, chatType);
+  		setMessageStatusCallback(message, callbackId);
+  		if(extjson != null)
+  			message.setAttribute("extkey", extjson);
+  		EMClient.getInstance().chatManager().sendMessage(message);
+  	}
+  	
+  	//【API】
   	public void sendVoiceMessage(final String filePath, final int length, final String toChatUsername, final int callbackId,final int chatType)
   	{
   		EMMessage message = EMMessage.createVoiceSendMessage(filePath, length, toChatUsername);
@@ -224,6 +235,17 @@ public class EMSdkLib {
   		EMMessage message = EMMessage.createFileSendMessage(filePath, toChatUsername);
   		setMessageType(message, chatType);
   		setMessageStatusCallback(message, callbackId);
+  		EMClient.getInstance().chatManager().sendMessage(message);
+  	}
+  	
+  	//【API】
+  	public void sendFileMessageExt(final String filePath,final String toChatUsername, final int callbackId,final int chatType,final String extjson)
+  	{
+  		EMMessage message = EMMessage.createFileSendMessage(filePath, toChatUsername);
+  		setMessageType(message, chatType);
+  		setMessageStatusCallback(message, callbackId);
+  		if(extjson != null)
+  			message.setAttribute("extkey", extjson);
   		EMClient.getInstance().chatManager().sendMessage(message);
   	}
   	

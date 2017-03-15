@@ -68,6 +68,12 @@ namespace EaseMob{
 			sdk.sendTextMessage (content, to, cb.CallbackId,(int)chattype);
 		}
 
+		public void SendTextMessageExt (string content, string to, ChatType chattype, EMBaseCallback cb,string extjson)
+		{
+			AddCallbackToList (cb);
+			sdk.sendTextMessageExt (content, to, cb.CallbackId,(int)chattype,extjson);
+		}
+
 //		public void SendVoiceMessage (string path, int length, string to, ChatType chattype, EMBaseCallback cb)
 //		{
 //			AddCallbackToList (cb);
@@ -84,6 +90,11 @@ namespace EaseMob{
 		{
 			AddCallbackToList (cb);
 			sdk.sendFileMessage (path, to, cb.CallbackId, (int)chattype);
+		}
+		public void SendFileMessageExt (string path, string to,ChatType chattype,EMBaseCallback cb,string extjson)
+		{
+			AddCallbackToList (cb);
+			sdk.sendFileMessageExt (path, to, cb.CallbackId, (int)chattype,extjson);
 		}
 
 		[System.Obsolete("This method not in Use.",true)]

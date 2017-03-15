@@ -7,14 +7,12 @@ using EaseMob;
 using UnityEngine.SceneManagement;
 
 public class MainScene : MonoBehaviour {
-
-	public Button friendListBtn;
+	public InputField toUser;
 	public InputField txtContent;
 	public Button sendTxtMessageBtn;
 	public Button sendGroupTxtMsgBtn;
 	public RectTransform logContent;
 	public Text logText;
-	public Dropdown friendListDd;
 	public Button screenShot;
 	public InputField fromUser;
 	public InputField msgId;
@@ -35,8 +33,8 @@ public class MainScene : MonoBehaviour {
 	public Button addToGroupBtn;
 	public Button joinGroupBtn;
 	public Button GroupInfoBtn;
+	public Button sendExtMsgBtn;
 
-	private List<Dropdown.OptionData> friendList = new List<Dropdown.OptionData>();
 	private List<EMGroup> groupList = new List<EMGroup>();
 
 	// Use this for initialization
@@ -48,32 +46,7 @@ public class MainScene : MonoBehaviour {
 
 		setMessageRecvListener ();
 
-		friendListBtn.onClick.AddListener (delegate {
-			friendList.Clear();
-			friendListDd.ClearOptions();
-			string names = EMClient.Instance.GetAllContactsFromServer();
-			Dropdown.OptionData od = new Dropdown.OptionData();
-			od.text = "choose";
-			friendList.Add(od);
-			if(names.Length > 0){
-				string[] namearr = names.Split(new char[] { ',' });
-				foreach(string name in namearr){
-					Dropdown.OptionData dod = new Dropdown.OptionData();
-					dod.text = name;
-					friendList.Add(dod);
-				}
-			}
-			friendListDd.AddOptions(friendList);
-		});
-
 		sendTxtMessageBtn.onClick.AddListener (delegate() {
-			if(friendListDd.value == 0){
-				logText.text = "not choose";
-				logText.color = new Color(255,0,0);
-				return;
-			}
-			Dropdown.OptionData dod = friendList[friendListDd.value];
-
 			EMBaseCallback cb = new EMBaseCallback();
 			cb.onSuccessCallback = () => {
 				logText.text = "send message success";
@@ -84,7 +57,7 @@ public class MainScene : MonoBehaviour {
 			cb.onErrorCallback = (code,message) => {
 				
 			};
-			EMClient.Instance.SendTextMessage(txtContent.text, dod.text, ChatType.Chat, cb);
+			EMClient.Instance.SendTextMessage(txtContent.text, toUser.text, ChatType.Chat, cb);
 		});
 
 		screenShot.onClick.AddListener (delegate() {
@@ -93,7 +66,6 @@ public class MainScene : MonoBehaviour {
 
 		sendFileMessageBtn.onClick.AddListener (delegate() {
 			if(filePath.text.Length > 0){
-				Dropdown.OptionData dod = friendList[friendListDd.value];
 				EMBaseCallback cb = new EMBaseCallback();
 				cb.onSuccessCallback = () => {
 					logText.text = "send file success";
@@ -104,7 +76,7 @@ public class MainScene : MonoBehaviour {
 				cb.onErrorCallback = (code,msg) => {
 
 				};
-				EMClient.Instance.SendFileMessage(filePath.text,dod.text,ChatType.Chat,cb);
+				EMClient.Instance.SendFileMessage(filePath.text,toUser.text,ChatType.Chat,cb);
 			}
 
 		});
@@ -310,6 +282,22 @@ public class MainScene : MonoBehaviour {
 		});
 
 		logText.text = GlobalListener.Instance.listenerInfo;
+
+		sendExtMsgBtn.onClick.AddListener (delegate() {
+			EMBaseCallback cb = new EMBaseCallback();
+			cb.onSuccessCallback = () => {
+				logText.text = "send message success";
+			};
+			cb.onProgressCallback = (progress,status) => {
+
+			};
+			cb.onErrorCallback = (code,message) => {
+
+			};
+			string jsonstr = "{\"key\":\"extinfotext\"}";
+			EMClient.Instance.SendTextMessageExt(txtContent.text, toUser.text, ChatType.Chat, cb,jsonstr);
+
+		});
 	}
 			
 	IEnumerator GenCapture()
@@ -349,7 +337,7 @@ public class MainScene : MonoBehaviour {
 			foreach(EMMessage msg in msgs){
 				logText.text += msg.mFrom;
 				if(msg.mType == MessageType.TXT){
-					logText.text += ",content="+msg.mTxt;
+					logText.text += ",content="+msg.mTxt+",ext="+msg.ext;
 				}
 
 				if(msg.mType == MessageType.IMAGE)
