@@ -181,7 +181,7 @@ public class EMSdkLib {
   		EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
   		setMessageType(message, chatType);
   		setMessageStatusCallback(message, callbackId);
-		if(extjson != null)
+		if(extjson != null && !extjson.empty())
   			message.setAttribute("extkey", extjson);
   		EMClient.getInstance().chatManager().sendMessage(message);
   	}
@@ -226,7 +226,7 @@ public class EMSdkLib {
   		EMMessage message = EMMessage.createFileSendMessage(filePath, toChatUsername);
   		setMessageType(message, chatType);
   		setMessageStatusCallback(message, callbackId);
-		if(extjson != null)
+		if(extjson != null && !extjson.empty())
   			message.setAttribute("extkey", extjson);
   		EMClient.getInstance().chatManager().sendMessage(message);
   	}
