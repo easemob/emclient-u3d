@@ -20,8 +20,6 @@
 - (int) createAccount:(NSString *)username withPwd: (NSString *)password;
 - (void) login:(NSString *)username withPwd: (NSString *)password;
 - (void) logout:(BOOL)flag;
-- (void) sendTextMessage:(NSString *)content toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype;
-- (void) sendFileMessage:(NSString *)path toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype;
 - (void) sendTextMessage:(NSString *)content toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype ext:(NSString*) ext;
 - (void) sendFileMessage:(NSString *)path toUser:(NSString *)to callbackId:(int)callbackId chattype:(int)chattype ext:(NSString*) ext;
 - (NSString *) getAllContactsFromServer;

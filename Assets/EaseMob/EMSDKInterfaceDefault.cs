@@ -25,13 +25,9 @@ namespace EaseMob{
 			string ret = "{\"on\":\"success\"}";
 			EMSDKCallback.Instance.LogoutCallback (ret);
 		}
-		public override void sendTextMessage (string content, string to, int callbackId,int chattype)
+		public override void sendTextMessage (string content, string to, int callbackId, int chattype, string extjson = "")
 		{
 			
-		}
-		public override void sendTextMessageExt (string content, string to, int callbackId, int chattype,string extjson)
-		{
-
 		}
 
 //		public override void sendVoiceMessage (string path, int length, string to, int callbackId,int chattype)
@@ -50,15 +46,11 @@ namespace EaseMob{
 //		{
 //			
 //		}
-		public override void sendFileMessage (string path, string to, int callbackId,int chattype)
+		public override void sendFileMessage (string path, string to, int callbackId, int chattype, string extjson = "")
 		{
 			
 		}
 
-		public override void sendFileMessageExt (string path, string to, int callbackId,int chattype,string extjson)
-		{
-
-		}
 
 		public override string getAllContactsFromServer()
 		{
