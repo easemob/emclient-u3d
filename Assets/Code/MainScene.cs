@@ -42,7 +42,7 @@ public class MainScene : MonoBehaviour {
 		
 		rawImage.gameObject.SetActive(false);
 
-		EMClient.Instance.isAutoAcceptGroupInvitation (false);
+		EMClient.Instance.isAutoAcceptGroupInvitation (true);
 
 		setMessageRecvListener ();
 
@@ -136,7 +136,7 @@ public class MainScene : MonoBehaviour {
 				cb.onErrorCallback = (code, msg) => {
 					logText.text = msg;
 				};
-				EMClient.Instance.createGroup (groupName.text, "desc:" + groupName.text, new string[0], "reason", 200, (GroupStyle)groupStyle.value, cb);
+				EMClient.Instance.createGroup (groupName.text, "desc:" + groupName.text, new string[0], "reason", 200, GroupStyle.GroupStylePublicOpenJoin, cb);
 			}
 		});
 
